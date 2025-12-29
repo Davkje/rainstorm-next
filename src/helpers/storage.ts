@@ -1,5 +1,5 @@
-import { Idea } from "@/lib/ideas";
-import { Template, defaultTemplates } from "@/lib/templates";
+import { Idea } from "@/models/ideas";
+import { Template, defaultTemplates } from "@/models/templates";
 
 // --- TEMPLEATE FUNCTIONS ---
 

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { loadIdeas, saveIdeas, loadTemplates, createIdeaFromTemplate } from "@/helpers/storage";
 
-import { Idea } from "@/lib/ideas";
+import { Idea } from "@/models/ideas";
 
 export default function IdeasPage() {
 	const router = useRouter();

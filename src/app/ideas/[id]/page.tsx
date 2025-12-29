@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Idea } from "@/lib/ideas";
+import { Idea } from "@/models/ideas";
 import { loadIdeas, saveIdeas } from "@/helpers/storage";
 
 interface IdeaPageProps {

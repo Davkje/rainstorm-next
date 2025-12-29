@@ -1,7 +1,7 @@
 "use client";
 
 import { loadTemplates } from "@/helpers/storage";
-import { Template } from "@/lib/templates";
+import { Template } from "@/models/templates";
 import { useEffect, useState } from "react";
 import * as React from "react";
 
