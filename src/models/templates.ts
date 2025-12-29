@@ -1,10 +1,10 @@
 export interface Template {
 	id: string;
 	name: string;
-	categories: TemplateCategory[];
+	categories: Category[];
 }
 
-export interface TemplateCategory {
+export interface Category {
 	id: string;
 	name: string;
 	text: string;

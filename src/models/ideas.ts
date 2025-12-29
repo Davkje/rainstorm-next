@@ -1,14 +1,13 @@
-export interface IdeaCategory {
-	id: string;
-	name: string;
-	text: string;
-	words: string[];
-}
+import { Category } from "./templates";
+
+export type Word = string;
+export type WordBankName = "nature" | "abstract" | "places" | "verbs" | "creature";
+export type WordBanks = Record<WordBankName, Word[]>;
 
 export interface Idea {
 	id: string;
 	templateId: string;
 	name: string;
-	categories: IdeaCategory[];
+	categories: Category[];
 	updatedAt: number;
 }
