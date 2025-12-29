@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Idea } from "@/models/ideas";
 import { loadIdeas, saveIdeas } from "@/helpers/storage";
+import { useAutosave } from "@/utils/useAutoSave";
+import EditableText from "@/components/EditableText";
 
 interface IdeaPageProps {
 	params: Promise<{ id: string }>;
@@ -15,6 +17,15 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 
 	const router = useRouter();
 	const [idea, setIdea] = useState<Idea | null>(null);
+
+	const saveStatus = useAutosave<Idea>(
+		idea,
+		(updated) => {
+			const allIdeas = loadIdeas();
+			saveIdeas(allIdeas.map((i) => (i.id === updated.id ? updated : i)));
+		},
+		800
+	);
 
 	useEffect(() => {
 		const timeout = setTimeout(() => {
@@ -32,33 +43,51 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 		setIdea((prev) => {
 			if (!prev) return prev;
 
-			const updated: Idea = {
+			return {
 				...prev,
 				categories: prev.categories.map((c) => (c.id === catId ? { ...c, text: newText } : c)),
 				updatedAt: Date.now(),
 			};
-
-			const allIdeas = loadIdeas();
-			saveIdeas(allIdeas.map((i) => (i.id === updated.id ? updated : i)));
-
-			return updated;
 		});
 	};
 
 	return (
 		<div className="p-4">
-			<h1 className="text-3xl font-bold mb-4">{idea.name}</h1>
+			<EditableText
+				text={idea.name}
+				className="text-3xl font-bold"
+				tag="h1"
+				onChange={(newName) =>
+					setIdea((prev) => (prev ? { ...prev, name: newName, updatedAt: Date.now() } : prev))
+				}
+			/>
 
 			{idea.categories.map((cat) => (
 				<div key={cat.id} className="mb-4">
-					<h2 className="font-semibold">{cat.name}</h2>
+					<EditableText
+						text={cat.name}
+						className="font-semibold"
+						tag="h2"
+						onChange={(newName) =>
+							setIdea((prev) =>
+								prev
+									? {
+											...prev,
+											categories: prev.categories.map((c) =>
+												c.id === cat.id ? { ...c, name: newName } : c
+											),
+											updatedAt: Date.now(),
+									  }
+									: prev
+							)
+						}
+					/>
 					<textarea
 						className="w-full border rounded p-2 mt-1"
 						value={cat.text}
 						onChange={(e) => updateCategoryText(cat.id, e.target.value)}
 						rows={4}
 					/>
-					{cat.words.length > 0 && <p className="text-sm mt-1">Wordbank: {cat.words.join(", ")}</p>}
 				</div>
 			))}
 
@@ -68,6 +97,10 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 			>
 				Back to Ideas
 			</button>
+			<p className="text-sm text-gray-500 py-2">
+				{saveStatus === "saving" && "Saving…"}
+				{saveStatus === "saved" && ""}
+			</p>
 		</div>
 	);
 }
