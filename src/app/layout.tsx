@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import Image from "next/image";
+import "@/styles/globals.css";
 import Link from "next/link";
 
 const geistSans = Geist({
@@ -31,20 +32,22 @@ export default function RootLayout({
     ${geistMono.variable}
     antialiased
     grid
-    grid-rows-[44px_auto_24px]
+    grid-rows-[44px_auto]
     min-h-screen
   `}
 			>
-				<header className="bg-black p-2">
+				<header className="bg-slate-950 px-2 gap-2 flex justify-between items-center">
+					<Link href="/">
+						<Image src="/rainstorm.png" alt="rainstorm" width={150} height={167}></Image>
+					</Link>
 					<nav className="flex gap-2">
-						<Link href="/">Home</Link>
 						<Link href="/about">About</Link>
 						<Link href="/templates">Templates</Link>
 						<Link href="/ideas">Ideas</Link>
 					</nav>
 				</header>
-				<main className="h-full p-2">{children}</main>
-				<footer className="bg-black">footer</footer>
+				<main className="bg-slate-900 h-full p-2">{children}</main>
+				{/* <footer className="bg-slate-950">footer</footer> */}
 			</body>
 		</html>
 	);
