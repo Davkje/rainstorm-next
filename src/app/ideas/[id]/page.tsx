@@ -1,39 +1,41 @@
 "use client";
 
+import * as React from "react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Idea, loadIdeas, saveIdeas } from "@/lib/ideas";
+import { Idea } from "@/lib/ideas";
+import { loadIdeas, saveIdeas } from "@/helpers/storage";
 
 interface IdeaPageProps {
-	params: { id: string };
+	params: Promise<{ id: string }>;
 }
 
 export default function IdeaPage({ params }: IdeaPageProps) {
+	const { id } = React.use(params);
+
 	const router = useRouter();
 	const [idea, setIdea] = useState<Idea | null>(null);
 
 	useEffect(() => {
 		const timeout = setTimeout(() => {
 			const allIdeas = loadIdeas();
-			const found = allIdeas.find((i) => i.id === params.id);
+			const found = allIdeas.find((i) => i.id === id);
 			if (found) setIdea(found);
 		}, 0);
 
 		return () => clearTimeout(timeout);
-	}, [params.id]);
+	}, [id]);
 
 	if (!idea) return <div>Loading...</div>;
 
 	const updateCategoryText = (catId: string, newText: string) => {
-		if (!idea) return;
-
 		setIdea((prev) => {
 			if (!prev) return prev;
 
-			const updated = {
+			const updated: Idea = {
 				...prev,
 				categories: prev.categories.map((c) => (c.id === catId ? { ...c, text: newText } : c)),
-				updatedAt: new Date().getTime(), // ✔ nu kallas det i callback
+				updatedAt: Date.now(),
 			};
 
 			const allIdeas = loadIdeas();
@@ -46,6 +48,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 	return (
 		<div className="p-4">
 			<h1 className="text-3xl font-bold mb-4">{idea.name}</h1>
+
 			{idea.categories.map((cat) => (
 				<div key={cat.id} className="mb-4">
 					<h2 className="font-semibold">{cat.name}</h2>
@@ -58,6 +61,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 					{cat.words.length > 0 && <p className="text-sm mt-1">Wordbank: {cat.words.join(", ")}</p>}
 				</div>
 			))}
+
 			<button
 				className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
 				onClick={() => router.push("/ideas")}
