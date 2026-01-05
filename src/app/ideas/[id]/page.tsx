@@ -19,7 +19,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 	const { id } = React.use(params);
 
 	const [idea, setIdea] = useState<Idea | null>(null);
-	const [view, setView] = useState<"define" | "ideate">("define");
+	const [view, setView] = useState<"define" | "ideate">("ideate");
 
 	const saveStatus = useAutosave<Idea>(
 		idea,
@@ -27,7 +27,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 			const allIdeas = loadIdeas();
 			saveIdeas(allIdeas.map((i) => (i.id === updated.id ? updated : i)));
 		},
-		800
+		300
 	);
 
 	useEffect(() => {
@@ -74,7 +74,11 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 				</div>
 			</div>
 			{/* VIEW */}
-			{view === "define" ? <DefineView idea={idea} setIdea={setIdea} /> : <IdeateView />}
+			{view === "define" ? (
+				<DefineView idea={idea} setIdea={setIdea} />
+			) : (
+				<IdeateView idea={idea} setIdea={setIdea} />
+			)}
 		</div>
 	);
 }

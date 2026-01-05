@@ -27,8 +27,8 @@ export default function WordGenerator({ currentWord, getRandomWord, bank, setBan
 				{Object.keys(wordBanks).map((bankName) => (
 					<button
 						key={bankName}
-						className={`flex-0 py-2 px-4 rounded text-xl capitalize ${
-							bankName === bank ? "bg-slate-800" : "bg-slate-900"
+						className={`button--primary flex-0 py-2 px-4 rounded-xl text-md capitalize ${
+							bankName === bank ? "" : "text-rain-400"
 						} hover:bg-slate-800`}
 						onClick={() => changeBank(bankName as WordBankName)}
 					>
@@ -38,7 +38,7 @@ export default function WordGenerator({ currentWord, getRandomWord, bank, setBan
 			</div>
 
 			<button
-				className="w-full px-8 py-8 bg-slate-800 text-3xl uppercase font-bold rounded-xl hover:bg-slate-700"
+				className="button--primary w-full px-8 py-8  text-xl uppercase font-extrabold"
 				onClick={() => getRandomWord()}
 			>
 				New Word

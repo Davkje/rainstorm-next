@@ -16,3 +16,12 @@ export interface Category {
 	text: string;
 	words: string[];
 }
+
+export type DragWordData = {
+	word: Word;
+	parentId: string;
+};
+
+export type DragOverData =
+	| { parentId: string; isTrash?: boolean }
+	| { parentId: string; word: Word };

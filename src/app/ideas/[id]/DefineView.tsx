@@ -43,6 +43,9 @@ export default function DefineView({ idea, setIdea }: Props) {
 						tag="h2"
 						onChange={(v) => updateCategoryName(cat.id, v)}
 					/>
+					{cat.words.length > 0 && (
+						<p className="capitalize text-md text-gray-300">{cat.words.join(", ")}</p>
+					)}
 					<textarea
 						className="text-lg w-full border-2 border-rain-600 rounded-lg p-2 mt-2"
 						value={cat.text}
@@ -50,10 +53,6 @@ export default function DefineView({ idea, setIdea }: Props) {
 						onChange={(e) => updateCategoryText(cat.id, e.target.value)}
 						rows={3}
 					/>
-
-					{cat.words.length > 0 && (
-						<p className="text-sm mt-1 text-gray-500">Wordbank: {cat.words.join(", ")}</p>
-					)}
 				</div>
 			))}
 		</div>

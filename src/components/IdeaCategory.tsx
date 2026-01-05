@@ -34,7 +34,7 @@ export default function IdeaCategory({
 			ref={setNodeRef}
 			className={`flex flex-col text-xl flex-1 p-4 border-2 border-slate-700 rounded-lg transition-colors`}
 		>
-			<h3 className="text-3xl font-bold lg:text-start">{title}</h3>
+			<h3 className="text-lg font-bold lg:text-start">{title}</h3>
 
 			<SortableContext items={words.map((w) => `${id}-${w}`)} strategy={rectSortingStrategy}>
 				<div className="flex-1">

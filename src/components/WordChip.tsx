@@ -27,8 +27,8 @@ export default function WordChip({ word, parentId }: WordChipProps) {
 
 	const baseClasses =
 		"flex justify-center items-center rounded-lg text-slate-100 capitalize select-none transition-all";
-	const generatorClasses = "px-10 text-[10vw] font-bold uppercase hover:bg-slate-800";
-	const categoryClasses = "bg-slate-700 px-4 py-1 text-2xl hover:bg-slate-600";
+	const generatorClasses = "px-10 text-3xl font-bold uppercase hover:bg-slate-800";
+	const categoryClasses = "bg-slate-800 px-4 py-1 text-lg hover:bg-slate-600";
 
 	return (
 		<div

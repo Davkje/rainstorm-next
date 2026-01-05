@@ -1,61 +1,188 @@
-export default function IdeateView() {
+"use client";
+
+import { useState } from "react";
+import {
+	DndContext,
+	closestCenter,
+	PointerSensor,
+	useSensor,
+	useSensors,
+	DragOverlay,
+} from "@dnd-kit/core";
+import type { DragStartEvent, DragOverEvent, DragEndEvent } from "@dnd-kit/core";
+import { arrayMove } from "@dnd-kit/sortable";
+
+import { DragOverData, DragWordData, Idea, Word, WordBankName } from "@/models/ideas";
+import { wordBanks } from "@/data/wordBanks";
+
+import WordGenerator from "@/components/WordGenerator";
+import WordChip from "@/components/WordChip";
+import IdeaCategory from "@/components/IdeaCategory";
+
+type Props = {
+	idea: Idea;
+	setIdea: React.Dispatch<React.SetStateAction<Idea | null>>;
+};
+
+export default function IdeateView({ idea, setIdea }: Props) {
+	const sensors = useSensors(useSensor(PointerSensor));
+
+	const [draggingWord, setDraggingWord] = useState<{
+		word: Word;
+		parentId: string;
+	} | null>(null);
+
+	const [isDraggingWord, setIsDraggingWord] = useState(false);
+	const [overCategoryId, setOverCategoryId] = useState<string | null>(null);
+
+	const [bank, setBank] = useState<WordBankName>("nature");
+	const [currentWord, setCurrentWord] = useState<Word>("rain");
+
+	const getRandomWord = (customBank?: WordBankName) => {
+		const activeBank = customBank ?? bank;
+		const words = wordBanks[activeBank];
+		if (!words || words.length === 0) return;
+
+		let next = words[Math.floor(Math.random() * words.length)];
+		while (next === currentWord && words.length > 1) {
+			next = words[Math.floor(Math.random() * words.length)];
+		}
+		setCurrentWord(next);
+	};
+
+	/* -------------------- DND HANDLERS -------------------- */
+
+	const handleDragStart = (event: DragStartEvent) => {
+		const data = event.active.data?.current as { word: Word; parentId: string } | undefined;
+		if (!data) return;
+
+		setDraggingWord(data);
+		setIsDraggingWord(true);
+	};
+
+	const handleDragOver = (event: DragOverEvent) => {
+		const overParent = event.over?.data?.current?.parentId;
+		setOverCategoryId(overParent ?? null);
+	};
+
+	const handleDragEnd = (event: DragEndEvent) => {
+		setDraggingWord(null);
+		setIsDraggingWord(false);
+		setOverCategoryId(null);
+
+		const { active, over } = event;
+		if (!active || !over) return;
+
+		const activeData = active.data?.current as DragWordData;
+		const overData = over.data?.current as DragOverData;
+
+		if (!activeData || !overData) return;
+
+		const { word, parentId: from } = activeData;
+		const to = overData.parentId;
+
+		// Hindra drop i generator
+		if (to === "generator") return;
+
+		setIdea((prev) => {
+			if (!prev) return prev;
+
+			/* -------- TRASH -------- */
+			if ("isTrash" in overData && overData.isTrash && from !== "generator") {
+				return {
+					...prev,
+					categories: prev.categories.map((c) =>
+						c.id === from ? { ...c, words: c.words.filter((w) => w !== word) } : c
+					),
+					updatedAt: Date.now(),
+				};
+			}
+
+			/* -------- FROM GENERATOR -------- */
+			if (from === "generator") {
+				const updated = prev.categories.map((c) =>
+					c.id === to && !c.words.includes(word) ? { ...c, words: [...c.words, word] } : c
+				);
+
+				getRandomWord();
+
+				return { ...prev, categories: updated, updatedAt: Date.now() };
+			}
+
+			/* -------- BETWEEN CATEGORIES -------- */
+			if (from !== to) {
+				const target = prev.categories.find((c) => c.id === to);
+				if (target?.words.includes(word)) return prev;
+
+				return {
+					...prev,
+					categories: prev.categories.map((c) => {
+						if (c.id === from) return { ...c, words: c.words.filter((w) => w !== word) };
+						if (c.id === to) return { ...c, words: [...c.words, word] };
+						return c;
+					}),
+					updatedAt: Date.now(),
+				};
+			}
+
+			/* -------- REORDER IN SAME CATEGORY -------- */
+			if (!("word" in overData)) return prev;
+
+			const category = prev.categories.find((c) => c.id === from);
+			if (!category) return prev;
+
+			const oldIndex = category.words.indexOf(word);
+			const newIndex = category.words.indexOf(overData.word);
+
+			if (oldIndex === -1 || newIndex === -1) return prev;
+
+			const newWords = arrayMove(category.words, oldIndex, newIndex);
+
+			return {
+				...prev,
+				categories: prev.categories.map((c) => (c.id === from ? { ...c, words: newWords } : c)),
+				updatedAt: Date.now(),
+			};
+		});
+	};
+
 	return (
-		<div className="p-8">
-			<h1 className="text-3xl font-bold">Ideate view (coming soon)</h1>
-		</div>
+		<DndContext
+			sensors={sensors}
+			collisionDetection={closestCenter}
+			onDragStart={handleDragStart}
+			onDragOver={handleDragOver}
+			onDragEnd={handleDragEnd}
+		>
+			<div className="grid grid-cols-2 gap-6 h-full">
+				<WordGenerator
+					currentWord={currentWord}
+					setCurrentWord={setCurrentWord}
+					getRandomWord={getRandomWord}
+					bank={bank}
+					setBank={setBank}
+				/>
+
+				<div className="flex flex-col gap-4">
+					{idea.categories.map((cat) => (
+						<IdeaCategory
+							key={cat.id}
+							id={cat.id}
+							title={cat.name}
+							words={cat.words}
+							isDraggingWord={isDraggingWord}
+							overCategoryId={overCategoryId}
+							draggingFrom={draggingWord?.parentId || null}
+						/>
+					))}
+				</div>
+
+				<DragOverlay dropAnimation={null}>
+					{draggingWord ? (
+						<WordChip word={draggingWord.word} parentId={draggingWord.parentId} />
+					) : null}
+				</DragOverlay>
+			</div>
+		</DndContext>
 	);
 }
-
-// import IdeaCategory from "@/components/IdeaCategory";
-// import WordGenerator from "@/components/WordGenerator";
-// import { Category, WordBankName } from "@/models/ideas";
-
-// type Props = {
-// 	categories: Category[];
-// 	bank: WordBankName;
-// 	isDraggingWord: boolean;
-// 	overCategoryId: string | null;
-// 	draggingFrom: string | null;
-// 	generatedWord: string;
-// 	getRandomWord: () => void;
-// 	setBank: (bank: string) => void;
-// 	setGeneratedWord: (word: string) => void;
-// };
-
-// export default function IdeateView({
-// 	categories,
-// 	isDraggingWord,
-// 	overCategoryId,
-// 	draggingFrom,
-// 	generatedWord,
-// 	getRandomWord,
-// 	bank,
-// 	setBank,
-// 	setGeneratedWord,
-// }: Props) {
-// 	return (
-// 		<div className="grid grid-cols-2 gap-4 grow">
-// 			<WordGenerator
-// 				currentWord={generatedWord}
-// 				setCurrentWord={setGeneratedWord}
-// 				getRandomWord={getRandomWord}
-// 				bank={bank}
-// 				setBank={setBank}
-// 			/>
-
-// 			<div className="flex flex-col gap-4">
-// 				{categories.map((category) => (
-// 					<IdeaCategory
-// 						key={category.id}
-// 						id={category.id}
-// 						title={category.name}
-// 						words={category.words}
-// 						isDraggingWord={isDraggingWord}
-// 						overCategoryId={overCategoryId}
-// 						draggingFrom={draggingFrom}
-// 					/>
-// 				))}
-// 			</div>
-// 		</div>
-// 	);
-// }
