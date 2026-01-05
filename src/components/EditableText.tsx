@@ -53,10 +53,11 @@ export default function EditableText({
 				ref={inputRef}
 				type="text"
 				value={value}
+				name={value}
 				onChange={(e) => setValue(e.target.value)}
 				onBlur={handleBlur}
 				onKeyDown={handleKeyDown}
-				className={className + " border rounded px-1"}
+				className={className + " border-0 outline-0"} // start with space
 			/>
 		);
 	}

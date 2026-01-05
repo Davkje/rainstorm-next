@@ -30,18 +30,14 @@ export default function IdeasPage() {
 	};
 
 	return (
-		<div className="p-4">
-			<h1 className="text-3xl font-bold mb-4">Ideas</h1>
+		<div>
+			<h1>Ideas</h1>
 
 			<div className="mb-6">
-				<h2 className="text-xl font-semibold mb-2">Create New Idea</h2>
+				<h2 className="mb-2">Create New Idea</h2>
 				<div className="flex gap-2 flex-wrap">
 					{templates.map((t) => (
-						<button
-							key={t.id}
-							onClick={() => handleCreateIdea(t)}
-							className="px-3 py-2 bg-green-600 text-white rounded hover:bg-green-600"
-						>
+						<button key={t.id} onClick={() => handleCreateIdea(t)} className="button--primary">
 							{t.name}
 						</button>
 					))}
@@ -49,17 +45,14 @@ export default function IdeasPage() {
 			</div>
 
 			<div>
-				<h2 className="text-xl font-semibold mb-2">Existing Ideas</h2>
+				<h2 className="mb-2">Existing Ideas</h2>
 				{ideas.length === 0 ? (
 					<p>No ideas yet.</p>
 				) : (
-					<ul className="list-disc pl-5">
+					<ul className="grid gap-4">
 						{ideas.map((i) => (
 							<li key={i.id}>
-								<button
-									onClick={() => router.push(`/ideas/${i.id}`)}
-									className="text-blue-600 hover:underline"
-								>
+								<button onClick={() => router.push(`/ideas/${i.id}`)} className="button--ghost">
 									{i.name}
 								</button>
 							</li>

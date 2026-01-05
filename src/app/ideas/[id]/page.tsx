@@ -52,10 +52,11 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 	};
 
 	return (
-		<div className="p-4">
+		<div>
 			<EditableText
 				text={idea.name}
-				className="text-3xl font-bold"
+				className="text-xl font-bold leading-normal"
+				// tabindex="0"
 				tag="h1"
 				onChange={(newName) =>
 					setIdea((prev) => (prev ? { ...prev, name: newName, updatedAt: Date.now() } : prev))
@@ -66,7 +67,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 				<div key={cat.id} className="mb-4">
 					<EditableText
 						text={cat.name}
-						className="font-semibold"
+						className="text-lg font-bold leading-normal"
 						tag="h2"
 						onChange={(newName) =>
 							setIdea((prev) =>
@@ -83,21 +84,19 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 						}
 					/>
 					<textarea
-						className="w-full border rounded p-2 mt-1"
+						className="text-lg w-full border-2 border-rain-600 rounded-lg p-2 mt-1 outline-0"
 						value={cat.text}
+						name={`${cat.name}-text-field`}
 						onChange={(e) => updateCategoryText(cat.id, e.target.value)}
 						rows={4}
 					/>
 				</div>
 			))}
 
-			<button
-				className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
-				onClick={() => router.push("/ideas")}
-			>
+			<button className="button--primary" onClick={() => router.push("/ideas")}>
 				Back to Ideas
 			</button>
-			<p className="text-sm text-gray-500 py-2">
+			<p className="text-md text-gray-500 py-2">
 				{saveStatus === "saving" && "Saving…"}
 				{saveStatus === "saved" && ""}
 			</p>

@@ -2,36 +2,42 @@
 
 @theme {
 	/* Font */
-	/* --font-grosa: var(--font-grosa); */
+	--font-lateef: var(--font-lateef);
 
 	/* Text Size */
-	/* --text-4xl: clamp(3.5rem, 12vw, 11rem);
-  --text-3xl: clamp(3.6rem, 8vw, 9rem);
-  --text-2xl: clamp(3rem, 7vw, 6rem);
-  --text-xl: clamp(2rem, 4vw, 3rem);
-  --text-lg: clamp(1.2rem, 3vw, 2.2rem);
-  --text-md: clamp(1.1rem, 2.5vw, 1.5rem);
-  --text-sm: clamp(1rem, 2vw, 1.2rem); */
+	--text-3xl: clamp(3rem, 8vw, 9rem);
+	--text-2xl: clamp(2.5rem, 5vw, 3rem);
+	--text-xl: clamp(2rem, 4vw, 2.5rem);
+	--text-lg: clamp(1.2rem, 3vw, 2rem);
+	--text-md: clamp(1.1rem, 2.5vw, 1.5rem);
+	--text-sm: clamp(1rem, 2vw, 1.2rem);
 
 	/* Headings */
-	/* --text-heading-lg: clamp(2rem, 3vw, 4.5rem);
-  --text-heading-md: clamp(1.5rem, 2.5vw, 3.5rem);
-  --text-heading-sm: clamp(1.25rem, 2vw, 2.5rem);
+	--text-heading-md: clamp(1.5rem, 2.5vw, 3.5rem);
+	/* --text-heading-sm: clamp(1.25rem, 2vw, 2.5rem);
+	--text-heading-lg: clamp(2rem, 3vw, 4.5rem);
   --text-heading-xs: clamp(1rem, 1.5vw, 2rem); */
 
 	/* Line height */
-	/* --leading-tight: 0.8;
-  --leading-normal: 1;
-  --leading-relaxed: clamp(1.4, 1vw + 1, 1.6);
+	--leading-normal: 1.2;
+	/* 
+	--leading-tight: 0.8;
+	--leading-relaxed: clamp(1.4, 1vw + 1, 1.6);
   --leading-loose: clamp(1.6, 2vw + 1, 2); */
 
 	/* Color */
-	--color-beige-light: #f3f2eb;
-	--color-beige-dark: #e7e2c1;
-	--color-beige-box-1: #edf0d6;
-	--color-beige-lighter: #f0efe4;
-	--color-beige-paper: #f9f8ee;
-	--color-green: #13282b;
+	--color-rain-100: #f9f5f5;
+	--color-rain-200: #e6e7ee;
+	--color-rain-300: #bfc0c8;
+	--color-rain-400: #575664;
+	--color-rain-500: #3f3f4c;
+	--color-rain-600: #272736;
+	--color-rain-700: #131522;
+	--color-rain-800: #0e0f19;
+	--color-rain-900: #07070b;
+
 	--color-black: #000;
+	--color-black-trans: #0000001e;
 	--color-white: #fff;
+	--color-white-trans: #ffffff2e;
 }

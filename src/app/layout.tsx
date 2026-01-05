@@ -1,17 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Lateef } from "next/font/google";
 import Image from "next/image";
 import "@/styles/globals.css";
 import Link from "next/link";
 
-const geistSans = Geist({
-	variable: "--font-geist-sans",
+const lateef = Lateef({
 	subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-	variable: "--font-geist-mono",
-	subsets: ["latin"],
+	weight: ["200", "300", "400", "500", "600", "700", "800"],
+	style: ["normal"],
+	variable: "--font-lateef",
+	display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -28,15 +26,14 @@ export default function RootLayout({
 		<html lang="en">
 			<body
 				className={`
-    ${geistSans.variable}
-    ${geistMono.variable}
+    ${lateef.variable}
     antialiased
     grid
     grid-rows-[44px_auto]
     min-h-screen
   `}
 			>
-				<header className="bg-slate-950 px-2 gap-2 flex justify-between items-center">
+				<header className="bg-rain-700 px-2 gap-2 flex justify-between items-center">
 					<Link href="/">
 						<Image src="/rainstorm.png" alt="rainstorm" width={150} height={167}></Image>
 					</Link>
@@ -46,7 +43,7 @@ export default function RootLayout({
 						<Link href="/ideas">Ideas</Link>
 					</nav>
 				</header>
-				<main className="bg-slate-900 h-full p-2">{children}</main>
+				<main className="bg-rain-800 h-full p-4">{children}</main>
 				{/* <footer className="bg-slate-950">footer</footer> */}
 			</body>
 		</html>

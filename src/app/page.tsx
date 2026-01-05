@@ -35,16 +35,12 @@ export default function Home() {
 			{/* BYT TILL RIKTIG TEXT INTE BILD */}
 			<div className="h-full flex flex-col items-center justify-center gap-8">
 				<Image src="/rainstorm.png" alt="rainstorm" width={600} height={167} />
-				<p className=" text-xl italic">The one word, limiting, focused idea tool</p>
+				<p className="italic">The one word, limiting, focused idea tool</p>
 				<div className="flex flex-col items-center justify-center gap-8">
-					<h2 className="text-xl font-semibold">What do you want to create?</h2>
-					<div className="flex gap-4 flex-wrap text-xl">
+					<h2 className="font-bold">What do you want to create?</h2>
+					<div className="flex gap-4 flex-wrap text-lg">
 						{templates.map((t) => (
-							<button
-								key={t.id}
-								onClick={() => handleCreateIdea(t)}
-								className="px-12 py-2 border-2 border-slate-200 text-white rounded-xl hover:bg-slate-600"
-							>
+							<button className="button--primary" key={t.id} onClick={() => handleCreateIdea(t)}>
 								{t.name}
 							</button>
 						))}
