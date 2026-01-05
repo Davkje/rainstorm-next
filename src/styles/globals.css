@@ -73,7 +73,7 @@ body {
 		@apply border-rain-500;
 	}
 	.button--ghost {
-		@apply bg-transparent text-rain-100 border-none p-0 hover:underline;
+		@apply bg-transparent text-rain-100 border-none p-0;
 	}
 	/* 
 	.button--loading {
