@@ -55,9 +55,8 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 		<div>
 			<EditableText
 				text={idea.name}
-				className="text-xl font-bold leading-normal"
-				// tabindex="0"
 				tag="h1"
+				className="text-xl font-bold leading-normal inline-block"
 				onChange={(newName) =>
 					setIdea((prev) => (prev ? { ...prev, name: newName, updatedAt: Date.now() } : prev))
 				}
@@ -67,7 +66,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 				<div key={cat.id} className="mb-4">
 					<EditableText
 						text={cat.name}
-						className="text-lg font-bold leading-normal"
+						className="text-lg font-bold leading-normal inline-block"
 						tag="h2"
 						onChange={(newName) =>
 							setIdea((prev) =>
@@ -84,11 +83,11 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 						}
 					/>
 					<textarea
-						className="text-lg w-full border-2 border-rain-600 rounded-lg p-2 mt-1 outline-0"
+						className="text-lg w-full border-2 border-rain-600 rounded-lg p-2 mt-2"
 						value={cat.text}
 						name={`${cat.name}-text-field`}
 						onChange={(e) => updateCategoryText(cat.id, e.target.value)}
-						rows={4}
+						rows={3}
 					/>
 				</div>
 			))}

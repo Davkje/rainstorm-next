@@ -4,7 +4,7 @@ interface EditableTextProps {
 	text: string;
 	className?: string;
 	onChange: (newText: string) => void;
-	tag?: ElementType; // t.ex. "h1" | "h2" | "span" | "div" etc.
+	tag?: ElementType; // t.ex. h1, span, div etc.
 }
 
 export default function EditableText({
@@ -45,6 +45,10 @@ export default function EditableText({
 			setValue(text);
 			setEditing(false);
 		}
+		if (e.key === "Tab") {
+			e.preventDefault();
+			saveValue();
+		}
 	};
 
 	if (editing) {
@@ -63,7 +67,19 @@ export default function EditableText({
 	}
 
 	return (
-		<Tag className={className} onClick={() => setEditing(true)}>
+		<Tag
+			className={className}
+			tabIndex={0}
+			role="button"
+			aria-label="Editable text"
+			onClick={() => setEditing(true)}
+			onKeyDown={(e: React.KeyboardEvent) => {
+				if (e.key === "Enter" || e.key === " ") {
+					e.preventDefault();
+					setEditing(true);
+				}
+			}}
+		>
 			{text}
 		</Tag>
 	);

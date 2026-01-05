@@ -1,14 +1,9 @@
+import { Category } from "./ideas";
+
 export interface Template {
 	id: string;
 	name: string;
 	categories: Category[];
-}
-
-export interface Category {
-	id: string;
-	name: string;
-	text: string;
-	words: string[];
 }
 
 // Default templates
