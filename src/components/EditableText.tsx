@@ -68,7 +68,7 @@ export default function EditableText({
 
 	return (
 		<Tag
-			className={className}
+			className={className + " cursor-pointer"}
 			tabIndex={0}
 			role="button"
 			aria-label="Editable text"

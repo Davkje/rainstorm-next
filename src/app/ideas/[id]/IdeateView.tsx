@@ -84,6 +84,8 @@ export default function IdeateView({ idea, setIdea }: Props) {
 		// Hindra drop i generator
 		if (to === "generator") return;
 
+		let generateWordOnDrop = false;
+
 		setIdea((prev) => {
 			if (!prev) return prev;
 
@@ -100,13 +102,15 @@ export default function IdeateView({ idea, setIdea }: Props) {
 
 			/* -------- FROM GENERATOR -------- */
 			if (from === "generator") {
-				const updated = prev.categories.map((c) =>
-					c.id === to && !c.words.includes(word) ? { ...c, words: [...c.words, word] } : c
-				);
+				generateWordOnDrop = true;
 
-				getRandomWord();
-
-				return { ...prev, categories: updated, updatedAt: Date.now() };
+				return {
+					...prev,
+					categories: prev.categories.map((c) =>
+						c.id === to && !c.words.includes(word) ? { ...c, words: [...c.words, word] } : c
+					),
+					updatedAt: Date.now(),
+				};
 			}
 
 			/* -------- BETWEEN CATEGORIES -------- */
@@ -144,6 +148,10 @@ export default function IdeateView({ idea, setIdea }: Props) {
 				updatedAt: Date.now(),
 			};
 		});
+
+		if (generateWordOnDrop) {
+			getRandomWord(); // New word when you drag from generator
+		}
 	};
 
 	return (
