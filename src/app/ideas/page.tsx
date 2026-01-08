@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { loadIdeas, saveIdeas, loadTemplates, createIdeaFromTemplate } from "@/helpers/storage";
 
 import { Idea } from "@/models/ideas";
+import { Template } from "@/models/templates";
 
 export default function IdeasPage() {
 	const router = useRouter();
@@ -20,7 +21,7 @@ export default function IdeasPage() {
 		return () => clearTimeout(timeout);
 	}, []);
 
-	const handleCreateIdea = (template: any) => {
+	const handleCreateIdea = (template: Template) => {
 		const idea = createIdeaFromTemplate(template);
 		const allIdeas = loadIdeas();
 

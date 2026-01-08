@@ -34,24 +34,25 @@ export default function DefineView({ idea, setIdea }: Props) {
 	};
 
 	return (
-		<div className="space-y-6">
+		<div className="flex flex-col gap-2 h-full">
 			{idea.categories.map((cat) => (
-				<div key={cat.id} className="mb-4">
+				<div key={cat.id} className="grid">
 					<EditableText
 						text={cat.name}
-						className="text-lg font-bold leading-normal inline-block"
+						className="text-xl font-bold leading-normal inline-block"
 						tag="h2"
 						onChange={(v) => updateCategoryName(cat.id, v)}
 					/>
 					{cat.words.length > 0 && (
-						<p className="capitalize text-md text-gray-300">{cat.words.join(", ")}</p>
+						<p className="capitalize text-lg text-gray-300 mb-2">{cat.words.join(", ")}</p>
 					)}
 					<textarea
-						className="text-lg w-full border-2 border-rain-600 rounded-lg p-2 mt-2"
+						className="text-lg w-ful min-h-max border-2 border-rain-600 rounded-lg resize-none px-2 placeholder-rain-600"
 						value={cat.text}
 						name={`${cat.name}-text-field`}
 						onChange={(e) => updateCategoryText(cat.id, e.target.value)}
 						rows={3}
+						placeholder={`${cat.words.join(", ")}...`}
 					/>
 				</div>
 			))}

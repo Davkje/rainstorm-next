@@ -1,27 +1,16 @@
 "use client";
+
 import Image from "next/image";
-
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-
 import { loadIdeas, saveIdeas, loadTemplates, createIdeaFromTemplate } from "@/helpers/storage";
-
-import { Idea } from "@/models/ideas";
+import { Template } from "@/models/templates";
 
 export default function Home() {
 	const router = useRouter();
-	const [ideas, setIdeas] = useState<Idea[]>([]);
 	const [templates] = useState(loadTemplates());
 
-	useEffect(() => {
-		const timeout = setTimeout(() => {
-			setIdeas(loadIdeas());
-		}, 0);
-
-		return () => clearTimeout(timeout);
-	}, []);
-
-	const handleCreateIdea = (template: any) => {
+	const handleCreateIdea = (template: Template) => {
 		const idea = createIdeaFromTemplate(template);
 		const allIdeas = loadIdeas();
 
@@ -29,6 +18,7 @@ export default function Home() {
 
 		router.push(`/ideas/${idea.id}`);
 	};
+
 	return (
 		<>
 			{/* <h1 className="text-2xl font-bold">Home</h1> */}

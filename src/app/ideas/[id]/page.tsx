@@ -10,6 +10,8 @@ import { useAutosave } from "@/utils/useAutoSave";
 import DefineView from "./DefineView";
 import IdeateView from "./IdeateView";
 import EditableText from "@/components/EditableText";
+import CopyDropdown from "@/components/CopyDropdown";
+import DownloadDropdown from "@/components/DownloadDropdown";
 
 interface IdeaPageProps {
 	params: Promise<{ id: string }>;
@@ -40,25 +42,26 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 	if (!idea) return <div>Loading...</div>;
 
 	return (
-		<div className="p-4">
+		<div className="grid grid-rows-[44px_1fr] h-full">
 			{/* HEADER */}
 			<div className="flex justify-between items-center mb-6">
-				<div className="flex items-center gap-4">
-					<EditableText
-						text={idea.name}
-						tag="h1"
-						className="text-xl font-bold leading-normal inline-block"
-						onChange={(newName) =>
-							setIdea((prev) => (prev ? { ...prev, name: newName, updatedAt: Date.now() } : prev))
-						}
-					/>
+				<EditableText
+					text={idea.name}
+					tag="h1"
+					className="text-xl font-bold leading-normal inline-block"
+					onChange={(newName) =>
+						setIdea((prev) => (prev ? { ...prev, name: newName, updatedAt: Date.now() } : prev))
+					}
+				/>
+
+				<div className="flex items-center gap-3">
 					<span className="text-md text-rain-500">
 						{saveStatus === "saving" && "Saving…"}
 						{saveStatus === "saved" && ""}
 					</span>
-				</div>
-
-				<div className="flex items-center gap-2">
+					<CopyDropdown idea={idea} />
+					<DownloadDropdown idea={idea} />
+					<p>|</p>
 					<button
 						onClick={() => setView("ideate")}
 						className={`button--ghost ${view === "ideate" ? "text-slate-100" : "text-slate-800"}`}

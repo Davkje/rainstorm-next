@@ -9,6 +9,11 @@ export interface Template {
 // Default templates
 export const defaultTemplates: Template[] = [
 	{
+		id: "empty",
+		name: "Empty",
+		categories: [{ id: "Empty", name: "Empty", text: "", words: [] }],
+	},
+	{
 		id: "song",
 		name: "Song",
 		categories: [

@@ -64,7 +64,7 @@ body {
 	}
 
 	button {
-		@apply text-lg px-12 py-1 border-2 rounded-xl transition-colors duration-500 ease-in-out cursor-pointer;
+		@apply text-lg px-12 py-1 border-2 rounded-xl transition-colors duration-300 ease-in-out cursor-pointer;
 	}
 	.button--primary {
 		@apply border-rain-500 text-rain-100 bg-black-trans hover:border-rain-400;
@@ -73,7 +73,7 @@ body {
 		@apply border-rain-500;
 	}
 	.button--ghost {
-		@apply bg-transparent text-rain-100 border-none p-0;
+		@apply bg-transparent text-rain-200 border-none p-0 hover:text-white;
 	}
 	/* 
 	.button--loading {
