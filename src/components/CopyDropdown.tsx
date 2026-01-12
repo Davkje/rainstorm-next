@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Idea } from "@/models/ideas";
 import { copyIdea, ExportFormat } from "@/utils/copyIdea";
+import { RiFileCopyLine } from "@remixicon/react";
 
 export default function CopyDropdown({ idea }: { idea: Idea }) {
 	const [open, setOpen] = useState(false);
@@ -45,14 +46,14 @@ export default function CopyDropdown({ idea }: { idea: Idea }) {
 	}, [open]);
 
 	return (
-		<div ref={ref} className="relative">
+		<div ref={ref} className="relative flex">
 			<button
 				onClick={() => setOpen((v) => !v)}
-				className="button--ghost"
+				className="btn--link"
 				aria-haspopup="menu"
 				aria-expanded={open}
 			>
-				Copy
+				<RiFileCopyLine />
 			</button>
 
 			{open && (
@@ -60,13 +61,13 @@ export default function CopyDropdown({ idea }: { idea: Idea }) {
 					className="absolute min-w-max right-0 mt-2 grid rounded-lg px-4 py-2 bg-rain-700 shadow-lg z-50 text-nowrap"
 					role="menu"
 				>
-					<button onClick={() => handleCopy("plain")} className="button--ghost text-left">
+					<button onClick={() => handleCopy("plain")} className="btn--link text-left">
 						Plain text
 					</button>
-					<button onClick={() => handleCopy("markdown")} className="button--ghost text-left">
+					<button onClick={() => handleCopy("markdown")} className="btn--link text-left">
 						Markdown
 					</button>
-					<button onClick={() => handleCopy("html")} className="button--ghost text-left">
+					<button onClick={() => handleCopy("html")} className="btn--link text-left">
 						Formatted (Docs)
 					</button>
 				</div>

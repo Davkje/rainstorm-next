@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Idea } from "@/models/ideas";
 import { downloadIdea, DownloadFormat } from "@/utils/downloadIdea";
+import { RiFileDownloadLine } from "@remixicon/react";
 
 const options: DownloadFormat[] = ["txt", "pdf"];
 
@@ -47,14 +48,14 @@ export default function DownloadDropdown({ idea }: { idea: Idea }) {
 	}, [open]);
 
 	return (
-		<div className="relative" ref={ref}>
+		<div className="relative flex" ref={ref}>
 			<button
-				className="button--ghost"
+				className="btn--link"
 				onClick={() => setOpen((v) => !v)}
 				aria-haspopup="menu"
 				aria-expanded={open}
 			>
-				Download
+				<RiFileDownloadLine />
 			</button>
 
 			{open && (
@@ -66,7 +67,7 @@ export default function DownloadDropdown({ idea }: { idea: Idea }) {
 						<button
 							key={opt}
 							onClick={() => handleDownload(opt)}
-							className={`button--ghost text-left capitalize`}
+							className={`btn--link text-left capitalize`}
 						>
 							{`${opt.toUpperCase()} file`}
 						</button>

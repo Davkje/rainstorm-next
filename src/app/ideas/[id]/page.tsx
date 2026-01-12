@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 
-import { Idea } from "@/models/ideas";
+import { Category, Idea } from "@/models/ideas";
 import { loadIdeas, saveIdeas } from "@/helpers/storage";
 import { useAutosave } from "@/utils/useAutoSave";
 
@@ -12,6 +12,8 @@ import IdeateView from "./IdeateView";
 import EditableText from "@/components/EditableText";
 import CopyDropdown from "@/components/CopyDropdown";
 import DownloadDropdown from "@/components/DownloadDropdown";
+import { createCategory } from "@/utils/createCategory";
+import ConfirmModal from "@/components/ui/ConfirmModal";
 
 interface IdeaPageProps {
 	params: Promise<{ id: string }>;
@@ -22,6 +24,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 
 	const [idea, setIdea] = useState<Idea | null>(null);
 	const [view, setView] = useState<"define" | "ideate">("ideate");
+	const [categoryToDelete, setCategoryToDelete] = useState<Category | null>(null);
 
 	const saveStatus = useAutosave<Idea>(
 		idea,
@@ -41,10 +44,43 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 
 	if (!idea) return <div>Loading...</div>;
 
+	const addCategory = () => {
+		setIdea((prev) => {
+			if (!prev) return prev;
+
+			return {
+				...prev,
+				categories: [...prev.categories, createCategory()],
+				updatedAt: Date.now(),
+			};
+		});
+	};
+
+	const removeCategory = (categoryId: string) => {
+		const category = idea.categories.find((c) => c.id === categoryId);
+		if (!category) return;
+
+		setCategoryToDelete(category);
+	};
+
+	const confirmRemoveCategory = (categoryId: string) => {
+		setIdea((prev) => {
+			if (!prev) return prev;
+
+			return {
+				...prev,
+				categories: prev.categories.filter((cat) => cat.id !== categoryId),
+				updatedAt: Date.now(),
+			};
+		});
+
+		setCategoryToDelete(null);
+	};
+
 	return (
-		<div className="grid grid-rows-[44px_1fr] h-full">
+		<div className="grid grid-rows-[auto_1fr] h-full">
 			{/* HEADER */}
-			<div className="flex justify-between items-center mb-6">
+			<div className="flex justify-between items-center mb-2">
 				<EditableText
 					text={idea.name}
 					tag="h1"
@@ -61,27 +97,53 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 					</span>
 					<CopyDropdown idea={idea} />
 					<DownloadDropdown idea={idea} />
-					<p>|</p>
-					<button
-						onClick={() => setView("ideate")}
-						className={`button--ghost ${view === "ideate" ? "text-slate-100" : "text-slate-800"}`}
-					>
-						Ideate
-					</button>
-					<button
-						onClick={() => setView("define")}
-						className={`button--ghost ${view === "define" ? "text-slate-100" : "text-slate-800"}`}
-					>
-						Define
-					</button>
+					<div className="flex items-center gap-3 bg-rain-700 px-2 rounded-lg">
+						<button
+							onClick={() => setView("ideate")}
+							className={`btn--link ${view === "ideate" ? "text-rain-100" : "text-rain-500"}`}
+						>
+							Ideate
+						</button>
+						<button
+							onClick={() => setView("define")}
+							className={`btn--link ${view === "define" ? "text-rain-100" : "text-rain-500"}`}
+						>
+							Define
+						</button>
+					</div>
 				</div>
 			</div>
 			{/* VIEW */}
 			{view === "define" ? (
-				<DefineView idea={idea} setIdea={setIdea} />
+				<DefineView
+					idea={idea}
+					setIdea={setIdea}
+					onAddCategory={addCategory}
+					onRemoveCategory={removeCategory}
+				/>
 			) : (
-				<IdeateView idea={idea} setIdea={setIdea} />
+				<IdeateView
+					idea={idea}
+					setIdea={setIdea}
+					onAddCategory={addCategory}
+					onRemoveCategory={removeCategory}
+				/>
 			)}
+			<ConfirmModal
+				open={!!categoryToDelete}
+				title={`Delete "${categoryToDelete?.name}"`}
+				description={
+					categoryToDelete &&
+					(categoryToDelete.text.trim().length > 0 || categoryToDelete.words.length > 0)
+						? "This category is not empty. All text and words will be permanently deleted."
+						: "This action cannot be undone."
+				}
+				confirmText="Delete"
+				cancelText="Cancel"
+				danger
+				onCancel={() => setCategoryToDelete(null)}
+				onConfirm={() => categoryToDelete && confirmRemoveCategory(categoryToDelete.id)}
+			/>
 		</div>
 	);
 }

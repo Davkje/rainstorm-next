@@ -26,9 +26,9 @@ export default function WordChip({ word, parentId }: WordChipProps) {
 	};
 
 	const baseClasses =
-		"flex justify-center items-center rounded-lg text-slate-100 capitalize select-none transition-all";
-	const generatorClasses = "px-10 text-3xl font-bold uppercase hover:bg-slate-800";
-	const categoryClasses = "bg-slate-800 px-4 py-1 text-lg hover:bg-slate-600";
+		"flex justify-center items-center rounded-lg text-rain-100 capitalize select-none transition-all";
+	const generatorClasses = "px-10 text-3xl font-bold uppercase hover:bg-rain-700";
+	const categoryClasses = "bg-rain-700 px-4 py-1 text-lg font-bold hover:bg-rain-600";
 
 	return (
 		<div
@@ -39,7 +39,7 @@ export default function WordChip({ word, parentId }: WordChipProps) {
 			className={`
 				${baseClasses}
 				${parentId === "generator" ? generatorClasses : categoryClasses}
-				${isDragging ? "bg-slate-950 text-slate-800" : ""}
+				${isDragging ? "bg-black-trans text-rain-600" : ""}
 				`}
 		>
 			{word}

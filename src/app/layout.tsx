@@ -33,7 +33,7 @@ export default function RootLayout({
     min-h-screen
   `}
 			>
-				<header className="bg-rain-700 px-2 gap-2 flex justify-between items-center">
+				<header className="bg-rain-800 px-4 gap-2 flex justify-between items-center">
 					<Link href="/">
 						<Image src="/rainstorm.png" alt="rainstorm" width={150} height={167}></Image>
 					</Link>
@@ -44,7 +44,6 @@ export default function RootLayout({
 					</nav>
 				</header>
 				<main className="bg-rain-800 h-full p-4">{children}</main>
-				{/* <footer className="bg-slate-950">footer</footer> */}
 			</body>
 		</html>
 	);

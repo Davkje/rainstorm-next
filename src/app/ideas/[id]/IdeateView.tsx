@@ -18,13 +18,16 @@ import { wordBanks } from "@/data/wordBanks";
 import WordGenerator from "@/components/WordGenerator";
 import WordChip from "@/components/WordChip";
 import IdeaCategory from "@/components/IdeaCategory";
+import { RiAddLine } from "@remixicon/react";
 
 type Props = {
 	idea: Idea;
 	setIdea: React.Dispatch<React.SetStateAction<Idea | null>>;
+	onAddCategory: () => void;
+	onRemoveCategory: (id: string) => void;
 };
 
-export default function IdeateView({ idea, setIdea }: Props) {
+export default function IdeateView({ idea, setIdea, onAddCategory, onRemoveCategory }: Props) {
 	const sensors = useSensors(useSensor(PointerSensor));
 
 	const [draggingWord, setDraggingWord] = useState<{
@@ -154,6 +157,10 @@ export default function IdeateView({ idea, setIdea }: Props) {
 		}
 	};
 
+	const handleRemoveCategory = (id: string) => {
+		onRemoveCategory(id);
+	};
+
 	return (
 		<DndContext
 			sensors={sensors}
@@ -180,9 +187,17 @@ export default function IdeateView({ idea, setIdea }: Props) {
 							words={cat.words}
 							isDraggingWord={isDraggingWord}
 							overCategoryId={overCategoryId}
+							handleRemoveCategory={handleRemoveCategory}
 							draggingFrom={draggingWord?.parentId || null}
 						/>
 					))}
+					<button
+						onClick={onAddCategory}
+						className="flex justify-center items-center gap-2 p-2 text-lg text-rain-400 border-2 rounded-xl text-center"
+					>
+						<RiAddLine />
+						Add category
+					</button>
 				</div>
 
 				<DragOverlay dropAnimation={null}>

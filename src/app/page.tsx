@@ -30,7 +30,11 @@ export default function Home() {
 					<h2 className="font-bold">What do you want to create?</h2>
 					<div className="flex gap-4 flex-wrap text-lg">
 						{templates.map((t) => (
-							<button className="button--primary" key={t.id} onClick={() => handleCreateIdea(t)}>
+							<button
+								className="btn--primary hover:scale-[1.1] transition-all duration-500 ease-in-out"
+								key={t.id}
+								onClick={() => handleCreateIdea(t)}
+							>
 								{t.name}
 							</button>
 						))}

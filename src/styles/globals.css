@@ -40,7 +40,7 @@ body {
 		@apply text-xl font-bold leading-normal;
 	}
 	h3 {
-		@apply text-xl leading-normal;
+		@apply text-lg font-bold;
 	}
 	h4 {
 		@apply text-lg font-bold;
@@ -49,13 +49,18 @@ body {
 		@apply text-lg;
 	}
 
+	input {
+		@apply leading-normal;
+	}
+
 	p {
 		font-size: var(--text-lg);
 		line-height: var(--leading-relaxed);
+		font-weight: medium;
 	}
 
 	a {
-		font-size: var(--text-md);
+		font-size: var(--text-lg);
 		text-decoration: none;
 	}
 
@@ -64,19 +69,24 @@ body {
 	}
 
 	button {
-		@apply text-lg px-12 py-1 border-2 rounded-xl transition-colors duration-300 ease-in-out cursor-pointer;
+		@apply text-lg font-medium px-12 py-1 border-2 rounded-xl transition-colors duration-300 ease-in-out cursor-pointer;
 	}
-	.button--primary {
-		@apply border-rain-500 text-rain-100 bg-black-trans hover:border-rain-400;
+	.btn--primary {
+		@apply text-rain-100 bg-rain-800 border-rain-400 hover:border-rain-200;
 	}
-	.button--secondary {
-		@apply border-rain-500;
+	.btn--tertiary {
+		@apply text-rain-900 bg-rain-300 border-rain-900 hover:bg-rain-200;
 	}
-	.button--ghost {
-		@apply bg-transparent text-rain-200 border-none p-0 hover:text-white;
+	.btn--ghost {
+		@apply bg-transparent text-rain-300 border-transparent hover:text-rain-100 hover:border-rain-300;
 	}
-	/* 
-	.button--loading {
-		@apply opacity-20 cursor-not-allowed;
-	} */
+	.btn--link {
+		@apply bg-transparent text-rain-300 border-none p-0 hover:text-rain-100;
+	}
+	.btn--icon {
+		@apply bg-transparent text-rain-300 border-none p-1 hover:text-white;
+	}
+	.btn--danger {
+		@apply bg-transparent text-rain-300 border-transparent hover:border-red-500 hover:text-red-500;
+	}
 }

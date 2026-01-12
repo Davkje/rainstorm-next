@@ -1,6 +1,7 @@
 import { useDroppable } from "@dnd-kit/core";
 import { SortableContext, rectSortingStrategy } from "@dnd-kit/sortable";
 import WordChip from "./WordChip";
+import { RiCloseFill, RiDeleteBinLine } from "@remixicon/react";
 
 type Props = {
 	id: string;
@@ -9,6 +10,7 @@ type Props = {
 	isDraggingWord: boolean;
 	overCategoryId: string | null;
 	draggingFrom: string | null;
+	handleRemoveCategory: (id: string) => void;
 };
 
 export default function IdeaCategory({
@@ -18,6 +20,7 @@ export default function IdeaCategory({
 	isDraggingWord,
 	overCategoryId,
 	draggingFrom,
+	handleRemoveCategory,
 }: Props) {
 	const { setNodeRef } = useDroppable({
 		id,
@@ -32,25 +35,32 @@ export default function IdeaCategory({
 	return (
 		<div
 			ref={setNodeRef}
-			className={`flex flex-col text-xl flex-1 p-4 border-2 border-slate-700 rounded-lg transition-colors`}
+			className={`flex flex-col text-xl flex-1 p-2 border-2 border-rain-600 rounded-lg transition-colors`}
 		>
-			<h3 className="text-lg font-bold lg:text-start">{title}</h3>
+			<div className="flex justify-between">
+				<h3 className="text-lg leading-normal">{title}</h3>
+				<button
+					onClick={() => {
+						handleRemoveCategory(id);
+					}}
+					className="btn--icon text-rain-600 hover:text-rain-300"
+				>
+					<RiCloseFill />
+				</button>
+			</div>
 
 			<SortableContext items={words.map((w) => `${id}-${w}`)} strategy={rectSortingStrategy}>
 				<div className="flex-1">
-					<div className="flex flex-wrap gap-2 text-xl justify-center">
+					<div className="flex flex-wrap h-full gap-2 text-xl justify-center items-center">
 						{words.length === 0 ? (
-							<p className="italic text-slate-700 self-center">Drag word here</p>
+							<p className="text-rain-600 self-center">Drag word here</p>
 						) : (
 							words.map((word) => <WordChip key={word} word={word} parentId={id} />)
 						)}
 					</div>
 				</div>
 			</SortableContext>
-			<div
-				className={`flex justify-end
-          `}
-			>
+			<div className={`flex justify-end`}>
 				<span
 					ref={setTrashRef}
 					className={`
@@ -60,10 +70,10 @@ export default function IdeaCategory({
 					? "opacity-100 scale-100"
 					: "opacity-0 scale-0"
 			}
-			${isOverTrash ? "text-white bg-red-800/50" : "text-slate-700"}
+			${isOverTrash ? "text-white bg-red-800/50" : "text-rain-400"}
 		`}
 				>
-					delete
+					<RiDeleteBinLine />
 				</span>
 			</div>
 		</div>
