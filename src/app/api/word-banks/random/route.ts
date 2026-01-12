@@ -3,11 +3,21 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
 	const { searchParams } = new URL(req.url);
+
 	const bank = searchParams.get("bank");
+	const exclude = searchParams.get("exclude");
 
 	const banks = bank ? [bank] : Object.keys(wordBanks);
 
-	const allWords = banks.flatMap((bank) => wordBanks[bank as keyof typeof wordBanks] ?? []);
+	let allWords = banks.flatMap((bank) => wordBanks[bank as keyof typeof wordBanks] ?? []);
+
+	if (exclude) {
+		const filtered = allWords.filter((word) => word !== exclude);
+
+		if (filtered.length > 0) {
+			allWords = filtered;
+		}
+	}
 
 	if (allWords.length === 0) {
 		return NextResponse.json({ error: "No words found" }, { status: 404 });

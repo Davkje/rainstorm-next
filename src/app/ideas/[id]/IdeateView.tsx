@@ -13,7 +13,6 @@ import type { DragStartEvent, DragOverEvent, DragEndEvent } from "@dnd-kit/core"
 import { arrayMove } from "@dnd-kit/sortable";
 
 import { Category, DragOverData, DragWordData, Idea } from "@/models/ideas";
-// import { wordBanks } from "@/data/wordBanks";
 
 import WordGenerator from "@/components/WordGenerator";
 import WordChip from "@/components/WordChip";
@@ -42,6 +41,7 @@ export default function IdeateView({ idea, setIdea, onAddCategory, onRemoveCateg
 	const [banks, setBanks] = useState<WordBankName[]>([]);
 	const [bank, setBank] = useState<WordBankName>("nature");
 	const [currentWord, setCurrentWord] = useState<Word>("rain");
+	const [isBankLocked, setIsBankLocked] = useState<boolean>(false);
 
 	useEffect(() => {
 		fetch("/api/word-banks")
@@ -49,10 +49,20 @@ export default function IdeateView({ idea, setIdea, onAddCategory, onRemoveCateg
 			.then((data) => setBanks(data.banks));
 	}, []);
 
+	/* -------------------- WORD -------------------- */
 	const getRandomWord = async (customBank?: WordBankName) => {
-		const bankToUse = customBank ?? bank;
+		let bankToUse: WordBankName;
 
-		const res = await fetch(`/api/word-banks/random?bank=${bankToUse}`);
+		if (customBank) {
+			bankToUse = customBank;
+		} else if (isBankLocked) {
+			bankToUse = bank;
+		} else {
+			bankToUse = getRandomBank(bank);
+			setBank(bankToUse);
+		}
+
+		const res = await fetch(`/api/word-banks/random?bank=${bankToUse}&exclude=${currentWord}`);
 
 		if (!res.ok) return;
 
@@ -60,10 +70,30 @@ export default function IdeateView({ idea, setIdea, onAddCategory, onRemoveCateg
 		setCurrentWord(data.word);
 	};
 
+	/* -------------------- BANKS -------------------- */
+
+	const getRandomBank = (exclude?: WordBankName) => {
+		if (banks.length === 0) return bank;
+
+		const available = exclude ? banks.filter((b) => b !== exclude) : banks;
+
+		if (available.length === 0) return exclude ?? bank;
+
+		const index = Math.floor(Math.random() * available.length);
+		return available[index];
+	};
+
 	const handleChangeBank = (newBank: WordBankName) => {
 		setBank(newBank);
+		setIsBankLocked(true);
 		getRandomWord(newBank);
 	};
+
+	const toggleBankLock = () => {
+		setIsBankLocked((prev) => !prev);
+	};
+
+	/* -------------------- CATEGORY -------------------- */
 
 	const updateCategoryName = (catId: Category["id"], newName: string) => {
 		setIdea((prev) => {
@@ -75,6 +105,10 @@ export default function IdeateView({ idea, setIdea, onAddCategory, onRemoveCateg
 				updatedAt: Date.now(),
 			};
 		});
+	};
+
+	const handleRemoveCategory = (id: string) => {
+		onRemoveCategory(id);
 	};
 
 	/* -------------------- DND HANDLERS -------------------- */
@@ -181,10 +215,6 @@ export default function IdeateView({ idea, setIdea, onAddCategory, onRemoveCateg
 		}
 	};
 
-	const handleRemoveCategory = (id: string) => {
-		onRemoveCategory(id);
-	};
-
 	return (
 		<DndContext
 			sensors={sensors}
@@ -198,8 +228,10 @@ export default function IdeateView({ idea, setIdea, onAddCategory, onRemoveCateg
 					currentWord={currentWord}
 					banks={banks}
 					activeBank={bank}
+					isBankLocked={isBankLocked}
 					onChangeBank={handleChangeBank}
-					onNewWord={getRandomWord}
+					onToggleBankLock={toggleBankLock}
+					onNewWord={() => getRandomWord()}
 				/>
 
 				<div className="flex flex-col gap-4">
