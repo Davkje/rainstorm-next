@@ -3,7 +3,7 @@ import WordChip from "./WordChip";
 import { RiLockLine, RiLockUnlockLine } from "@remixicon/react";
 
 type Props = {
-	currentWord: Word;
+	currentWord: Word | null;
 	isBankLocked: boolean;
 	banks: WordBankName[];
 	activeBank: WordBankName;

@@ -1,4 +1,4 @@
-export type WordBankName = "nature" | "place" | "abstract" | "verb" | "creature";
+export type WordBankName = "nature" | "place" | "abstract" | "verb" | "creature" | null;
 
 export type Word = string;
 

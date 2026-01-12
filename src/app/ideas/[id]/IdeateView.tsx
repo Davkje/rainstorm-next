@@ -39,30 +39,27 @@ export default function IdeateView({ idea, setIdea, onAddCategory, onRemoveCateg
 	const [overCategoryId, setOverCategoryId] = useState<string | null>(null);
 
 	const [banks, setBanks] = useState<WordBankName[]>([]);
-	const [bank, setBank] = useState<WordBankName>("nature");
-	const [currentWord, setCurrentWord] = useState<Word>("rain");
+	const [bank, setBank] = useState<WordBankName | null>(null);
+	const [currentWord, setCurrentWord] = useState<Word | null>(null);
 	const [isBankLocked, setIsBankLocked] = useState<boolean>(false);
 
-	useEffect(() => {
-		fetch("/api/word-banks")
-			.then((res) => res.json())
-			.then((data) => setBanks(data.banks));
-	}, []);
-
 	/* -------------------- WORD -------------------- */
+
 	const getRandomWord = async (customBank?: WordBankName) => {
 		let bankToUse: WordBankName;
 
 		if (customBank) {
 			bankToUse = customBank;
-		} else if (isBankLocked) {
+		} else if (isBankLocked && bank) {
 			bankToUse = bank;
 		} else {
-			bankToUse = getRandomBank(bank);
+			bankToUse = getRandomBank(bank ?? undefined);
 			setBank(bankToUse);
 		}
 
-		const res = await fetch(`/api/word-banks/random?bank=${bankToUse}&exclude=${currentWord}`);
+		const res = await fetch(
+			`/api/word-banks/random?bank=${bankToUse}${currentWord ? `&exclude=${currentWord}` : ""}`
+		);
 
 		if (!res.ok) return;
 
@@ -211,9 +208,41 @@ export default function IdeateView({ idea, setIdea, onAddCategory, onRemoveCateg
 		});
 
 		if (generateWordOnDrop) {
-			getRandomWord(); // New word when you drag from generator
+			getRandomWord();
 		}
 	};
+
+	/* -------------------- INIT -------------------- */
+
+	useEffect(() => {
+		let cancelled = false;
+
+		const init = async () => {
+			const banksRes = await fetch("/api/word-banks");
+			if (!banksRes.ok) return;
+
+			const { banks } = await banksRes.json();
+			if (cancelled || banks.length === 0) return;
+
+			const startBank = banks[Math.floor(Math.random() * banks.length)];
+
+			const wordRes = await fetch(`/api/word-banks/random?bank=${startBank}`);
+			if (!wordRes.ok) return;
+
+			const { word } = await wordRes.json();
+			if (cancelled) return;
+
+			setBanks(banks);
+			setBank(startBank);
+			setCurrentWord(word);
+		};
+
+		init();
+
+		return () => {
+			cancelled = true;
+		};
+	}, []);
 
 	return (
 		<DndContext
