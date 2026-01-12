@@ -3,7 +3,7 @@ import WordChip from "./WordChip";
 import { RiLockLine, RiLockUnlockLine } from "@remixicon/react";
 
 type Props = {
-	currentWord: Word | null;
+	currentWord: Word;
 	isBankLocked: boolean;
 	banks: WordBankName[];
 	activeBank: WordBankName;
@@ -28,13 +28,14 @@ export default function WordGenerator({
 					<WordChip word={currentWord} parentId="generator" />
 				</div>
 			</div>
-			<button
-				onClick={onToggleBankLock}
-				className={`btn--icon ${isBankLocked === false ? "text-rain-600" : "text-rain-200"}`}
-			>
-				{isBankLocked ? <RiLockLine /> : <RiLockUnlockLine />}
-			</button>
+
 			<div className="flex flex-wrap gap-2 justify-center w-full">
+				<button
+					onClick={onToggleBankLock}
+					className={`btn--icon ${isBankLocked === false ? "text-rain-500" : "text-rain-200"}`}
+				>
+					{isBankLocked ? <RiLockLine /> : <RiLockUnlockLine />}
+				</button>
 				{banks.map((bank) => (
 					<button
 						key={bank}

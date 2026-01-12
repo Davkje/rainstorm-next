@@ -39,8 +39,8 @@ export default function IdeateView({ idea, setIdea, onAddCategory, onRemoveCateg
 	const [overCategoryId, setOverCategoryId] = useState<string | null>(null);
 
 	const [banks, setBanks] = useState<WordBankName[]>([]);
-	const [bank, setBank] = useState<WordBankName | null>(null);
-	const [currentWord, setCurrentWord] = useState<Word | null>(null);
+	const [bank, setBank] = useState<WordBankName>("nature");
+	const [currentWord, setCurrentWord] = useState<Word>("rain");
 	const [isBankLocked, setIsBankLocked] = useState<boolean>(false);
 
 	/* -------------------- WORD -------------------- */
@@ -82,7 +82,7 @@ export default function IdeateView({ idea, setIdea, onAddCategory, onRemoveCateg
 
 	const handleChangeBank = (newBank: WordBankName) => {
 		setBank(newBank);
-		setIsBankLocked(true);
+		// setIsBankLocked(true);
 		getRandomWord(newBank);
 	};
 
