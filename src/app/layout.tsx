@@ -37,10 +37,11 @@ export default function RootLayout({
 					<Link href="/">
 						<Image src="/rainstorm.png" alt="rainstorm" width={150} height={167}></Image>
 					</Link>
-					<nav className="flex gap-2">
-						<Link href="/about">About</Link>
-						<Link href="/templates">Templates</Link>
+					<nav className="flex gap-4">
 						<Link href="/ideas">Ideas</Link>
+						<Link href="/words">Words</Link>
+						<Link href="/templates">Templates</Link>
+						<Link href="/about">About</Link>
 					</nav>
 				</header>
 				<main className="bg-rain-800 h-full p-4">{children}</main>

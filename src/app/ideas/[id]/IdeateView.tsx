@@ -12,7 +12,7 @@ import {
 import type { DragStartEvent, DragOverEvent, DragEndEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 
-import { DragOverData, DragWordData, Idea, Word, WordBankName } from "@/models/ideas";
+import { Category, DragOverData, DragWordData, Idea, Word, WordBankName } from "@/models/ideas";
 import { wordBanks } from "@/data/wordBanks";
 
 import WordGenerator from "@/components/WordGenerator";
@@ -51,6 +51,18 @@ export default function IdeateView({ idea, setIdea, onAddCategory, onRemoveCateg
 			next = words[Math.floor(Math.random() * words.length)];
 		}
 		setCurrentWord(next);
+	};
+
+	const updateCategoryName = (catId: Category["id"], newName: string) => {
+		setIdea((prev) => {
+			if (!prev) return prev;
+
+			return {
+				...prev,
+				categories: prev.categories.map((c) => (c.id === catId ? { ...c, name: newName } : c)),
+				updatedAt: Date.now(),
+			};
+		});
 	};
 
 	/* -------------------- DND HANDLERS -------------------- */
@@ -189,6 +201,7 @@ export default function IdeateView({ idea, setIdea, onAddCategory, onRemoveCateg
 							overCategoryId={overCategoryId}
 							handleRemoveCategory={handleRemoveCategory}
 							draggingFrom={draggingWord?.parentId || null}
+							updateCategoryName={updateCategoryName}
 						/>
 					))}
 					<button

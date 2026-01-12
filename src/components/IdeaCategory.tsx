@@ -2,6 +2,8 @@ import { useDroppable } from "@dnd-kit/core";
 import { SortableContext, rectSortingStrategy } from "@dnd-kit/sortable";
 import WordChip from "./WordChip";
 import { RiCloseFill, RiDeleteBinLine } from "@remixicon/react";
+import { Category } from "@/models/ideas";
+import EditableText from "./EditableText";
 
 type Props = {
 	id: string;
@@ -11,6 +13,7 @@ type Props = {
 	overCategoryId: string | null;
 	draggingFrom: string | null;
 	handleRemoveCategory: (id: string) => void;
+	updateCategoryName: (catId: Category["id"], newName: string) => void;
 };
 
 export default function IdeaCategory({
@@ -21,6 +24,7 @@ export default function IdeaCategory({
 	overCategoryId,
 	draggingFrom,
 	handleRemoveCategory,
+	updateCategoryName,
 }: Props) {
 	const { setNodeRef } = useDroppable({
 		id,
@@ -32,13 +36,24 @@ export default function IdeaCategory({
 		data: { parentId: id, isTrash: true },
 	});
 
+	const onUpdateCategoryName = (id: string, v: string) => {
+		const catId = id;
+		const newName = v;
+		updateCategoryName(catId, newName);
+	};
+
 	return (
 		<div
 			ref={setNodeRef}
 			className={`flex flex-col text-xl flex-1 p-2 border-2 border-rain-600 rounded-lg transition-colors`}
 		>
 			<div className="flex justify-between">
-				<h3 className="text-lg leading-normal">{title}</h3>
+				<EditableText
+					text={title}
+					className="text-lg font-bold leading-normal inline-block"
+					tag="h2"
+					onChange={(v) => onUpdateCategoryName(id, v)}
+				/>
 				<button
 					onClick={() => {
 						handleRemoveCategory(id);
