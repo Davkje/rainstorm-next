@@ -1,6 +1,4 @@
-export type Word = string;
-export type WordBankName = "nature" | "abstract" | "places" | "verbs" | "creature";
-export type WordBanks = Record<WordBankName, Word[]>;
+import { Word } from "./wordBanks";
 
 export interface Idea {
 	id: string;

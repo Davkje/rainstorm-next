@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
 	DndContext,
 	closestCenter,
@@ -12,13 +12,14 @@ import {
 import type { DragStartEvent, DragOverEvent, DragEndEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 
-import { Category, DragOverData, DragWordData, Idea, Word, WordBankName } from "@/models/ideas";
-import { wordBanks } from "@/data/wordBanks";
+import { Category, DragOverData, DragWordData, Idea } from "@/models/ideas";
+// import { wordBanks } from "@/data/wordBanks";
 
 import WordGenerator from "@/components/WordGenerator";
 import WordChip from "@/components/WordChip";
 import IdeaCategory from "@/components/IdeaCategory";
 import { RiAddLine } from "@remixicon/react";
+import { Word, WordBankName } from "@/models/wordBanks";
 
 type Props = {
 	idea: Idea;
@@ -38,19 +39,30 @@ export default function IdeateView({ idea, setIdea, onAddCategory, onRemoveCateg
 	const [isDraggingWord, setIsDraggingWord] = useState(false);
 	const [overCategoryId, setOverCategoryId] = useState<string | null>(null);
 
+	const [banks, setBanks] = useState<WordBankName[]>([]);
 	const [bank, setBank] = useState<WordBankName>("nature");
 	const [currentWord, setCurrentWord] = useState<Word>("rain");
 
-	const getRandomWord = (customBank?: WordBankName) => {
-		const activeBank = customBank ?? bank;
-		const words = wordBanks[activeBank];
-		if (!words || words.length === 0) return;
+	useEffect(() => {
+		fetch("/api/word-banks")
+			.then((res) => res.json())
+			.then((data) => setBanks(data.banks));
+	}, []);
 
-		let next = words[Math.floor(Math.random() * words.length)];
-		while (next === currentWord && words.length > 1) {
-			next = words[Math.floor(Math.random() * words.length)];
-		}
-		setCurrentWord(next);
+	const getRandomWord = async (customBank?: WordBankName) => {
+		const bankToUse = customBank ?? bank;
+
+		const res = await fetch(`/api/word-banks/random?bank=${bankToUse}`);
+
+		if (!res.ok) return;
+
+		const data = await res.json();
+		setCurrentWord(data.word);
+	};
+
+	const handleChangeBank = (newBank: WordBankName) => {
+		setBank(newBank);
+		getRandomWord(newBank);
 	};
 
 	const updateCategoryName = (catId: Category["id"], newName: string) => {
@@ -184,10 +196,10 @@ export default function IdeateView({ idea, setIdea, onAddCategory, onRemoveCateg
 			<div className="grid grid-cols-2 gap-4">
 				<WordGenerator
 					currentWord={currentWord}
-					setCurrentWord={setCurrentWord}
-					getRandomWord={getRandomWord}
-					bank={bank}
-					setBank={setBank}
+					banks={banks}
+					activeBank={bank}
+					onChangeBank={handleChangeBank}
+					onNewWord={getRandomWord}
 				/>
 
 				<div className="flex flex-col gap-4">
