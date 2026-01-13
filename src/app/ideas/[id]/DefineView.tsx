@@ -3,15 +3,15 @@
 import { Idea, Category } from "@/models/ideas";
 import EditableText from "@/components/EditableText";
 import { RiCloseFill } from "@remixicon/react";
+import { Word } from "@/models/wordBanks";
 
 type Props = {
 	idea: Idea;
 	setIdea: React.Dispatch<React.SetStateAction<Idea | null>>;
-	onAddCategory: () => void;
 	onRemoveCategory: (id: string) => void;
 };
 
-export default function DefineView({ idea, setIdea, onAddCategory, onRemoveCategory }: Props) {
+export default function DefineView({ idea, setIdea, onRemoveCategory }: Props) {
 	const updateCategoryText = (catId: Category["id"], newText: string) => {
 		setIdea((prev) => {
 			if (!prev) return prev;
@@ -36,6 +36,30 @@ export default function DefineView({ idea, setIdea, onAddCategory, onRemoveCateg
 		});
 	};
 
+	const updateWord = (catId: Category["id"], oldWord: Word, newWord: Word) => {
+		setIdea((prev) => {
+			if (!prev) return prev;
+
+			return {
+				...prev,
+				categories: prev.categories.map((cat) => {
+					if (cat.id !== catId) return cat;
+
+					const clean = newWord.trim();
+					if (!clean) return cat;
+
+					if (cat.words.includes(newWord)) return cat;
+
+					return {
+						...cat,
+						words: cat.words.map((w) => (w === oldWord ? newWord : w)),
+					};
+				}),
+				updatedAt: Date.now(),
+			};
+		});
+	};
+
 	return (
 		<div className="flex flex-col gap-4 h-full">
 			<div className="grid h-full gap-4">
@@ -44,7 +68,7 @@ export default function DefineView({ idea, setIdea, onAddCategory, onRemoveCateg
 						<div className="flex justify-between">
 							<EditableText
 								text={cat.name}
-								className="text-xl font-bold leading-normal inline-block"
+								className="text-xl font-bold leading-relaxed capitalize"
 								tag="h2"
 								onChange={(v) => updateCategoryName(cat.id, v)}
 							/>
@@ -57,9 +81,17 @@ export default function DefineView({ idea, setIdea, onAddCategory, onRemoveCateg
 								<RiCloseFill />
 							</button>
 						</div>
-						{cat.words.length > 0 && (
-							<p className="capitalize text-lg text-gray-300 mb-2">{cat.words.join(", ")}</p>
-						)}
+						<div className="flex gap-2">
+							{cat.words.map((word) => (
+								<EditableText
+									key={word}
+									text={word}
+									className="text-lg text-rain-400 capitalize font-bold"
+									tag="span"
+									onChange={(v) => updateWord(cat.id, word, v)}
+								></EditableText>
+							))}
+						</div>
 						<textarea
 							className="text-lg flex grow border-2 border-rain-600 rounded-lg resize-none px-2 placeholder-rain-600"
 							value={cat.text}
@@ -71,12 +103,6 @@ export default function DefineView({ idea, setIdea, onAddCategory, onRemoveCateg
 					</div>
 				))}
 			</div>
-			<button
-				onClick={onAddCategory}
-				className="p-2 text-lg text-rain-400 border-2 rounded-xl text-center"
-			>
-				+ Add category
-			</button>
 		</div>
 	);
 }

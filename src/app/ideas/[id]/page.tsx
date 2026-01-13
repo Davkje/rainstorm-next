@@ -14,6 +14,7 @@ import CopyDropdown from "@/components/CopyDropdown";
 import DownloadDropdown from "@/components/DownloadDropdown";
 import { createCategory } from "@/utils/createCategory";
 import ConfirmModal from "@/components/ui/ConfirmModal";
+import { RiAddBoxLine } from "@remixicon/react";
 
 interface IdeaPageProps {
 	params: Promise<{ id: string }>;
@@ -84,17 +85,19 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 				<EditableText
 					text={idea.name}
 					tag="h1"
-					className="text-xl font-bold leading-normal inline-block"
+					className="text-xl font-bold leading-9"
 					onChange={(newName) =>
 						setIdea((prev) => (prev ? { ...prev, name: newName, updatedAt: Date.now() } : prev))
 					}
 				/>
-
 				<div className="flex items-center gap-3">
 					<span className="text-md text-rain-500">
 						{saveStatus === "saving" && "Saving…"}
 						{saveStatus === "saved" && ""}
 					</span>
+					<button onClick={addCategory} className={`btn--icon`}>
+						<RiAddBoxLine />
+					</button>
 					<CopyDropdown idea={idea} />
 					<DownloadDropdown idea={idea} />
 					<div className="flex items-center gap-3 bg-rain-700 px-2 rounded-lg">
@@ -115,19 +118,9 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 			</div>
 			{/* VIEW */}
 			{view === "define" ? (
-				<DefineView
-					idea={idea}
-					setIdea={setIdea}
-					onAddCategory={addCategory}
-					onRemoveCategory={removeCategory}
-				/>
+				<DefineView idea={idea} setIdea={setIdea} onRemoveCategory={removeCategory} />
 			) : (
-				<IdeateView
-					idea={idea}
-					setIdea={setIdea}
-					onAddCategory={addCategory}
-					onRemoveCategory={removeCategory}
-				/>
+				<IdeateView idea={idea} setIdea={setIdea} onRemoveCategory={removeCategory} />
 			)}
 			<ConfirmModal
 				open={!!categoryToDelete}

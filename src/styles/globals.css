@@ -68,6 +68,10 @@ body {
 		list-style: none;
 	}
 
+	input {
+		@apply: leading-normal;
+	}
+
 	button {
 		@apply text-lg font-medium px-12 py-1 border-2 rounded-xl transition-colors duration-300 ease-in-out cursor-pointer;
 	}

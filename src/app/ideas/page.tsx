@@ -46,12 +46,12 @@ export default function IdeasPage() {
 	};
 
 	return (
-		<div>
+		<div className="text-center">
 			<h1>Ideas</h1>
 
 			<div className="mb-6">
 				<h2 className="mb-2">Create New Idea</h2>
-				<div className="flex gap-2 flex-wrap">
+				<div className="flex justify-center gap-2 flex-wrap">
 					{templates.map((t) => (
 						<button key={t.id} onClick={() => handleCreateIdea(t)} className="btn--primary">
 							{t.name}

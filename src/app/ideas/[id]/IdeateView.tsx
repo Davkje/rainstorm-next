@@ -17,17 +17,15 @@ import { Category, DragOverData, DragWordData, Idea } from "@/models/ideas";
 import WordGenerator from "@/components/WordGenerator";
 import WordChip from "@/components/WordChip";
 import IdeaCategory from "@/components/IdeaCategory";
-import { RiAddLine } from "@remixicon/react";
 import { Word, WordBankName } from "@/models/wordBanks";
 
 type Props = {
 	idea: Idea;
 	setIdea: React.Dispatch<React.SetStateAction<Idea | null>>;
-	onAddCategory: () => void;
 	onRemoveCategory: (id: string) => void;
 };
 
-export default function IdeateView({ idea, setIdea, onAddCategory, onRemoveCategory }: Props) {
+export default function IdeateView({ idea, setIdea, onRemoveCategory }: Props) {
 	const sensors = useSensors(useSensor(PointerSensor));
 
 	const [draggingWord, setDraggingWord] = useState<{
@@ -65,6 +63,32 @@ export default function IdeateView({ idea, setIdea, onAddCategory, onRemoveCateg
 
 		const data = await res.json();
 		setCurrentWord(data.word);
+	};
+
+	const addWord = (catId: Category["id"]) => {
+		if (!currentWord) return;
+
+		setIdea((prev) => {
+			if (!prev) return prev;
+
+			return {
+				...prev,
+				categories: prev.categories.map((cat) => {
+					if (cat.id !== catId) return cat;
+
+					// undvik dubbletter
+					if (cat.words.includes(currentWord)) return cat;
+
+					return {
+						...cat,
+						words: [...cat.words, currentWord],
+					};
+				}),
+				updatedAt: Date.now(),
+			};
+		});
+
+		getRandomWord();
 	};
 
 	/* -------------------- BANKS -------------------- */
@@ -275,15 +299,9 @@ export default function IdeateView({ idea, setIdea, onAddCategory, onRemoveCateg
 							handleRemoveCategory={handleRemoveCategory}
 							draggingFrom={draggingWord?.parentId || null}
 							updateCategoryName={updateCategoryName}
+							addWord={addWord}
 						/>
 					))}
-					<button
-						onClick={onAddCategory}
-						className="flex justify-center items-center gap-2 p-2 text-lg text-rain-400 border-2 rounded-xl text-center"
-					>
-						<RiAddLine />
-						Add category
-					</button>
 				</div>
 
 				<DragOverlay dropAnimation={null}>

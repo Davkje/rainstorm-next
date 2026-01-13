@@ -1,7 +1,7 @@
 import { useDroppable } from "@dnd-kit/core";
 import { SortableContext, rectSortingStrategy } from "@dnd-kit/sortable";
 import WordChip from "./WordChip";
-import { RiCloseFill, RiDeleteBinLine } from "@remixicon/react";
+import { RiAddLine, RiCloseFill, RiDeleteBinLine } from "@remixicon/react";
 import { Category } from "@/models/ideas";
 import EditableText from "./EditableText";
 
@@ -14,6 +14,7 @@ type Props = {
 	draggingFrom: string | null;
 	handleRemoveCategory: (id: string) => void;
 	updateCategoryName: (catId: Category["id"], newName: string) => void;
+	addWord: (catId: Category["id"]) => void;
 };
 
 export default function IdeaCategory({
@@ -25,6 +26,7 @@ export default function IdeaCategory({
 	draggingFrom,
 	handleRemoveCategory,
 	updateCategoryName,
+	addWord,
 }: Props) {
 	const { setNodeRef } = useDroppable({
 		id,
@@ -42,26 +44,40 @@ export default function IdeaCategory({
 		updateCategoryName(catId, newName);
 	};
 
+	const handleAddWord = () => {
+		addWord(id);
+	};
+
 	return (
 		<div
 			ref={setNodeRef}
 			className={`flex flex-col text-xl flex-1 p-2 border-2 border-rain-600 rounded-lg transition-colors`}
 		>
-			<div className="flex justify-between">
+			<div className="flex justify-between items-center">
 				<EditableText
 					text={title}
-					className="text-lg font-bold leading-normal inline-block"
+					className="text-lg font-bold leading-8 inline-block"
 					tag="h2"
 					onChange={(v) => onUpdateCategoryName(id, v)}
 				/>
-				<button
-					onClick={() => {
-						handleRemoveCategory(id);
-					}}
-					className="btn--icon text-rain-600 hover:text-rain-300"
-				>
-					<RiCloseFill />
-				</button>
+				<div className="flex">
+					<button
+						onClick={() => {
+							handleAddWord();
+						}}
+						className="btn--icon text-rain-600 hover:text-rain-300"
+					>
+						<RiAddLine />
+					</button>
+					<button
+						onClick={() => {
+							handleRemoveCategory(id);
+						}}
+						className="btn--icon text-rain-600 hover:text-rain-300"
+					>
+						<RiCloseFill />
+					</button>
+				</div>
 			</div>
 
 			<SortableContext items={words.map((w) => `${id}-${w}`)} strategy={rectSortingStrategy}>
