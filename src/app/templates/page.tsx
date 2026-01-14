@@ -9,7 +9,6 @@ export default function TemplatesPage() {
 	const [templates, setTemplates] = useState<Template[]>([]);
 
 	useEffect(() => {
-		// delay setState to avoid cascading renders
 		const timeout = setTimeout(() => {
 			setTemplates(loadTemplates());
 		}, 0);
@@ -17,17 +16,17 @@ export default function TemplatesPage() {
 	}, []);
 
 	return (
-		<div className="p-4">
-			<h1 className="text-3xl font-bold mb-4">Templates</h1>
-			<p className="mb-4">Lista över templates, både fördefinierade och egna.</p>
+		<div className="text-center">
+			<h1>Templates</h1>
+			<p className="text-xl">List of templates</p>
 
 			{templates.length === 0 ? (
 				<p>Inga templates än.</p>
 			) : (
-				<ul className="list-disc pl-5">
+				<ul>
 					{templates.map((t) => (
-						<li key={t.id} className="mb-2">
-							<Link href={`/templates/${t.id}`} className="text-blue-600 hover:underline">
+						<li key={t.id}>
+							<Link className="text-xl" href={`/templates/${t.id}`}>
 								{t.name}
 							</Link>
 						</li>

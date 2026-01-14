@@ -2,15 +2,25 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { RiDeleteBinLine } from "@remixicon/react";
 
-import { loadIdeas, saveIdeas, loadTemplates, createIdeaFromTemplate } from "@/helpers/storage";
+import {
+	loadIdeas,
+	saveIdeas,
+	loadTemplates,
+	createIdeaFromTemplate,
+	removeIdea,
+} from "@/helpers/storage";
 
 import { Idea } from "@/models/ideas";
+import { Template } from "@/models/templates";
+import ConfirmModal from "@/components/ui/ConfirmModal";
 
 export default function IdeasPage() {
 	const router = useRouter();
 	const [ideas, setIdeas] = useState<Idea[]>([]);
 	const [templates] = useState(loadTemplates());
+	const [ideaToDelete, setIdeaToDelete] = useState<Idea | null>(null);
 
 	useEffect(() => {
 		const timeout = setTimeout(() => {
@@ -20,7 +30,7 @@ export default function IdeasPage() {
 		return () => clearTimeout(timeout);
 	}, []);
 
-	const handleCreateIdea = (template: any) => {
+	const handleCreateIdea = (template: Template) => {
 		const idea = createIdeaFromTemplate(template);
 		const allIdeas = loadIdeas();
 
@@ -29,19 +39,21 @@ export default function IdeasPage() {
 		router.push(`/ideas/${idea.id}`);
 	};
 
+	const confirmRemoveIdea = (ideaId: string) => {
+		removeIdea(ideaId);
+		setIdeas(loadIdeas());
+		setIdeaToDelete(null);
+	};
+
 	return (
-		<div className="p-4">
-			<h1 className="text-3xl font-bold mb-4">Ideas</h1>
+		<div className="text-center">
+			<h1>Ideas</h1>
 
 			<div className="mb-6">
-				<h2 className="text-xl font-semibold mb-2">Create New Idea</h2>
-				<div className="flex gap-2 flex-wrap">
+				<h2 className="mb-2">Create New Idea</h2>
+				<div className="flex justify-center gap-2 flex-wrap">
 					{templates.map((t) => (
-						<button
-							key={t.id}
-							onClick={() => handleCreateIdea(t)}
-							className="px-3 py-2 bg-green-600 text-white rounded hover:bg-green-600"
-						>
+						<button key={t.id} onClick={() => handleCreateIdea(t)} className="btn--primary">
 							{t.name}
 						</button>
 					))}
@@ -49,24 +61,36 @@ export default function IdeasPage() {
 			</div>
 
 			<div>
-				<h2 className="text-xl font-semibold mb-2">Existing Ideas</h2>
+				<h2 className="mb-2">Existing Ideas</h2>
 				{ideas.length === 0 ? (
 					<p>No ideas yet.</p>
 				) : (
-					<ul className="list-disc pl-5">
-						{ideas.map((i) => (
-							<li key={i.id}>
-								<button
-									onClick={() => router.push(`/ideas/${i.id}`)}
-									className="text-blue-600 hover:underline"
-								>
-									{i.name}
+					<ul className="grid gap-4">
+						{ideas.map((idea) => (
+							<li
+								key={idea.id}
+								className="flex justify-between border-2 border-rain-500 rounded p-2"
+							>
+								<button onClick={() => router.push(`/ideas/${idea.id}`)} className="btn--link">
+									{idea.name}
+								</button>
+								<button onClick={() => setIdeaToDelete(idea)} className="btn--icon">
+									<RiDeleteBinLine />
 								</button>
 							</li>
 						))}
 					</ul>
 				)}
 			</div>
+			<ConfirmModal
+				open={!!ideaToDelete}
+				title={`Delete "${ideaToDelete?.name}"`}
+				description="All words, text, categories will be permanently deleted."
+				confirmText="Delete"
+				danger
+				onCancel={() => setIdeaToDelete(null)}
+				onConfirm={() => ideaToDelete && confirmRemoveIdea(ideaToDelete.id)}
+			/>
 		</div>
 	);
 }

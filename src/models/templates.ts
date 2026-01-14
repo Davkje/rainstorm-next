@@ -1,18 +1,18 @@
+import { Category } from "./ideas";
+
 export interface Template {
 	id: string;
 	name: string;
 	categories: Category[];
 }
 
-export interface Category {
-	id: string;
-	name: string;
-	text: string;
-	words: string[];
-}
-
 // Default templates
 export const defaultTemplates: Template[] = [
+	{
+		id: "empty",
+		name: "Empty",
+		categories: [{ id: "Empty", name: "Empty", text: "", words: [] }],
+	},
 	{
 		id: "song",
 		name: "Song",

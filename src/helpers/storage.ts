@@ -74,3 +74,11 @@ export function addIdea(newIdea: Idea) {
 	saveIdeas(updated);
 	return updated;
 }
+
+// REMOVE IDEA
+export function removeIdea(ideaId: Idea["id"]) {
+	const all = loadIdeas();
+	const updated = all.filter((idea) => idea.id !== ideaId);
+	saveIdeas(updated);
+	return updated;
+}

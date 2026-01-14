@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import { Lateef } from "next/font/google";
+import Image from "next/image";
+import "@/styles/globals.css";
 import Link from "next/link";
 
-const geistSans = Geist({
-	variable: "--font-geist-sans",
+const lateef = Lateef({
 	subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-	variable: "--font-geist-mono",
-	subsets: ["latin"],
+	weight: ["200", "300", "400", "500", "600", "700", "800"],
+	style: ["normal"],
+	variable: "--font-lateef",
+	display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -27,24 +26,25 @@ export default function RootLayout({
 		<html lang="en">
 			<body
 				className={`
-    ${geistSans.variable}
-    ${geistMono.variable}
+    ${lateef.variable}
     antialiased
     grid
-    grid-rows-[44px_auto_24px]
+    grid-rows-[44px_auto]
     min-h-screen
   `}
 			>
-				<header className="bg-black p-2">
-					<nav className="flex gap-2">
-						<Link href="/">Home</Link>
-						<Link href="/about">About</Link>
-						<Link href="/templates">Templates</Link>
+				<header className="bg-rain-800 px-4 gap-2 flex justify-between items-center">
+					<Link href="/">
+						<Image src="/rainstorm.png" alt="rainstorm" width={150} height={167}></Image>
+					</Link>
+					<nav className="flex gap-4">
 						<Link href="/ideas">Ideas</Link>
+						<Link href="/words">Words</Link>
+						<Link href="/templates">Templates</Link>
+						<Link href="/about">About</Link>
 					</nav>
 				</header>
-				<main className="h-full p-2">{children}</main>
-				<footer className="bg-black">footer</footer>
+				<main className="bg-rain-800 h-full p-4">{children}</main>
 			</body>
 		</html>
 	);
