@@ -1,15 +1,15 @@
-import { wordBanks } from "@/data/wordBanks.server";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { getAllWordBanks } from "@/lib/wordBanks";
 
-export async function GET(_: Request, { params }: { params: { bank: string } }) {
-	const bank = params.bank as keyof typeof wordBanks;
+export async function GET(_req: NextRequest, { params }: { params: Promise<{ bank: string }> }) {
+	const { bank } = await params;
 
-	if (!wordBanks[bank]) {
-		return NextResponse.json({ error: "Bank not forund" }, { status: 404 });
+	const banks = getAllWordBanks();
+	const found = banks.find((b) => b.name === bank);
+
+	if (!found) {
+		return NextResponse.json({ error: "Bank not found" }, { status: 404 });
 	}
 
-	return NextResponse.json({
-		name: bank,
-		words: wordBanks[bank],
-	});
+	return NextResponse.json(found);
 }

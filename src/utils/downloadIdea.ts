@@ -42,10 +42,10 @@ export async function downloadPdf(idea: Idea) {
 
 	for (const category of idea.categories) {
 		y += 8;
-		doc.setFont(undefined, "bold");
+		doc.setFont("bold");
 		doc.text(category.name, 20, y);
 
-		doc.setFont(undefined, "normal");
+		doc.setFont("normal");
 		y += 6;
 
 		if (category.words.length) {
