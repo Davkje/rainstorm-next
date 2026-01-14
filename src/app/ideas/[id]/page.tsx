@@ -91,10 +91,10 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 					}
 				/>
 				<div className="flex items-center gap-3">
-					<span className="text-md text-rain-500">
+					{/* <span className="text-md text-rain-500">
 						{saveStatus === "saving" && "Saving…"}
 						{saveStatus === "saved" && ""}
-					</span>
+					</span> */}
 					<button onClick={addCategory} className={`btn--icon`}>
 						<RiAddBoxLine />
 					</button>

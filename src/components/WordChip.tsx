@@ -40,7 +40,7 @@ export default function WordChip({ word, parentId }: WordChipProps) {
 			className={`
 				${baseClasses}
 				${parentId === "generator" ? generatorClasses : categoryClasses}
-				${isDragging ? "bg-rain-900/50 text-rain-600" : ""}
+				${isDragging ? "bg-transparent text-transparent" : ""}
 				`}
 		>
 			{word}

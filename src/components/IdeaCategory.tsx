@@ -9,9 +9,9 @@ type Props = {
 	id: string;
 	title: string;
 	words: string[];
-	isDraggingWord: boolean;
-	overCategoryId: string | null;
-	draggingFrom: string | null;
+	// isDraggingWord: boolean;
+	// overCategoryId: string | null;
+	// draggingFrom: string | null;
 	handleRemoveCategory: (id: string) => void;
 	updateCategoryName: (catId: Category["id"], newName: string) => void;
 	addWord: (catId: Category["id"]) => void;
@@ -21,9 +21,9 @@ export default function IdeaCategory({
 	id,
 	title,
 	words,
-	isDraggingWord,
-	overCategoryId,
-	draggingFrom,
+	// isDraggingWord,
+	// overCategoryId,
+	// draggingFrom,
 	handleRemoveCategory,
 	updateCategoryName,
 	addWord,
@@ -61,6 +61,14 @@ export default function IdeaCategory({
 					onChange={(v) => onUpdateCategoryName(id, v)}
 				/>
 				<div className="flex">
+					<span
+						ref={setTrashRef}
+						className={`material-symbols-outlined rounded p-1 transition-all duration-200 ${
+							isOverTrash ? "text-white bg-red-800/50" : "text-rain-600"
+						}`}
+					>
+						<RiDeleteBinLine />
+					</span>
 					<button
 						onClick={() => {
 							handleAddWord();
@@ -91,7 +99,7 @@ export default function IdeaCategory({
 					</div>
 				</div>
 			</SortableContext>
-			<div className={`flex justify-end`}>
+			{/* <div className={`flex justify-end`}>
 				<span
 					ref={setTrashRef}
 					className={`
@@ -99,14 +107,14 @@ export default function IdeaCategory({
 			${
 				isDraggingWord && overCategoryId === id && draggingFrom !== "generator"
 					? "opacity-100 scale-100"
-					: "opacity-0 scale-0"
+					: "opacity-0 scale-50"
 			}
 			${isOverTrash ? "text-white bg-red-800/50" : "text-rain-400"}
 		`}
 				>
 					<RiDeleteBinLine />
 				</span>
-			</div>
+			</div> */}
 		</div>
 	);
 }

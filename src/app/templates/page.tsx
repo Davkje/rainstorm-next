@@ -9,7 +9,6 @@ export default function TemplatesPage() {
 	const [templates, setTemplates] = useState<Template[]>([]);
 
 	useEffect(() => {
-		// delay setState to avoid cascading renders
 		const timeout = setTimeout(() => {
 			setTemplates(loadTemplates());
 		}, 0);
@@ -17,9 +16,9 @@ export default function TemplatesPage() {
 	}, []);
 
 	return (
-		<div>
+		<div className="text-center">
 			<h1>Templates</h1>
-			<h2>List of templates</h2>
+			<p className="text-xl">List of templates</p>
 
 			{templates.length === 0 ? (
 				<p>Inga templates än.</p>
@@ -27,7 +26,7 @@ export default function TemplatesPage() {
 				<ul>
 					{templates.map((t) => (
 						<li key={t.id}>
-							<Link className="text-lg" href={`/templates/${t.id}`}>
+							<Link className="text-xl" href={`/templates/${t.id}`}>
 								{t.name}
 							</Link>
 						</li>

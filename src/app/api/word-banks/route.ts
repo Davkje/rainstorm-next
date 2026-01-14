@@ -1,8 +1,5 @@
-import { wordBanks } from "@/data/wordBanks.server";
-import { NextResponse } from "next/server";
+import { getWordBankNames } from "@/lib/wordBanks";
 
 export async function GET() {
-	return NextResponse.json({
-		banks: Object.keys(wordBanks),
-	});
+	return Response.json({ banks: getWordBankNames() });
 }

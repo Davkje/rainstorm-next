@@ -106,7 +106,6 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory }: Props) {
 
 	const handleChangeBank = (newBank: WordBankName) => {
 		setBank(newBank);
-		// setIsBankLocked(true);
 		getRandomWord(newBank);
 	};
 
@@ -276,7 +275,7 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory }: Props) {
 			onDragOver={handleDragOver}
 			onDragEnd={handleDragEnd}
 		>
-			<div className="grid grid-cols-2 gap-4">
+			<div className="flex flex-col-reverse gap-4 sm:grid grid-cols-1 sm:grid-cols-2">
 				<WordGenerator
 					currentWord={currentWord}
 					banks={banks}
@@ -294,12 +293,12 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory }: Props) {
 							id={cat.id}
 							title={cat.name}
 							words={cat.words}
-							isDraggingWord={isDraggingWord}
-							overCategoryId={overCategoryId}
 							handleRemoveCategory={handleRemoveCategory}
-							draggingFrom={draggingWord?.parentId || null}
 							updateCategoryName={updateCategoryName}
 							addWord={addWord}
+							// isDraggingWord={isDraggingWord}
+							// overCategoryId={overCategoryId}
+							// draggingFrom={draggingWord?.parentId || null}
 						/>
 					))}
 				</div>
