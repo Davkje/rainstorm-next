@@ -61,14 +61,6 @@ export default function IdeaCategory({
 					onChange={(v) => onUpdateCategoryName(id, v)}
 				/>
 				<div className="flex">
-					<span
-						ref={setTrashRef}
-						className={`material-symbols-outlined rounded p-1 transition-all duration-200 ${
-							isOverTrash ? "text-white bg-red-800/50" : "text-rain-600"
-						}`}
-					>
-						<RiDeleteBinLine />
-					</span>
 					<button
 						onClick={() => {
 							handleAddWord();
@@ -77,6 +69,14 @@ export default function IdeaCategory({
 					>
 						<RiAddLine />
 					</button>
+					<span
+						ref={setTrashRef}
+						className={`material-symbols-outlined rounded p-1 transition-all duration-200 ${
+							isOverTrash ? "text-white bg-red-800/50" : "text-rain-600"
+						}`}
+					>
+						<RiDeleteBinLine />
+					</span>
 					<button
 						onClick={() => {
 							handleRemoveCategory(id);

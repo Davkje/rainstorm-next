@@ -1,4 +1,4 @@
-import "server only";
+import "server-only";
 
 import { wordBanks } from "@/data/wordBanks.server";
 import { WordBank, WordBankName, Word } from "@/models/wordBanks";
