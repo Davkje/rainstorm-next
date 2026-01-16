@@ -27,7 +27,8 @@ export default function WordChip({ word, parentId }: WordChipProps) {
 	};
 
 	const baseClasses =
-		"flex justify-center items-center rounded-lg text-rain-100 capitalize select-none transition-all";
+		// "flex justify-center items-center rounded-lg text-rain-100 capitalize select-none transition-all";
+		"flex justify-center items-center rounded-lg text-rain-100 capitalize select-none";
 	const generatorClasses = "px-10 text-3xl bg-rain-700 font-bold uppercase hover:bg-rain-600";
 	const categoryClasses = "bg-rain-700 px-4 py-1 text-lg font-bold hover:bg-rain-600";
 
