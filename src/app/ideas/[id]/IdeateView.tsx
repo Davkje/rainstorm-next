@@ -239,6 +239,7 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory }: Props) {
 		});
 
 		if (generateWordOnDrop) {
+			setCurrentWord("");
 			getRandomWord();
 		}
 	};
