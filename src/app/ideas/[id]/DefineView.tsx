@@ -68,7 +68,7 @@ export default function DefineView({ idea, setIdea, onRemoveCategory }: Props) {
 						<div className="flex justify-between">
 							<EditableText
 								text={cat.name}
-								className="text-xl font-bold leading-relaxed capitalize"
+								className="text-xl font-bold leading-normal"
 								tag="h2"
 								onChange={(v) => updateCategoryName(cat.id, v)}
 							/>
@@ -81,12 +81,12 @@ export default function DefineView({ idea, setIdea, onRemoveCategory }: Props) {
 								<RiCloseFill />
 							</button>
 						</div>
-						<div className="flex gap-2">
+						<div className="flex gap-2 py-2">
 							{cat.words.map((word) => (
 								<EditableText
 									key={word}
 									text={word}
-									className="text-lg text-rain-400 capitalize font-bold"
+									className="text-lg text-rain-400 font-bold leading-normal"
 									tag="span"
 									onChange={(v) => updateWord(cat.id, word, v)}
 								></EditableText>

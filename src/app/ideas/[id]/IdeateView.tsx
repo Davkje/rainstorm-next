@@ -99,6 +99,20 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory }: Props) {
 		getRandomWord();
 	};
 
+	const removeWordFromCategory = (catId: Category["id"], word: Word) => {
+		setIdea((prev) => {
+			if (!prev) return prev;
+
+			return {
+				...prev,
+				categories: prev.categories.map((cat) =>
+					cat.id === catId ? { ...cat, words: cat.words.filter((w) => w !== word) } : cat
+				),
+				updatedAt: Date.now(),
+			};
+		});
+	};
+
 	/* -------------------- BANKS -------------------- */
 
 	const getRandomBank = (exclude?: WordBankName) => {
@@ -137,6 +151,18 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory }: Props) {
 
 	const handleRemoveCategory = (id: string) => {
 		onRemoveCategory(id);
+	};
+
+	const clearCategory = (catId: Category["id"]) => {
+		setIdea((prev) => {
+			if (!prev) return prev;
+
+			return {
+				...prev,
+				categories: prev.categories.map((c) => (c.id === catId ? { ...c, words: [] } : c)),
+				updatedAt: Date.now(),
+			};
+		});
 	};
 
 	/* -------------------- DND HANDLERS -------------------- */
@@ -312,6 +338,8 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory }: Props) {
 							handleRemoveCategory={handleRemoveCategory}
 							updateCategoryName={updateCategoryName}
 							addWord={addWord}
+							onRemoveWord={removeWordFromCategory}
+							onClearCategory={clearCategory}
 							// isDraggingWord={isDraggingWord}
 							// overCategoryId={overCategoryId}
 							// draggingFrom={draggingWord?.parentId || null}

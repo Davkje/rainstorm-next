@@ -14,7 +14,7 @@ import CopyDropdown from "@/components/CopyDropdown";
 import DownloadDropdown from "@/components/DownloadDropdown";
 import { createCategory } from "@/utils/createCategory";
 import ConfirmModal from "@/components/ui/ConfirmModal";
-import { RiAddBoxLine } from "@remixicon/react";
+import { RiAddBoxLine, RiPencilFill, RiRainyFill } from "@remixicon/react";
 
 interface IdeaPageProps {
 	params: Promise<{ id: string }>;
@@ -33,7 +33,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 			const allIdeas = loadIdeas();
 			saveIdeas(allIdeas.map((i) => (i.id === updated.id ? updated : i)));
 		},
-		300
+		800
 	);
 
 	useEffect(() => {
@@ -43,7 +43,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 		if (found) setIdea(found);
 	}, [id]);
 
-	if (!idea) return <div>Loading...</div>;
+	if (!idea) return <h1 className="w-full text-xl font-bold">Loading...</h1>;
 
 	const addCategory = () => {
 		setIdea((prev) => {
@@ -82,36 +82,43 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 		<div className="grid grid-rows-[auto_1fr] h-full">
 			{/* HEADER */}
 			<div className="flex justify-between items-center mb-2">
-				<EditableText
-					text={idea.name}
-					tag="h1"
-					className="text-xl font-bold leading-9"
-					onChange={(newName) =>
-						setIdea((prev) => (prev ? { ...prev, name: newName, updatedAt: Date.now() } : prev))
-					}
-				/>
-				<div className="flex items-center gap-3">
-					{/* <span className="text-md text-rain-500">
-						{saveStatus === "saving" && "Saving…"}
-						{saveStatus === "saved" && ""}
-					</span> */}
+				<div className="flex gap-2 justify-center items-center">
+					<EditableText
+						text={idea.name}
+						tag="h1"
+						className="text-2xl font-bold leading-9"
+						onChange={(newName) =>
+							setIdea((prev) => (prev ? { ...prev, name: newName, updatedAt: Date.now() } : prev))
+						}
+					/>
 					<button onClick={addCategory} className={`btn--icon`}>
 						<RiAddBoxLine />
 					</button>
 					<CopyDropdown idea={idea} />
 					<DownloadDropdown idea={idea} />
-					<div className="flex items-center gap-3 bg-rain-700 px-2 rounded-lg">
+					<span
+						className={`text-md text-rain-400 font-bold transition-colors duration-400 ease-out ${
+							saveStatus === "saving" ? "text-rain-400" : "text-transparent"
+						}`}
+					>
+						Saving...
+						{/* {saveStatus === "saving" && "Saving…"}
+						{saveStatus === "saved" && ""} */}
+					</span>
+				</div>
+				<div className="flex items-center gap-3">
+					<div className="flex items-center gap-3 bg-rain-600 p-2 rounded-lg">
 						<button
 							onClick={() => setView("ideate")}
-							className={`btn--link ${view === "ideate" ? "text-rain-100" : "text-rain-500"}`}
+							className={`btn--link ${view === "ideate" ? "text-rain-100" : "text-rain-400"}`}
 						>
-							Ideate
+							<RiRainyFill />
 						</button>
 						<button
 							onClick={() => setView("define")}
 							className={`btn--link ${view === "define" ? "text-rain-100" : "text-rain-500"}`}
 						>
-							Define
+							<RiPencilFill />
 						</button>
 					</div>
 				</div>

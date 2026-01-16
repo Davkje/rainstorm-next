@@ -1,82 +1,96 @@
-import { useState, useRef, useEffect, ElementType } from "react";
+import React, { useState, useRef, useEffect, ElementType } from "react";
 
 interface EditableTextProps {
 	text: string;
 	className?: string;
 	onChange: (newText: string) => void;
-	tag?: ElementType; // t.ex. h1, span, div etc.
+	tag?: ElementType;
 }
-
 export default function EditableText({
 	text,
-	className,
+	className = "",
 	onChange,
 	tag: Tag = "span",
 }: EditableTextProps) {
+	const ref = useRef<HTMLElement | null>(null);
+	const original = useRef(text);
 	const [editing, setEditing] = useState(false);
-	const [value, setValue] = useState(text);
-	const inputRef = useRef<HTMLInputElement | null>(null);
+
+	// Keep original text in sync if parent updates
+	useEffect(() => {
+		original.current = text;
+		if (!editing && ref.current) {
+			ref.current.innerText = text;
+		}
+	}, [text, editing]);
 
 	useEffect(() => {
-		if (editing && inputRef.current) {
-			inputRef.current.focus();
-			inputRef.current.select();
+		if (editing && ref.current) {
+			ref.current.focus();
+
+			const range = document.createRange();
+			range.selectNodeContents(ref.current);
+			const sel = window.getSelection();
+			sel?.removeAllRanges();
+			sel?.addRange(range);
 		}
 	}, [editing]);
 
-	const saveValue = () => {
+	const abort = () => {
+		if (ref.current) {
+			ref.current.innerText = original.current;
+		}
 		setEditing(false);
-		const trimmed = value.trim();
-		if (trimmed !== "") {
-			if (trimmed !== text) onChange(trimmed);
-		} else {
-			setValue(text);
-		}
 	};
 
-	const handleBlur = () => saveValue();
+	const commit = () => {
+		if (!ref.current) return;
 
-	const handleKeyDown = (e: React.KeyboardEvent) => {
-		if (e.key === "Enter") {
-			e.preventDefault();
-			saveValue();
+		const value = ref.current.innerText.trim();
+
+		if (value === "") {
+			abort();
+			return;
 		}
-		if (e.key === "Escape") {
-			setValue(text);
-			setEditing(false);
+
+		if (value !== original.current) {
+			onChange(value);
 		}
-		if (e.key === "Tab") {
-			e.preventDefault();
-			saveValue();
-		}
+
+		setEditing(false);
 	};
-
-	if (editing) {
-		return (
-			<input
-				ref={inputRef}
-				type="text"
-				value={value}
-				name={value}
-				onChange={(e) => setValue(e.target.value)}
-				onBlur={handleBlur}
-				onKeyDown={handleKeyDown}
-				className={className + " border-0 outline-0"} // start with space
-			/>
-		);
-	}
 
 	return (
 		<Tag
-			className={className + " cursor-pointer"}
+			ref={ref}
+			contentEditable={editing}
+			suppressContentEditableWarning
 			tabIndex={0}
-			role="button"
+			role="textbox"
 			aria-label="Editable text"
+			aria-multiline="false"
+			aria-readonly={!editing}
+			className={`
+				${className}
+				inline-block
+				px-1
+				cursor-pointer
+				outline-none
+				rounded
+				focus:ring-2 focus:ring-rain-600 
+			`}
 			onClick={() => setEditing(true)}
-			onKeyDown={(e: React.KeyboardEvent) => {
-				if (e.key === "Enter" || e.key === " ") {
+			onFocus={() => setEditing(true)}
+			onBlur={commit}
+			onKeyDown={(e: React.KeyboardEvent<HTMLElement>) => {
+				if (e.key === "Enter") {
 					e.preventDefault();
-					setEditing(true);
+					commit();
+				}
+
+				if (e.key === "Escape") {
+					e.preventDefault();
+					abort();
 				}
 			}}
 		>

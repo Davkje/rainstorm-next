@@ -4,29 +4,28 @@ import WordChip from "./WordChip";
 import { RiAddLine, RiCloseFill, RiDeleteBinLine } from "@remixicon/react";
 import { Category } from "@/models/ideas";
 import EditableText from "./EditableText";
+import { Word } from "@/models/wordBanks";
 
 type Props = {
 	id: string;
 	title: string;
 	words: string[];
-	// isDraggingWord: boolean;
-	// overCategoryId: string | null;
-	// draggingFrom: string | null;
 	handleRemoveCategory: (id: string) => void;
 	updateCategoryName: (catId: Category["id"], newName: string) => void;
 	addWord: (catId: Category["id"]) => void;
+	onRemoveWord: (catId: Category["id"], word: Word) => void;
+	onClearCategory: (catId: Category["id"]) => void;
 };
 
 export default function IdeaCategory({
 	id,
 	title,
 	words,
-	// isDraggingWord,
-	// overCategoryId,
-	// draggingFrom,
 	handleRemoveCategory,
 	updateCategoryName,
 	addWord,
+	onRemoveWord,
+	onClearCategory,
 }: Props) {
 	const { setNodeRef } = useDroppable({
 		id,
@@ -65,23 +64,26 @@ export default function IdeaCategory({
 						onClick={() => {
 							handleAddWord();
 						}}
-						className="btn--icon text-rain-600 hover:text-rain-300"
+						className="btn--icon text-rain-400 hover:text-rain-200"
 					>
 						<RiAddLine />
 					</button>
-					<span
+					<button
+						type="button"
 						ref={setTrashRef}
-						className={`material-symbols-outlined rounded p-1 transition-all duration-200 ${
-							isOverTrash ? "text-white bg-red-800/50" : "text-rain-600"
+						onClick={() => onClearCategory(id)}
+						aria-label={`Clear all words in ${title}`}
+						className={`btn--icon text-rain-400 hover:text-rain-200 rounded-lg ${
+							isOverTrash && "text-white bg-red-800/50"
 						}`}
 					>
 						<RiDeleteBinLine />
-					</span>
+					</button>
 					<button
 						onClick={() => {
 							handleRemoveCategory(id);
 						}}
-						className="btn--icon text-rain-600 hover:text-rain-300"
+						className="btn--icon text-rain-400 hover:text-rain-200"
 					>
 						<RiCloseFill />
 					</button>
@@ -94,27 +96,18 @@ export default function IdeaCategory({
 						{words.length === 0 ? (
 							<p className="text-rain-600 self-center">Drag word here</p>
 						) : (
-							words.map((word) => <WordChip key={word} word={word} parentId={id} />)
+							words.map((word) => (
+								<WordChip
+									key={word}
+									word={word}
+									parentId={id}
+									onRemove={() => onRemoveWord(id, word)}
+								/>
+							))
 						)}
 					</div>
 				</div>
 			</SortableContext>
-			{/* <div className={`flex justify-end`}>
-				<span
-					ref={setTrashRef}
-					className={`
-			material-symbols-outlined rounded p-1 transition-all duration-200
-			${
-				isDraggingWord && overCategoryId === id && draggingFrom !== "generator"
-					? "opacity-100 scale-100"
-					: "opacity-0 scale-50"
-			}
-			${isOverTrash ? "text-white bg-red-800/50" : "text-rain-400"}
-		`}
-				>
-					<RiDeleteBinLine />
-				</span>
-			</div> */}
 		</div>
 	);
 }

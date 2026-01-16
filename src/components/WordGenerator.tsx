@@ -29,7 +29,7 @@ export default function WordGenerator({
 		<div className="h-full flex flex-col justify-end items-center gap-4">
 			<div className="flex justify-center h-full">
 				<div
-					className={`flex flex-col justify-center transition-opacity duration-75 ${
+					className={`w-full flex flex-col justify-center transition-opacity duration-75 ${
 						isWordLoading ? "opacity-0" : "opacity-100"
 					}`}
 				>
@@ -38,16 +38,10 @@ export default function WordGenerator({
 			</div>
 
 			<div
-				className={`flex flex-wrap gap-2 justify-center w-full transition-opacity duration-1000 ${
+				className={`flex flex-wrap gap-2 justify-center w-full transition-opacity duration-300 ${
 					areBanksLoading ? "opacity-0" : "opacity-100"
 				}`}
 			>
-				<button
-					onClick={onToggleBankLock}
-					className={`btn--icon ${isBankLocked === false ? "text-rain-500" : "text-rain-200"}`}
-				>
-					{isBankLocked ? <RiLockLine /> : <RiLockUnlockLine />}
-				</button>
 				{banks.map((bank) => (
 					<button
 						key={bank}
@@ -59,6 +53,12 @@ export default function WordGenerator({
 						{bank}
 					</button>
 				))}
+				<button
+					onClick={onToggleBankLock}
+					className={`btn--icon ${isBankLocked === false ? "text-rain-500" : "text-rain-200"}`}
+				>
+					{isBankLocked ? <RiLockLine /> : <RiLockUnlockLine />}
+				</button>
 			</div>
 
 			<button

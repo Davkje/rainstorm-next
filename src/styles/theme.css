@@ -5,7 +5,7 @@
 	--font-lateef: var(--font-lateef);
 
 	/* Text Size */
-	--text-3xl: clamp(3rem, 8vw, 9rem);
+	--text-3xl: clamp(3rem, 8vw, 6rem);
 	--text-2xl: clamp(2.5rem, 5vw, 3rem);
 	--text-xl: clamp(1.8rem, 4vw, 2.5rem);
 	--text-lg: clamp(1.2rem, 3vw, 2rem);
