@@ -62,9 +62,9 @@ export default function DefineView({ idea, setIdea, onRemoveCategory }: Props) {
 
 	return (
 		<div className="flex flex-col gap-4 h-full">
-			<div className="grid h-full gap-4">
+			<div className="flex flex-col h-full gap-4">
 				{idea.categories.map((cat) => (
-					<div key={cat.id} className="flex flex-col">
+					<div key={cat.id} className="flex flex-col grow">
 						<div className="flex justify-between">
 							<EditableText
 								text={cat.name}
@@ -81,7 +81,7 @@ export default function DefineView({ idea, setIdea, onRemoveCategory }: Props) {
 								<RiCloseFill />
 							</button>
 						</div>
-						<div className="flex gap-2 py-2">
+						<div className="flex gap-1 py-2">
 							{cat.words.map((word) => (
 								<EditableText
 									key={word}
@@ -93,11 +93,11 @@ export default function DefineView({ idea, setIdea, onRemoveCategory }: Props) {
 							))}
 						</div>
 						<textarea
-							className="text-lg flex grow border-2 border-rain-600 rounded-lg resize-none px-2 placeholder-rain-600"
+							className="text-lg flex grow border-2 border-rain-600 rounded-lg resize-none p-2 placeholder-rain-600 leading-normal min-h-24"
 							value={cat.text}
 							name={`${cat.name}-text-field`}
 							onChange={(e) => updateCategoryText(cat.id, e.target.value)}
-							rows={3}
+							rows={1}
 							placeholder={`${cat.words.join(", ")}...`}
 						/>
 					</div>

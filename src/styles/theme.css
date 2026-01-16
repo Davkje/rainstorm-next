@@ -9,7 +9,7 @@
 	--text-2xl: clamp(2.5rem, 5vw, 3rem);
 	--text-xl: clamp(1.8rem, 4vw, 2.5rem);
 	--text-lg: clamp(1.2rem, 3vw, 2rem);
-	--text-md: clamp(1.1rem, 2.5vw, 1.5rem);
+	--text-md: clamp(1.1rem, 2.7vw, 1.5rem);
 	--text-sm: clamp(1rem, 2vw, 1.2rem);
 
 	/* Headings */

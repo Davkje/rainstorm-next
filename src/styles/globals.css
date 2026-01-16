@@ -60,8 +60,15 @@ body {
 	}
 
 	a {
-		font-size: var(--text-lg);
+		font-size: var(--text-md);
+		line-height: var(--leading-normal);
 		text-decoration: none;
+		color: var(--color-rain-300);
+		transition: color 300ms ease;
+	}
+
+	a:hover {
+		color: var(--color-rain-100);
 	}
 
 	li {
