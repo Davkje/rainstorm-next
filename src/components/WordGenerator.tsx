@@ -10,6 +10,8 @@ type Props = {
 	onChangeBank: (bank: WordBankName) => void;
 	onNewWord: () => void;
 	onToggleBankLock: () => void;
+	isWordLoading: boolean;
+	areBanksLoading: boolean;
 };
 
 export default function WordGenerator({
@@ -20,16 +22,26 @@ export default function WordGenerator({
 	onNewWord,
 	onToggleBankLock,
 	isBankLocked,
+	isWordLoading,
+	areBanksLoading,
 }: Props) {
 	return (
 		<div className="h-full flex flex-col justify-end items-center gap-4">
 			<div className="flex justify-center h-full">
-				<div className="flex flex-col justify-center">
+				<div
+					className={`flex flex-col justify-center transition-opacity duration-600 ${
+						isWordLoading ? "opacity-0" : "opacity-100"
+					}`}
+				>
 					<WordChip word={currentWord} parentId="generator" />
 				</div>
 			</div>
 
-			<div className="flex flex-wrap gap-2 justify-center w-full">
+			<div
+				className={`flex flex-wrap gap-2 justify-center w-full transition-opacity duration-600 ${
+					areBanksLoading ? "opacity-0" : "opacity-100"
+				}`}
+			>
 				<button
 					onClick={onToggleBankLock}
 					className={`btn--icon ${isBankLocked === false ? "text-rain-500" : "text-rain-200"}`}

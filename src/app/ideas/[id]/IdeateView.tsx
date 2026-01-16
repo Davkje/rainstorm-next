@@ -41,9 +41,13 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory }: Props) {
 	const [currentWord, setCurrentWord] = useState<Word>("rain");
 	const [isBankLocked, setIsBankLocked] = useState<boolean>(false);
 
+	const [isWordLoading, setIsWordLoading] = useState(true);
+	const [areBanksLoading, setAreBanksLoading] = useState(true);
+
 	/* -------------------- WORD -------------------- */
 
 	const getRandomWord = async (customBank?: WordBankName) => {
+		setIsWordLoading(true);
 		let bankToUse: WordBankName;
 
 		if (customBank) {
@@ -59,10 +63,14 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory }: Props) {
 			`/api/word-banks/random?bank=${bankToUse}${currentWord ? `&exclude=${currentWord}` : ""}`
 		);
 
-		if (!res.ok) return;
+		if (!res.ok) {
+			setIsWordLoading(false);
+			return;
+		}
 
 		const data = await res.json();
 		setCurrentWord(data.word);
+		setIsWordLoading(false);
 	};
 
 	const addWord = (catId: Category["id"]) => {
@@ -241,6 +249,9 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory }: Props) {
 		let cancelled = false;
 
 		const init = async () => {
+			setAreBanksLoading(true);
+			setIsWordLoading(true);
+
 			const banksRes = await fetch("/api/word-banks");
 			if (!banksRes.ok) return;
 
@@ -258,6 +269,8 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory }: Props) {
 			setBanks(banks);
 			setBank(startBank);
 			setCurrentWord(word);
+			setAreBanksLoading(false);
+			setIsWordLoading(false);
 		};
 
 		init();
@@ -284,6 +297,8 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory }: Props) {
 					onChangeBank={handleChangeBank}
 					onToggleBankLock={toggleBankLock}
 					onNewWord={() => getRandomWord()}
+					isWordLoading={isWordLoading}
+					areBanksLoading={areBanksLoading}
 				/>
 
 				<div className="flex flex-col gap-4">
