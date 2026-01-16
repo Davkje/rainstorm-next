@@ -29,7 +29,9 @@ export default function WordGenerator({
 		<div className="h-full flex flex-col justify-end items-center gap-4">
 			<div className="flex justify-center h-full">
 				<div
-					className={`flex flex-col justify-center ${isWordLoading ? "opacity-0" : "opacity-100"}`}
+					className={`flex flex-col justify-center transition-opacity duration-75 ${
+						isWordLoading ? "opacity-0" : "opacity-100"
+					}`}
 				>
 					<WordChip word={currentWord} parentId="generator" />
 				</div>
