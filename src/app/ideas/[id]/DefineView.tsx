@@ -9,9 +9,10 @@ type Props = {
 	idea: Idea;
 	setIdea: React.Dispatch<React.SetStateAction<Idea | null>>;
 	onRemoveCategory: (id: string) => void;
+	onAddCategory: () => void;
 };
 
-export default function DefineView({ idea, setIdea, onRemoveCategory }: Props) {
+export default function DefineView({ idea, setIdea, onRemoveCategory, onAddCategory }: Props) {
 	const updateCategoryText = (catId: Category["id"], newText: string) => {
 		setIdea((prev) => {
 			if (!prev) return prev;
@@ -63,6 +64,14 @@ export default function DefineView({ idea, setIdea, onRemoveCategory }: Props) {
 	return (
 		<div className="flex flex-col gap-4 h-full">
 			<div className="flex flex-col h-full gap-4">
+				{idea.categories.length === 0 && (
+					<div className="flex flex-col text-center grow justify-center items-center text-rain-400">
+						<span className="text-xl">No categoires</span>
+						<button onClick={() => onAddCategory()} className="btn--primary text-xl">
+							Add new category
+						</button>
+					</div>
+				)}
 				{idea.categories.map((cat) => (
 					<div key={cat.id} className="flex flex-col grow">
 						<div className="flex justify-between">

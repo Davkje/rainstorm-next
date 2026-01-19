@@ -14,7 +14,9 @@ import CopyDropdown from "@/components/CopyDropdown";
 import DownloadDropdown from "@/components/DownloadDropdown";
 import { createCategory } from "@/utils/createCategory";
 import ConfirmModal from "@/components/ui/ConfirmModal";
-import { RiAddBoxLine, RiPencilFill, RiRainyFill } from "@remixicon/react";
+import { RiAddBoxLine, RiPencilFill, RiQuestionLine, RiRainyFill } from "@remixicon/react";
+import { useGlobalKeys } from "@/utils/useGlobalKeys";
+import HelpOverlay from "@/components/HelpOverlay";
 
 interface IdeaPageProps {
 	params: Promise<{ id: string }>;
@@ -24,9 +26,14 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 	const { id } = React.use(params);
 
 	const [idea, setIdea] = useState<Idea | null>(null);
-	const [view, setView] = useState<"define" | "ideate">("ideate");
+	const categories = React.useMemo(() => idea?.categories ?? [], [idea]);
+	type View = "ideate" | "define";
+	const [view, setView] = useState<View>("ideate");
 	const [categoryToDelete, setCategoryToDelete] = useState<Category | null>(null);
+	const [showHelp, setShowHelp] = useState(false);
+	const [showDefineHint, setShowDefineHint] = useState(false);
 
+	/* -------------------- AUTO SAVE -------------------- */
 	const saveStatus = useAutosave<Idea>(
 		idea,
 		(updated) => {
@@ -36,12 +43,57 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 		800
 	);
 
+	/* -------------------- LOAD IDEA -------------------- */
 	useEffect(() => {
 		const allIdeas = loadIdeas();
 		const found = allIdeas.find((i) => i.id === id);
 		// eslint-disable-next-line react-hooks/set-state-in-effect
 		if (found) setIdea(found);
 	}, [id]);
+
+	/* -------------------- DEFINE HINT -------------------- */
+	useEffect(() => {
+		if (!categories.length) return;
+		const allHaveWords = categories.every((cat) => cat.words.length > 0);
+		const totalWords = categories.reduce((sum, cat) => sum + cat.words.length, 0);
+
+		if (allHaveWords && totalWords >= 6) {
+			const showTimer = setTimeout(() => setShowDefineHint(true), 0);
+			const hideTimer = setTimeout(() => setShowDefineHint(false), 3000);
+			return () => {
+				clearTimeout(showTimer);
+				clearTimeout(hideTimer);
+			};
+		}
+	}, [categories]);
+
+	/* -------------------- GLOBAL KEYS -------------------- */
+	useGlobalKeys(
+		"v",
+		() => {
+			setView((prev) => (prev === "ideate" ? "define" : "ideate"));
+		},
+		{
+			ignoreInputs: true,
+		}
+	);
+	useGlobalKeys(
+		"d",
+		() => {
+			setView("define");
+		},
+		{
+			ignoreInputs: true,
+		}
+	);
+	useGlobalKeys(
+		"h",
+		() => {
+			setShowHelp((prev) => !prev);
+		},
+		{ ignoreInputs: true }
+	);
+	useGlobalKeys("Escape", () => setShowHelp(false));
 
 	if (!idea) return <h1 className="w-full text-xl font-bold">Loading...</h1>;
 
@@ -94,6 +146,9 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 					<button onClick={addCategory} className={`btn--icon`}>
 						<RiAddBoxLine />
 					</button>
+					<button onClick={() => setShowHelp((prev) => !prev)} className={`btn--icon`}>
+						<RiQuestionLine />
+					</button>
 					<CopyDropdown idea={idea} />
 					<DownloadDropdown idea={idea} />
 					<span
@@ -107,16 +162,28 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 					</span>
 				</div>
 				<div className="flex items-center gap-3">
-					<div className="flex items-center gap-3 bg-rain-600 p-2 rounded-lg">
+					<div className="flex items-center gap-3 bg-rain-600 p-2 rounded-lg relative">
 						<button
 							onClick={() => setView("ideate")}
 							className={`btn--link ${view === "ideate" ? "text-rain-100" : "text-rain-400"}`}
 						>
 							<RiRainyFill />
 						</button>
+						{showDefineHint && (
+							<div
+								className="
+									absolute top-0 right-full mr-2 font-bold
+									bg-rain-700 text-white w-[200px] text-md h-full flex justify-center items-center rounded shadow-lg
+									anim-fade-in-out z-50"
+							>
+								Ready to Define?
+							</div>
+						)}
 						<button
 							onClick={() => setView("define")}
-							className={`btn--link ${view === "define" ? "text-rain-100" : "text-rain-500"}`}
+							className={`btn--link ${showDefineHint && "anim-blink"} ${
+								view === "define" ? "text-rain-100" : "text-rain-500"
+							}`}
 						>
 							<RiPencilFill />
 						</button>
@@ -125,9 +192,19 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 			</div>
 			{/* VIEW */}
 			{view === "define" ? (
-				<DefineView idea={idea} setIdea={setIdea} onRemoveCategory={removeCategory} />
+				<DefineView
+					idea={idea}
+					setIdea={setIdea}
+					onRemoveCategory={removeCategory}
+					onAddCategory={addCategory}
+				/>
 			) : (
-				<IdeateView idea={idea} setIdea={setIdea} onRemoveCategory={removeCategory} />
+				<IdeateView
+					idea={idea}
+					setIdea={setIdea}
+					onRemoveCategory={removeCategory}
+					onAddCategory={addCategory}
+				/>
 			)}
 			<ConfirmModal
 				open={!!categoryToDelete}
@@ -144,6 +221,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 				onCancel={() => setCategoryToDelete(null)}
 				onConfirm={() => categoryToDelete && confirmRemoveCategory(categoryToDelete.id)}
 			/>
+			<HelpOverlay open={showHelp} onClose={() => setShowHelp(false)} />
 		</div>
 	);
 }
