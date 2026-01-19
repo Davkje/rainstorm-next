@@ -14,9 +14,18 @@ import CopyDropdown from "@/components/CopyDropdown";
 import DownloadDropdown from "@/components/DownloadDropdown";
 import { createCategory } from "@/utils/createCategory";
 import ConfirmModal from "@/components/ui/ConfirmModal";
-import { RiAddBoxLine, RiPencilFill, RiQuestionLine, RiRainyFill } from "@remixicon/react";
+import {
+	RiAddBoxLine,
+	RiArrowDropLeftFill,
+	RiArrowDropRightFill,
+	RiPencilFill,
+	RiQuestionLine,
+	RiRainyFill,
+} from "@remixicon/react";
 import { useGlobalKeys } from "@/utils/useGlobalKeys";
 import HelpOverlay from "@/components/HelpOverlay";
+import { useOneTimeHint } from "@/utils/useOneTimeHint";
+import { isCategoryEmpty } from "@/utils/IsCategoryEmpty";
 
 interface IdeaPageProps {
 	params: Promise<{ id: string }>;
@@ -31,7 +40,11 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 	const [view, setView] = useState<View>("ideate");
 	const [categoryToDelete, setCategoryToDelete] = useState<Category | null>(null);
 	const [showHelp, setShowHelp] = useState(false);
-	const [showDefineHint, setShowDefineHint] = useState(false);
+
+	const allHaveWords = categories?.every((cat) => cat.words.length > 0);
+	const allHaveSomeText = categories?.every((cat) => cat.text.length > 10);
+	const totalWords = categories?.reduce((sum, cat) => sum + cat.words.length, 0);
+	const totalText = categories?.reduce((sum, cat) => sum + cat.text.length, 0);
 
 	/* -------------------- AUTO SAVE -------------------- */
 	const saveStatus = useAutosave<Idea>(
@@ -51,21 +64,16 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 		if (found) setIdea(found);
 	}, [id]);
 
-	/* -------------------- DEFINE HINT -------------------- */
-	useEffect(() => {
-		if (!categories.length) return;
-		const allHaveWords = categories.every((cat) => cat.words.length > 0);
-		const totalWords = categories.reduce((sum, cat) => sum + cat.words.length, 0);
+	/* -------------------- HINTS -------------------- */
+	const showDefineHint = useOneTimeHint({
+		when: allHaveWords && totalWords >= 3,
+		duration: 3000,
+	});
 
-		if (allHaveWords && totalWords >= 6) {
-			const showTimer = setTimeout(() => setShowDefineHint(true), 0);
-			const hideTimer = setTimeout(() => setShowDefineHint(false), 3000);
-			return () => {
-				clearTimeout(showTimer);
-				clearTimeout(hideTimer);
-			};
-		}
-	}, [categories]);
+	const showExportHint = useOneTimeHint({
+		when: allHaveWords && totalWords >= 3 && allHaveSomeText && totalText >= 25,
+		duration: 3000,
+	});
 
 	/* -------------------- GLOBAL KEYS -------------------- */
 	useGlobalKeys(
@@ -95,11 +103,12 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 	);
 	useGlobalKeys("Escape", () => setShowHelp(false));
 
-	if (!idea) return <h1 className="w-full text-xl font-bold">Loading...</h1>;
+	/* --------------------CATEGORIES -------------------- */
 
 	const addCategory = () => {
 		setIdea((prev) => {
 			if (!prev) return prev;
+			if (categories.length >= 5) return prev;
 
 			return {
 				...prev,
@@ -110,9 +119,24 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 	};
 
 	const removeCategory = (categoryId: string) => {
-		const category = idea.categories.find((c) => c.id === categoryId);
+		const category = idea?.categories.find((c) => c.id === categoryId);
 		if (!category) return;
 
+		// EMPTY = DELETE NOW
+		if (isCategoryEmpty(category)) {
+			setIdea((prev) => {
+				if (!prev) return prev;
+
+				return {
+					...prev,
+					categories: prev.categories.filter((c) => c.id !== categoryId),
+					updatedAt: Date.now(),
+				};
+			});
+			return;
+		}
+
+		// NOT EMPTY = MODAL
 		setCategoryToDelete(category);
 	};
 
@@ -126,15 +150,16 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 				updatedAt: Date.now(),
 			};
 		});
-
 		setCategoryToDelete(null);
 	};
 
+	if (!idea) return <h1 className="w-full text-xl font-bold">Loading...</h1>;
+
 	return (
-		<div className="grid grid-rows-[auto_1fr] h-full">
+		<div className="grid grid-rows-[auto_1fr] gap-2 h-full">
 			{/* HEADER */}
-			<div className="flex justify-between items-center mb-2">
-				<div className="flex gap-2 justify-center items-center">
+			<div className="flex justify-between items-center h-full">
+				<div className="flex gap-2 justify-center items-center h-full">
 					<EditableText
 						text={idea.name}
 						tag="h1"
@@ -143,14 +168,21 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 							setIdea((prev) => (prev ? { ...prev, name: newName, updatedAt: Date.now() } : prev))
 						}
 					/>
-					<button onClick={addCategory} className={`btn--icon`}>
-						<RiAddBoxLine />
-					</button>
 					<button onClick={() => setShowHelp((prev) => !prev)} className={`btn--icon`}>
 						<RiQuestionLine />
 					</button>
-					<CopyDropdown idea={idea} />
-					<DownloadDropdown idea={idea} />
+					<button onClick={addCategory} className={`btn--icon`}>
+						<RiAddBoxLine />
+					</button>
+					<div className="relative flex gap-2 h-full justify-center items-center">
+						<CopyDropdown idea={idea} />
+						<DownloadDropdown idea={idea} />
+						{showExportHint && (
+							<div className="absolute top-0 left-full h-full font-bold bg-rain-700 text-white w-max ml-2 pl-2 pr-5 text-md flex justify-center items-center rounded shadow-lg z-50 anim-fade-in-left">
+								<RiArrowDropLeftFill /> Ready to Export?
+							</div>
+						)}
+					</div>
 					<span
 						className={`text-md text-rain-400 font-bold transition-colors duration-400 ease-out ${
 							saveStatus === "saving" ? "text-rain-400" : "text-transparent"
@@ -172,11 +204,11 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 						{showDefineHint && (
 							<div
 								className="
-									absolute top-0 right-full mr-2 font-bold
-									bg-rain-700 text-white w-[200px] text-md h-full flex justify-center items-center rounded shadow-lg
-									anim-fade-in-out z-50"
+									absolute top-0 right-full mr-2 pl-5 pr-2 font-bold
+									bg-rain-700 text-white w-max text-md h-full flex justify-center items-center rounded shadow-lg
+									anim-fade-in-right z-50"
 							>
-								Ready to Define?
+								Ready to Define? <RiArrowDropRightFill />
 							</div>
 						)}
 						<button
@@ -210,8 +242,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 				open={!!categoryToDelete}
 				title={`Delete "${categoryToDelete?.name}"`}
 				description={
-					categoryToDelete &&
-					(categoryToDelete.text.trim().length > 0 || categoryToDelete.words.length > 0)
+					categoryToDelete && !isCategoryEmpty(categoryToDelete)
 						? "This category is not empty. All text and words will be permanently deleted."
 						: "This action cannot be undone."
 				}

@@ -37,6 +37,8 @@ export default function IdeaCategory({
 		data: { parentId: id, isTrash: true },
 	});
 
+	const isMaxWords = words.length >= 10;
+
 	const onUpdateCategoryName = (id: string, v: string) => {
 		const catId = id;
 		const newName = v;
@@ -61,10 +63,11 @@ export default function IdeaCategory({
 				/>
 				<div className="flex">
 					<button
+						disabled={isMaxWords}
 						onClick={() => {
 							handleAddWord();
 						}}
-						className="btn--icon text-rain-400 hover:text-rain-200"
+						className="btn--icon text-rain-400 hover:text-rain-200 disabled:text-rain-600"
 					>
 						<RiAddLine />
 					</button>

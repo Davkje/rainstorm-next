@@ -46,6 +46,8 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 	const [isWordLoading, setIsWordLoading] = useState(true);
 	const [areBanksLoading, setAreBanksLoading] = useState(true);
 
+	const maxWordsPerCategory = 10;
+
 	/* -------------------- WORD -------------------- */
 
 	const getRandomWord = async (customBank?: WordBankName) => {
@@ -85,6 +87,7 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 				...prev,
 				categories: prev.categories.map((cat) => {
 					if (cat.id !== catId) return cat;
+					if (cat.words.length >= 10) return cat;
 
 					// undvik dubbletter
 					if (cat.words.includes(currentWord)) return cat;
@@ -198,9 +201,14 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 		const { word, parentId: from } = activeData;
 		const to = overData.parentId;
 
-		// Hindra drop i generator
-		if (to === "generator") return;
+		// Max Words
+		const targetCategory = idea.categories.find((c) => c.id === to);
+		if (targetCategory && targetCategory.words.length >= maxWordsPerCategory && from !== to) {
+			return;
+		}
 
+		// Cant drop in generator
+		if (to === "generator") return;
 		let generateWordOnDrop = false;
 
 		setIdea((prev) => {
@@ -223,9 +231,13 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 
 				return {
 					...prev,
-					categories: prev.categories.map((c) =>
-						c.id === to && !c.words.includes(word) ? { ...c, words: [...c.words, word] } : c
-					),
+					categories: prev.categories.map((c) => {
+						if (c.id !== to) return c;
+						if (c.words.length >= maxWordsPerCategory) return c;
+						if (c.words.includes(word)) return c;
+
+						return { ...c, words: [...c.words, word] };
+					}),
 					updatedAt: Date.now(),
 				};
 			}
@@ -233,7 +245,9 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 			/* -------- BETWEEN CATEGORIES -------- */
 			if (from !== to) {
 				const target = prev.categories.find((c) => c.id === to);
-				if (target?.words.includes(word)) return prev;
+				if (!target) return prev;
+				if (target.words.length >= maxWordsPerCategory) return prev;
+				if (target.words.includes(word)) return prev;
 
 				return {
 					...prev,
