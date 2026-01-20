@@ -39,7 +39,7 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 	// ALL BANKS
 	const [banks, setBanks] = useState<WordBankName[]>([]);
 	// ACTIVE BANKS IN PROJECT
-	const [activeBanks, setActiveBanks] = useState<WordBankName[]>([]);
+	const activeBanks = idea.activeBanks;
 	// SELECTED BANKS FOR FILTER
 	const [selectedBanks, setSelectedBanks] = useState<WordBankName[]>([]);
 	// WORD IN GENERATOR
@@ -131,14 +131,24 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 	/* -------------------- BANKS -------------------- */
 
 	const toggleActiveBank = (bank: WordBankName) => {
-		setActiveBanks((prev) => {
-			const next = prev.includes(bank) ? prev.filter((b) => b !== bank) : [...prev, bank];
+		const currentActive = idea.activeBanks;
 
-			// SYNC W. SELECTED
-			setSelectedBanks((sel) => sel.filter((b) => next.includes(b)));
+		const nextActive = currentActive.includes(bank)
+			? currentActive.filter((b) => b !== bank)
+			: [...currentActive, bank];
 
-			return next;
+		// UPDATE IDEA& ACTIVE BANKS
+		setIdea((prev) => {
+			if (!prev) return prev;
+			return {
+				...prev,
+				activeBanks: nextActive,
+				updatedAt: Date.now(),
+			};
 		});
+
+		// SYNC SELECTED
+		setSelectedBanks((sel) => sel.filter((b) => nextActive.includes(b)));
 	};
 
 	const toggleSelectedBank = (bank: WordBankName) => {
@@ -316,7 +326,6 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 			if (cancelled || banks.length === 0) return;
 
 			setBanks(banks);
-			setActiveBanks(idea.activeBanks ?? banks);
 
 			setSelectedBanks([]);
 

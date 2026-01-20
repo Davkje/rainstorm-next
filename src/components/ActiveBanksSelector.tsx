@@ -12,15 +12,15 @@ export default function ActiveBanksOverlay({ banks, activeBanks, onToggleBank, o
 	return (
 		<FocusTrap>
 			<div
-				className="fixed inset-0 bg-black/50 flex justify-center items-center z-50"
+				className="fixed inset-0 bg-black/40 flex justify-center items-center z-50"
 				onClick={onClose}
 			>
 				<div
-					className="bg-rain-800 p-6 rounded-2xl w-max max-h-[80vh] overflow-y-auto flex flex-col gap-4"
+					className="bg-rain-800 p-8 rounded-2xl w-max max-h-[60vh] overflow-y-auto flex items-center flex-col gap-4"
 					onClick={(e) => e.stopPropagation()}
 				>
 					<h2 className="text-center uppercase">Active Banks</h2>
-					<div className="grid grid-cols-2 grid-rows-5 gap-3 grid-flow-col">
+					<div className="grid grid-cols-5 grid-rows-2 gap-3">
 						{[...banks]
 							.sort((a, b) => a.localeCompare(b))
 							.map((bank) => {
@@ -31,8 +31,8 @@ export default function ActiveBanksOverlay({ banks, activeBanks, onToggleBank, o
 										onClick={() => onToggleBank(bank)}
 										className={`btn--primary capitalize ${
 											isActive
-												? "bg-rain-700 text-rain-200"
-												: "bg-rain-900/50 text-rain-400 border-transparent"
+												? "bg-rain-700 text-rain-200 border-rain-600"
+												: "bg-rain-900/40 text-rain-400 border-transparent"
 										}`}
 									>
 										{bank}
