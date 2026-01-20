@@ -35,7 +35,7 @@ export default function WordGenerator({
 						isWordLoading ? "opacity-0" : "opacity-100"
 					}`}
 				>
-					{!currentWord && (
+					{!currentWord && !isWordLoading && (
 						<span className="text-rain-600 select-none text-2xl font-bold uppercase">
 							Generate below
 						</span>

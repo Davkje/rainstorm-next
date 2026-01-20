@@ -220,8 +220,24 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 			return;
 		}
 
-		// Cant drop in generator
-		if (to === "generator") return;
+		/* -------- DROP ON GENERATOR -------- */
+		if (to === "generator" && from !== "generator") {
+			// REMOVE WORD IF DROPED IN GENERATOR
+			setIdea((prev) => {
+				if (!prev) return prev;
+
+				return {
+					...prev,
+					categories: prev.categories.map((c) =>
+						c.id === from ? { ...c, words: c.words.filter((w) => w !== word) } : c,
+					),
+					updatedAt: Date.now(),
+				};
+			});
+
+			return;
+		}
+
 		let generateWordOnDrop = false;
 
 		setIdea((prev) => {
