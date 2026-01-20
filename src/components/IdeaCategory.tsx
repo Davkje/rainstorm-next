@@ -60,6 +60,7 @@ export default function IdeaCategory({
 					className="text-lg font-bold leading-8 inline-block"
 					tag="h2"
 					onChange={(v) => onUpdateCategoryName(id, v)}
+					showEditButton
 				/>
 				<div className="flex">
 					<button

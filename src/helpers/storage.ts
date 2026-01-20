@@ -83,3 +83,9 @@ export function removeIdea(ideaId: Idea["id"]) {
 	saveIdeas(updated);
 	return updated;
 }
+
+// REMOVE ALL IDEAS
+export function removeAllIdeas() {
+	if (typeof window === "undefined") return;
+	localStorage.removeItem("ideas");
+}

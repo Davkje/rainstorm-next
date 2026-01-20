@@ -10,6 +10,7 @@ import {
 	loadTemplates,
 	createIdeaFromTemplate,
 	removeIdea,
+	removeAllIdeas,
 } from "@/helpers/storage";
 
 import { Idea } from "@/models/ideas";
@@ -21,6 +22,7 @@ export default function IdeasPage() {
 	const [ideas, setIdeas] = useState<Idea[]>([]);
 	const [templates] = useState(loadTemplates());
 	const [ideaToDelete, setIdeaToDelete] = useState<Idea | null>(null);
+	const [confirmDeleteAll, setConfirmDeleteAll] = useState(false);
 
 	useEffect(() => {
 		const timeout = setTimeout(() => {
@@ -82,6 +84,29 @@ export default function IdeasPage() {
 					</ul>
 				)}
 			</div>
+			{ideas.length > 0 && (
+				<button
+					onClick={() => setConfirmDeleteAll(true)}
+					className="btn--danger place-self-center mt-4 flex items-center gap-1"
+					disabled={ideas.length === 0}
+				>
+					<RiDeleteBinLine />
+					Delete all
+				</button>
+			)}
+			<ConfirmModal
+				open={confirmDeleteAll}
+				title="Delete ALL ideas"
+				description={`This will permanently delete ${ideas.length} ideas. This action cannot be undone.`}
+				confirmText="Delete all"
+				danger
+				onCancel={() => setConfirmDeleteAll(false)}
+				onConfirm={() => {
+					removeAllIdeas();
+					setIdeas([]);
+					setConfirmDeleteAll(false);
+				}}
+			/>
 			<ConfirmModal
 				open={!!ideaToDelete}
 				title={`Delete "${ideaToDelete?.name}"`}

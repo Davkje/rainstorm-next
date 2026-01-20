@@ -53,7 +53,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 			const allIdeas = loadIdeas();
 			saveIdeas(allIdeas.map((i) => (i.id === updated.id ? updated : i)));
 		},
-		800
+		800,
 	);
 
 	/* -------------------- LOAD IDEA -------------------- */
@@ -83,7 +83,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 		},
 		{
 			ignoreInputs: true,
-		}
+		},
 	);
 	useGlobalKeys(
 		"d",
@@ -92,14 +92,14 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 		},
 		{
 			ignoreInputs: true,
-		}
+		},
 	);
 	useGlobalKeys(
 		"h",
 		() => {
 			setShowHelp((prev) => !prev);
 		},
-		{ ignoreInputs: true }
+		{ ignoreInputs: true },
 	);
 	useGlobalKeys("Escape", () => setShowHelp(false));
 
@@ -164,6 +164,8 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 						text={idea.name}
 						tag="h1"
 						className="text-2xl font-bold leading-9"
+						showEditButton
+						editButtonSize={24}
 						onChange={(newName) =>
 							setIdea((prev) => (prev ? { ...prev, name: newName, updatedAt: Date.now() } : prev))
 						}

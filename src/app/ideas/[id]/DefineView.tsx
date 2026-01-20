@@ -80,6 +80,8 @@ export default function DefineView({ idea, setIdea, onRemoveCategory, onAddCateg
 								className="text-xl font-bold leading-normal"
 								tag="h2"
 								onChange={(v) => updateCategoryName(cat.id, v)}
+								showEditButton
+								editButtonSize={20}
 							/>
 							<button
 								onClick={() => {

@@ -1,16 +1,22 @@
 import React, { useState, useRef, useEffect, ElementType } from "react";
+import { RiPencilFill } from "@remixicon/react";
 
 interface EditableTextProps {
 	text: string;
 	className?: string;
 	onChange: (newText: string) => void;
 	tag?: ElementType;
+	showEditButton?: boolean;
+	editButtonSize?: number;
 }
+
 export default function EditableText({
 	text,
 	className = "",
-	onChange,
 	tag: Tag = "span",
+	onChange,
+	showEditButton,
+	editButtonSize = 16,
 }: EditableTextProps) {
 	const ref = useRef<HTMLElement | null>(null);
 	const original = useRef(text);
@@ -61,16 +67,17 @@ export default function EditableText({
 	};
 
 	return (
-		<Tag
-			ref={ref}
-			contentEditable={editing}
-			suppressContentEditableWarning
-			tabIndex={0}
-			role="textbox"
-			aria-label="Editable text"
-			aria-multiline="false"
-			aria-readonly={!editing}
-			className={`
+		<div className="inline-flex items-center gap-1">
+			<Tag
+				ref={ref}
+				contentEditable={editing}
+				suppressContentEditableWarning
+				tabIndex={0}
+				role="textbox"
+				aria-label="Editable text"
+				aria-multiline="false"
+				aria-readonly={!editing}
+				className={`
 				${className}
 				inline-block
 				px-1
@@ -79,22 +86,35 @@ export default function EditableText({
 				rounded
 				focus:ring-2 focus:ring-rain-600 
 			`}
-			onClick={() => setEditing(true)}
-			onFocus={() => setEditing(true)}
-			onBlur={commit}
-			onKeyDown={(e: React.KeyboardEvent<HTMLElement>) => {
-				if (e.key === "Enter") {
-					e.preventDefault();
-					commit();
-				}
+				onClick={() => setEditing(true)}
+				onFocus={() => setEditing(true)}
+				onBlur={commit}
+				onKeyDown={(e: React.KeyboardEvent<HTMLElement>) => {
+					if (e.key === "Enter") {
+						e.preventDefault();
+						commit();
+					}
 
-				if (e.key === "Escape") {
-					e.preventDefault();
-					abort();
-				}
-			}}
-		>
-			{text}
-		</Tag>
+					if (e.key === "Escape") {
+						e.preventDefault();
+						abort();
+					}
+				}}
+			>
+				{text}
+			</Tag>
+
+			{showEditButton && (
+				<button
+					type="button"
+					className="btn--icon"
+					onClick={() => setEditing(true)}
+					aria-label="Edit text"
+					tabIndex={-1}
+				>
+					<RiPencilFill size={editButtonSize} />
+				</button>
+			)}
+		</div>
 	);
 }
