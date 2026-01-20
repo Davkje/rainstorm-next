@@ -317,6 +317,7 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 
 			setBanks(banks);
 			setActiveBanks(idea.activeBanks ?? banks);
+
 			setSelectedBanks([]);
 
 			setAreBanksLoading(false);
