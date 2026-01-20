@@ -1,9 +1,11 @@
 import { Category } from "./ideas";
+import { WordBankName } from "./wordBanks";
 
 export interface Template {
 	id: string;
 	name: string;
 	categories: Category[];
+	activeBanks?: WordBankName[];
 }
 
 // Default templates
@@ -12,6 +14,18 @@ export const defaultTemplates: Template[] = [
 		id: "empty",
 		name: "Empty",
 		categories: [{ id: "Empty", name: "Empty", text: "", words: [] }],
+		activeBanks: [
+			"abstract",
+			"adjective",
+			"creature",
+			"emotion",
+			"magic",
+			"nature",
+			"object",
+			"place",
+			"role",
+			"verb",
+		],
 	},
 	{
 		id: "song",
@@ -21,6 +35,7 @@ export const defaultTemplates: Template[] = [
 			{ id: "pre", name: "Pre-Chorus", text: "", words: [] },
 			{ id: "chorus", name: "Chorus", text: "", words: [] },
 		],
+		activeBanks: ["abstract", "adjective", "emotion", "nature", "place", "role", "verb"],
 	},
 	{
 		id: "story",
@@ -30,6 +45,7 @@ export const defaultTemplates: Template[] = [
 			{ id: "conflict", name: "Conflict", text: "", words: [] },
 			{ id: "resolution", name: "Resolution", text: "", words: [] },
 		],
+		activeBanks: ["abstract", "creature", "emotion", "magic", "object", "role", "verb"],
 	},
 	{
 		id: "game",
@@ -39,5 +55,6 @@ export const defaultTemplates: Template[] = [
 			{ id: "loop", name: "Loop", text: "", words: [] },
 			{ id: "win", name: "Win", text: "", words: [] },
 		],
+		activeBanks: ["abstract", "adjective", "creature", "emotion", "magic", "nature"],
 	},
 ];

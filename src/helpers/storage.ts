@@ -64,6 +64,7 @@ export function createIdeaFromTemplate(template: Template): Idea {
 			text: "",
 			words: [...(c.words || [])],
 		})),
+		activeBanks: template.activeBanks ? [...template.activeBanks] : [],
 	};
 }
 

@@ -5,7 +5,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { RiCloseLine } from "@remixicon/react";
 
 type WordChipProps = {
-	word: Word;
+	word: Word | null;
 	parentId: Category["id"] | "generator";
 	onRemove?: () => void;
 };
@@ -30,7 +30,8 @@ export default function WordChip({ word, parentId, onRemove }: WordChipProps) {
 
 	const baseClasses =
 		"flex justify-center items-center rounded-lg text-rain-100 capitalize select-none transition-all";
-	const generatorClasses = "px-10 text-3xl bg-rain-700 font-bold uppercase hover:bg-rain-600";
+	const generatorClasses =
+		"px-10 text-3xl bg-rain-700 font-bold uppercase hover:bg-rain-600 shadow-black-red shadow-[0_10px_24px_rgba(0,0,0,0.20)]";
 	const categoryClasses =
 		"group relative gap-1 bg-rain-700 px-4 py-1 text-lg font-bold hover:bg-rain-600";
 
@@ -44,7 +45,7 @@ export default function WordChip({ word, parentId, onRemove }: WordChipProps) {
 			className={`
 				${baseClasses}
 				${parentId === "generator" ? generatorClasses : categoryClasses}
-				${isDragging ? "bg-transparent text-transparent" : ""}
+				${isDragging ? "bg-transparent text-transparent shadow-transparent" : ""}
 				`}
 			onKeyDown={(e) => {
 				if (parentId === "generator") return;

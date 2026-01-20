@@ -1,10 +1,11 @@
-import { Word } from "./wordBanks";
+import { Word, WordBankName } from "./wordBanks";
 
 export interface Idea {
 	id: string;
 	templateId: string;
 	name: string;
 	categories: Category[];
+	activeBanks: WordBankName[];
 	updatedAt: number;
 }
 

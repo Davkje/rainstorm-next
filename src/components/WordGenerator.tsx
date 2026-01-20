@@ -1,29 +1,31 @@
 import { Word, WordBankName } from "@/models/wordBanks";
 import WordChip from "./WordChip";
-import { RiLockLine, RiLockUnlockLine } from "@remixicon/react";
+import { RiArrowRightSFill, RiCloseLine } from "@remixicon/react";
 
 type Props = {
-	currentWord: Word;
-	isBankLocked: boolean;
-	banks: WordBankName[];
-	activeBank: WordBankName;
-	onChangeBank: (bank: WordBankName) => void;
+	currentWord: Word | null;
+	currentBank: WordBankName | null;
+	activeBanks: WordBankName[];
+	selectedBanks: WordBankName[];
+	onToggleSelectedBank: (bank: WordBankName) => void;
+	onClearSelected: () => void;
 	onNewWord: () => void;
-	onToggleBankLock: () => void;
 	isWordLoading: boolean;
 	areBanksLoading: boolean;
+	onOpenActiveBank: () => void;
 };
 
 export default function WordGenerator({
 	currentWord,
-	banks,
-	activeBank,
-	onChangeBank,
+	currentBank,
+	activeBanks,
+	selectedBanks,
+	onToggleSelectedBank,
+	onClearSelected,
 	onNewWord,
-	onToggleBankLock,
-	isBankLocked,
 	isWordLoading,
 	areBanksLoading,
+	onOpenActiveBank,
 }: Props) {
 	return (
 		<div className="h-full flex flex-col justify-end items-center gap-4">
@@ -33,39 +35,62 @@ export default function WordGenerator({
 						isWordLoading ? "opacity-0" : "opacity-100"
 					}`}
 				>
-					<WordChip word={currentWord} parentId="generator" />
+					{!currentWord && !isWordLoading && (
+						<span className="text-rain-600 select-none text-2xl font-bold uppercase">
+							Generate below
+						</span>
+					)}
+
+					{currentWord && <WordChip word={currentWord} parentId="generator" />}
 				</div>
 			</div>
-
 			<div
 				className={`flex flex-wrap gap-2 justify-center w-full transition-opacity duration-300 ${
 					areBanksLoading ? "opacity-0" : "opacity-100"
 				}`}
 			>
-				{banks.map((bank) => (
+				{activeBanks
+					.slice()
+					.sort((a, b) => a.localeCompare(b))
+					.map((bank) => {
+						const isSelected = selectedBanks.includes(bank);
+						const isCurrentBank = currentBank === bank;
+						return (
+							<button
+								key={bank}
+								onClick={() => onToggleSelectedBank(bank)}
+								className={`btn--primary text-md px-4 py-0 capitalize ${
+									isSelected
+										? "text-rain-200 border-rain-500 bg-rain-800 hover:text-rain-100"
+										: "text-rain-400 border-transparent bg-rain-700 hover:text-rain-100"
+								} ${isCurrentBank && "!bg-rain-600 !text-rain-200"}
+								`}
+							>
+								{bank}
+							</button>
+						);
+					})}
+				<div className="flex gap-2">
 					<button
-						key={bank}
-						onClick={() => onChangeBank(bank)}
-						className={`btn--primary flex-0 py-2 px-4 rounded-xl text-md capitalize border-rain-400 ${
-							activeBank === bank ? "" : "text-rain-400 border-rain-500"
-						} hover:border-rain-400 hover:text-rain-200`}
+						onClick={onClearSelected}
+						className={`btn--primary flex items-center text-md py-0 px-4 border-rain-500 hover:border-rain-400 ${selectedBanks.length <= 0 && "text-rain-500 bg-rain-700 border-transparent hover:border-transparent"}`}
 					>
-						{bank}
+						Clear <RiCloseLine />
 					</button>
-				))}
-				<button
-					onClick={onToggleBankLock}
-					className={`btn--icon ${isBankLocked === false ? "text-rain-500" : "text-rain-200"}`}
-				>
-					{isBankLocked ? <RiLockLine /> : <RiLockUnlockLine />}
-				</button>
+					<button
+						onClick={() => onOpenActiveBank()}
+						className="btn--primary text-md px-4 py-0 capitalize flex justify-center items-center pl-5 pr-2 text-rain-400 border-transparent bg-rain-700 hover:text-rain-100"
+					>
+						Banks <RiArrowRightSFill />
+					</button>
+				</div>
 			</div>
 
 			<button
 				className="btn--primary w-full px-8 py-8  text-xl uppercase font-extrabold"
 				onClick={() => onNewWord()}
 			>
-				New Word
+				Generate Word
 			</button>
 		</div>
 	);

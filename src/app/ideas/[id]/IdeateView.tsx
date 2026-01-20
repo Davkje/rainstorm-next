@@ -9,7 +9,7 @@ import {
 	useSensors,
 	DragOverlay,
 } from "@dnd-kit/core";
-import type { DragStartEvent, DragOverEvent, DragEndEvent } from "@dnd-kit/core";
+import type { DragStartEvent, DragEndEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 
 import { Category, DragOverData, DragWordData, Idea } from "@/models/ideas";
@@ -19,6 +19,7 @@ import WordChip from "@/components/WordChip";
 import IdeaCategory from "@/components/IdeaCategory";
 import { Word, WordBankName } from "@/models/wordBanks";
 import { useGlobalKeys } from "@/utils/useGlobalKeys";
+import ActiveBanksOverlay from "@/components/ActiveBanksSelector";
 
 type Props = {
 	idea: Idea;
@@ -35,36 +36,43 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 		parentId: string;
 	} | null>(null);
 
-	const [isDraggingWord, setIsDraggingWord] = useState(false);
-	const [overCategoryId, setOverCategoryId] = useState<string | null>(null);
-
+	// ALL BANKS
 	const [banks, setBanks] = useState<WordBankName[]>([]);
-	const [bank, setBank] = useState<WordBankName>("nature");
-	const [currentWord, setCurrentWord] = useState<Word>("rain");
-	const [isBankLocked, setIsBankLocked] = useState<boolean>(false);
+	// ACTIVE BANKS IN PROJECT
+	const [activeBanks, setActiveBanks] = useState<WordBankName[]>([]);
+	// SELECTED BANKS FOR FILTER
+	const [selectedBanks, setSelectedBanks] = useState<WordBankName[]>([]);
+	// WORD IN GENERATOR
+	const [currentWord, setCurrentWord] = useState<Word | null>(null);
+	// BANK OF CURRENT WORD
+	const [currentBank, setCurrentBank] = useState<WordBankName | null>(null);
 
 	const [isWordLoading, setIsWordLoading] = useState(true);
 	const [areBanksLoading, setAreBanksLoading] = useState(true);
+
+	const [showActiveBanksOverlay, setShowActiveBanksOverlay] = useState(false);
 
 	const maxWordsPerCategory = 10;
 
 	/* -------------------- WORD -------------------- */
 
-	const getRandomWord = async (customBank?: WordBankName) => {
-		setIsWordLoading(true);
-		let bankToUse: WordBankName;
-
-		if (customBank) {
-			bankToUse = customBank;
-		} else if (isBankLocked && bank) {
-			bankToUse = bank;
-		} else {
-			bankToUse = getRandomBank(bank ?? undefined);
-			setBank(bankToUse);
+	const getRandomWord = async () => {
+		if (banks.length === 0) {
+			setIsWordLoading(false);
+			return;
 		}
 
+		setIsWordLoading(true);
+
+		// SELECTED, OTHERWISE ACTIVE, OTHERWISE ALL BANKS
+		const banksToUse =
+			selectedBanks.length > 0 ? selectedBanks : activeBanks.length > 0 ? activeBanks : banks;
+
+		const index = Math.floor(Math.random() * banksToUse.length);
+		const bankToUse = banksToUse[index];
+
 		const res = await fetch(
-			`/api/word-banks/random?bank=${bankToUse}${currentWord ? `&exclude=${currentWord}` : ""}`
+			`/api/word-banks/random?bank=${bankToUse}${currentWord ? `&exclude=${currentWord}` : ""}`,
 		);
 
 		if (!res.ok) {
@@ -72,8 +80,10 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 			return;
 		}
 
-		const data = await res.json();
-		setCurrentWord(data.word);
+		const { word } = await res.json();
+		setCurrentWord(word);
+		setCurrentBank(bankToUse);
+		console.log(currentBank);
 		setIsWordLoading(false);
 	};
 
@@ -89,7 +99,7 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 					if (cat.id !== catId) return cat;
 					if (cat.words.length >= 10) return cat;
 
-					// undvik dubbletter
+					// NO DOUBLES
 					if (cat.words.includes(currentWord)) return cat;
 
 					return {
@@ -111,7 +121,7 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 			return {
 				...prev,
 				categories: prev.categories.map((cat) =>
-					cat.id === catId ? { ...cat, words: cat.words.filter((w) => w !== word) } : cat
+					cat.id === catId ? { ...cat, words: cat.words.filter((w) => w !== word) } : cat,
 				),
 				updatedAt: Date.now(),
 			};
@@ -120,24 +130,25 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 
 	/* -------------------- BANKS -------------------- */
 
-	const getRandomBank = (exclude?: WordBankName) => {
-		if (banks.length === 0) return bank;
+	const toggleActiveBank = (bank: WordBankName) => {
+		setActiveBanks((prev) => {
+			const next = prev.includes(bank) ? prev.filter((b) => b !== bank) : [...prev, bank];
 
-		const available = exclude ? banks.filter((b) => b !== exclude) : banks;
+			// SYNC W. SELECTED
+			setSelectedBanks((sel) => sel.filter((b) => next.includes(b)));
 
-		if (available.length === 0) return exclude ?? bank;
-
-		const index = Math.floor(Math.random() * available.length);
-		return available[index];
+			return next;
+		});
 	};
 
-	const handleChangeBank = (newBank: WordBankName) => {
-		setBank(newBank);
-		getRandomWord(newBank);
+	const toggleSelectedBank = (bank: WordBankName) => {
+		setSelectedBanks((prev) =>
+			prev.includes(bank) ? prev.filter((b) => b !== bank) : [...prev, bank],
+		);
 	};
 
-	const toggleBankLock = () => {
-		setIsBankLocked((prev) => !prev);
+	const clearSelectedBanks = () => {
+		setSelectedBanks([]);
 	};
 
 	/* -------------------- CATEGORY -------------------- */
@@ -177,18 +188,10 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 		if (!data) return;
 
 		setDraggingWord(data);
-		setIsDraggingWord(true);
-	};
-
-	const handleDragOver = (event: DragOverEvent) => {
-		const overParent = event.over?.data?.current?.parentId;
-		setOverCategoryId(overParent ?? null);
 	};
 
 	const handleDragEnd = (event: DragEndEvent) => {
 		setDraggingWord(null);
-		setIsDraggingWord(false);
-		setOverCategoryId(null);
 
 		const { active, over } = event;
 		if (!active || !over) return;
@@ -219,7 +222,7 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 				return {
 					...prev,
 					categories: prev.categories.map((c) =>
-						c.id === from ? { ...c, words: c.words.filter((w) => w !== word) } : c
+						c.id === from ? { ...c, words: c.words.filter((w) => w !== word) } : c,
 					),
 					updatedAt: Date.now(),
 				};
@@ -295,20 +298,10 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 		},
 		{
 			ignoreInputs: true,
-		}
-	);
-	useGlobalKeys(
-		"l",
-		() => {
-			toggleBankLock();
 		},
-		{
-			ignoreInputs: true,
-		}
 	);
 
 	/* -------------------- INIT -------------------- */
-
 	useEffect(() => {
 		let cancelled = false;
 
@@ -322,19 +315,13 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 			const { banks } = await banksRes.json();
 			if (cancelled || banks.length === 0) return;
 
-			const startBank = banks[Math.floor(Math.random() * banks.length)];
-
-			const wordRes = await fetch(`/api/word-banks/random?bank=${startBank}`);
-			if (!wordRes.ok) return;
-
-			const { word } = await wordRes.json();
-			if (cancelled) return;
-
 			setBanks(banks);
-			setBank(startBank);
-			setCurrentWord(word);
+			setActiveBanks(idea.activeBanks ?? banks);
+			setSelectedBanks([]);
+
 			setAreBanksLoading(false);
-			setIsWordLoading(false);
+
+			await getRandomWord();
 		};
 
 		init();
@@ -349,20 +336,20 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 			sensors={sensors}
 			collisionDetection={closestCenter}
 			onDragStart={handleDragStart}
-			onDragOver={handleDragOver}
 			onDragEnd={handleDragEnd}
 		>
 			<div className="flex flex-col-reverse gap-4 sm:grid grid-cols-1 sm:grid-cols-2">
 				<WordGenerator
 					currentWord={currentWord}
-					banks={banks}
-					activeBank={bank}
-					isBankLocked={isBankLocked}
-					onChangeBank={handleChangeBank}
-					onToggleBankLock={toggleBankLock}
-					onNewWord={() => getRandomWord()}
+					currentBank={currentBank}
+					activeBanks={activeBanks}
+					selectedBanks={selectedBanks}
+					onToggleSelectedBank={toggleSelectedBank}
+					onClearSelected={clearSelectedBanks}
+					onNewWord={getRandomWord}
 					isWordLoading={isWordLoading}
 					areBanksLoading={areBanksLoading}
+					onOpenActiveBank={() => setShowActiveBanksOverlay(true)}
 				/>
 
 				<div className="flex flex-col gap-4">
@@ -385,12 +372,17 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 							addWord={addWord}
 							onRemoveWord={removeWordFromCategory}
 							onClearCategory={clearCategory}
-							// isDraggingWord={isDraggingWord}
-							// overCategoryId={overCategoryId}
-							// draggingFrom={draggingWord?.parentId || null}
 						/>
 					))}
 				</div>
+				{showActiveBanksOverlay && (
+					<ActiveBanksOverlay
+						banks={banks}
+						activeBanks={activeBanks}
+						onToggleBank={toggleActiveBank}
+						onClose={() => setShowActiveBanksOverlay(false)}
+					/>
+				)}
 
 				<DragOverlay dropAnimation={null}>
 					{draggingWord ? (
