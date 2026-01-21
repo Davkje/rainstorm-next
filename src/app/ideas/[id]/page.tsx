@@ -158,7 +158,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 	return (
 		<div className="grid grid-rows-[auto_1fr] gap-2 h-full">
 			{/* HEADER */}
-			<div className="flex justify-between items-center h-full">
+			<div className="grid sm:flex sm:justify-between gap-2 h-full w-full ">
 				<div className="flex gap-2 justify-center items-center h-full">
 					<EditableText
 						text={idea.name}
@@ -170,32 +170,34 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 							setIdea((prev) => (prev ? { ...prev, name: newName, updatedAt: Date.now() } : prev))
 						}
 					/>
-					<button onClick={() => setShowHelp((prev) => !prev)} className={`btn--icon`}>
-						<RiQuestionLine />
-					</button>
-					<button onClick={addCategory} className={`btn--icon`}>
-						<RiAddBoxLine />
-					</button>
-					<div className="relative flex gap-2 h-full justify-center items-center">
-						<CopyDropdown idea={idea} />
-						<DownloadDropdown idea={idea} />
-						{showExportHint && (
-							<div className="absolute top-0 left-full h-full font-bold bg-rain-700 text-white w-max ml-2 pl-2 pr-5 text-md flex justify-center items-center rounded shadow-lg z-50 anim-fade-in-left">
-								<RiArrowDropLeftFill /> Ready to Export?
-							</div>
-						)}
-					</div>
-					<span
-						className={`text-md text-rain-400 font-bold transition-colors duration-400 ease-out ${
-							saveStatus === "saving" ? "text-rain-400" : "text-transparent"
-						}`}
-					>
-						Saving...
-						{/* {saveStatus === "saving" && "Saving…"}
-						{saveStatus === "saved" && ""} */}
-					</span>
 				</div>
-				<div className="flex items-center gap-3">
+				<div className="flex justify-between gap-3">
+					<div className="flex gap-2 h-full">
+						<span
+							className={`hidden sm:flex text-md text-rain-400 font-bold transition-colors duration-400 ease-out ${
+								saveStatus === "saving" ? "text-rain-400" : "text-transparent"
+							}`}
+						>
+							Saving...
+							{/* {saveStatus === "saving" && "Saving…"}
+						{saveStatus === "saved" && ""} */}
+						</span>
+						<button onClick={() => setShowHelp((prev) => !prev)} className={`btn--icon`}>
+							<RiQuestionLine className="" />
+						</button>
+						<button onClick={addCategory} className={`btn--icon`}>
+							<RiAddBoxLine />
+						</button>
+						<div className="relative flex gap-2 h-full justify-center items-center">
+							<CopyDropdown idea={idea} />
+							<DownloadDropdown idea={idea} />
+							{showExportHint && (
+								<div className="absolute top-0 left-full h-full font-bold bg-rain-700 text-white w-max ml-2 pl-2 pr-5 text-md flex justify-center items-center rounded shadow-lg z-50 anim-fade-in-left">
+									<RiArrowDropLeftFill /> Ready to Export?
+								</div>
+							)}
+						</div>
+					</div>
 					<div className="flex items-center gap-3 bg-rain-600 p-2 rounded-lg relative">
 						<button
 							onClick={() => setView("ideate")}

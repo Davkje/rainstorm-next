@@ -407,7 +407,7 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 					onOpenActiveBank={() => setShowActiveBanksOverlay(true)}
 				/>
 
-				<div className="flex flex-col gap-4">
+				<div className="flex flex-col gap-2 sm:gap-4">
 					{idea.categories.length === 0 && (
 						<div className="flex flex-col text-center grow justify-center items-center text-rain-400">
 							<span className="text-xl">No categoires</span>

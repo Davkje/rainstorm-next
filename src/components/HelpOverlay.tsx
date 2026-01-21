@@ -20,13 +20,9 @@ export default function HelpOverlay({ open, onClose }: Props) {
 	if (!open) return null;
 
 	return (
-		<div
-			className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center"
-			role="dialog"
-			aria-modal="true"
-		>
+		<div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
 			<FocusTrap>
-				<div className="bg-rain-800 max-w-4xl w-full rounded-xl p-8 shadow-xl relative">
+				<div className="flex flex-col bg-rain-800 w-full max-w-4xl max-h-[80vh] rounded-xl p-4 sm:p-8 lg:p-12 mx-20 shadow-xl relative">
 					<button
 						onClick={onClose}
 						className="btn--icon absolute top-4 right-4"
@@ -36,10 +32,10 @@ export default function HelpOverlay({ open, onClose }: Props) {
 					</button>
 					<h2 className="text-xl font-bold uppercase text-center">Help</h2>
 
-					<section className="grid grid-cols-2">
+					<section className="grid md:grid-cols-2 gap-2 mt-6 overflow-y-scroll">
 						<div className="flex flex-col grow">
 							<h3 className="text-center uppercase">How to use</h3>
-							<ul className="text-md leading-normal flex flex-col justify-between grow p-4">
+							<ul className="text-md leading-relaxed flex flex-col justify-between grow p-4">
 								<li className="list-disc list-inside">
 									Generate words in Ideate View and drag them into categories.
 								</li>
@@ -56,7 +52,7 @@ export default function HelpOverlay({ open, onClose }: Props) {
 								<li className="list-disc list-inside">Export your idea in a prefered format.</li>
 							</ul>
 						</div>
-						<div className="grid gap-2">
+						<div className="grid gap-8">
 							<div>
 								<h3 className="text-center uppercase">Icons</h3>
 								<ul className="text-md pl-4 space-y-1">

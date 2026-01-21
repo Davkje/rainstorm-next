@@ -102,7 +102,7 @@ body {
 	}
 }
 
-/* ANIMATIONS */
+/* ----- ANIMATIONS ----- */
 
 .anim-fade-in-right {
 	animation: fade-in-right 3s ease-in-out;
@@ -174,5 +174,37 @@ body {
 	100% {
 		color: var(--color-rain-500);
 		scale: 1;
+	}
+}
+
+/* MOBILE MENU */
+.mobile-menu {
+	transform: translateX(100%);
+	animation-fill-mode: forwards;
+}
+
+.slide-in {
+	animation: slideIn 0.3s forwards ease-out;
+}
+
+.slide-out {
+	animation: slideOut 0.3s forwards ease-in;
+}
+
+@keyframes slideIn {
+	from {
+		transform: translateX(100%);
+	}
+	to {
+		transform: translateX(0);
+	}
+}
+
+@keyframes slideOut {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(100%);
 	}
 }

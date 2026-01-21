@@ -57,7 +57,7 @@ export default function IdeaCategory({
 	return (
 		<div
 			ref={setNodeRef}
-			className={`flex flex-col text-xl flex-1 p-2 border-2 border-rain-600 rounded-lg transition-colors`}
+			className={`flex flex-col text-xl flex-1 p-2 gap-2 border-2 border-rain-600 rounded-lg transition-colors`}
 		>
 			<div className="flex justify-between items-center">
 				<EditableText
