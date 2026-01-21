@@ -47,13 +47,19 @@ export default function DefineView({ idea, setIdea, onRemoveCategory, onAddCateg
 					if (cat.id !== catId) return cat;
 
 					const clean = newWord.trim();
-					if (!clean) return cat;
 
-					if (cat.words.includes(newWord)) return cat;
+					if (!clean) {
+						return {
+							...cat,
+							words: cat.words.filter((w) => w !== oldWord),
+						};
+					}
+
+					if (cat.words.includes(clean)) return cat;
 
 					return {
 						...cat,
-						words: cat.words.map((w) => (w === oldWord ? newWord : w)),
+						words: cat.words.map((w) => (w === oldWord ? clean : w)),
 					};
 				}),
 				updatedAt: Date.now(),

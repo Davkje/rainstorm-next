@@ -18,9 +18,9 @@ import {
 	RiAddBoxLine,
 	RiArrowDropLeftFill,
 	RiArrowDropRightFill,
-	RiPencilFill,
+	RiEdit2Fill,
 	RiQuestionLine,
-	RiRainyFill,
+	RiThunderstormsFill,
 } from "@remixicon/react";
 import { useGlobalKeys } from "@/utils/useGlobalKeys";
 import HelpOverlay from "@/components/HelpOverlay";
@@ -201,7 +201,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 							onClick={() => setView("ideate")}
 							className={`btn--link ${view === "ideate" ? "text-rain-100" : "text-rain-400"}`}
 						>
-							<RiRainyFill />
+							<RiThunderstormsFill />
 						</button>
 						{showDefineHint && (
 							<div
@@ -219,7 +219,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 								view === "define" ? "text-rain-100" : "text-rain-500"
 							}`}
 						>
-							<RiPencilFill />
+							<RiEdit2Fill />
 						</button>
 					</div>
 				</div>

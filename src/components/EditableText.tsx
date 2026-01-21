@@ -54,11 +54,6 @@ export default function EditableText({
 
 		const value = ref.current.innerText.trim();
 
-		if (value === "") {
-			abort();
-			return;
-		}
-
 		if (value !== original.current) {
 			onChange(value);
 		}
@@ -84,8 +79,13 @@ export default function EditableText({
 				cursor-pointer
 				outline-none
 				rounded
-				focus:ring-2 focus:ring-rain-600 
-			`}
+				bg-transparent
+				focus:bg-rain-500/0
+				focus:outline-none
+				focus:ring-0
+				focus:ring-offset-0
+				`}
+				// focus:ring-2 focus:ring-rain-600
 				onClick={() => setEditing(true)}
 				onFocus={() => setEditing(true)}
 				onBlur={commit}
