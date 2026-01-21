@@ -5,12 +5,17 @@ import {
 	DndContext,
 	closestCenter,
 	PointerSensor,
+	KeyboardSensor,
 	useSensor,
 	useSensors,
 	DragOverlay,
+	Active,
+	Over,
 } from "@dnd-kit/core";
+
 import type { DragStartEvent, DragEndEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
+import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 
 import { Category, DragOverData, DragWordData, Idea } from "@/models/ideas";
 
@@ -29,7 +34,10 @@ type Props = {
 };
 
 export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCategory }: Props) {
-	const sensors = useSensors(useSensor(PointerSensor));
+	const sensors = useSensors(
+		useSensor(PointerSensor),
+		useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
+	);
 
 	const [draggingWord, setDraggingWord] = useState<{
 		word: Word;
@@ -83,7 +91,6 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 		const { word } = await res.json();
 		setCurrentWord(word);
 		setCurrentBank(bankToUse);
-		console.log(currentBank);
 		setIsWordLoading(false);
 	};
 
@@ -357,9 +364,31 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 		};
 	}, []);
 
+	/* -------------------- ACCESIBILITY ANOUNCEMENTS -------------------- */
+
+	const announcements = {
+		onDragStart({ active }: { active: Active }) {
+			return `Word "${active.id}" picked up. Use arrow keys to move. Press Enter or Space to drop.`;
+		},
+		onDragOver({ active, over }: { active: Active; over: Over | null }) {
+			if (over) {
+				return `Word "${active.id}" moved over ${over.id}.`;
+			}
+		},
+		onDragEnd({ active, over }: { active: Active; over: Over | null }) {
+			if (over) {
+				return `Word "${active.id}" dropped into ${over.id}.`;
+			}
+		},
+		onDragCancel({ active }: { active: Active }) {
+			return `Dragging of word "${active.id}" cancelled.`;
+		},
+	};
+
 	return (
 		<DndContext
 			sensors={sensors}
+			accessibility={{ announcements }}
 			collisionDetection={closestCenter}
 			onDragStart={handleDragStart}
 			onDragEnd={handleDragEnd}

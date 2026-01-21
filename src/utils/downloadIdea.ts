@@ -12,7 +12,6 @@ export async function downloadIdea(idea: Idea, format: DownloadFormat) {
 
 	if (format === "pdf") {
 		await downloadPdf(idea);
-		// console.log("PDF");
 	}
 }
 

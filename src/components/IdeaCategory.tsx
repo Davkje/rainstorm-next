@@ -37,6 +37,11 @@ export default function IdeaCategory({
 		data: { parentId: id, isTrash: true },
 	});
 
+	const { setNodeRef: setEmptyRef } = useDroppable({
+		id: `${id}-empty`,
+		data: { parentId: id },
+	});
+
 	const isMaxWords = words.length >= 10;
 
 	const onUpdateCategoryName = (id: string, v: string) => {
@@ -95,21 +100,21 @@ export default function IdeaCategory({
 			</div>
 
 			<SortableContext items={words.map((w) => `${id}-${w}`)} strategy={rectSortingStrategy}>
-				<div className="flex-1">
-					<div className="flex flex-wrap h-full gap-2 text-xl justify-center items-center">
-						{words.length === 0 ? (
-							<p className="text-rain-600 self-center">Drag word here</p>
-						) : (
-							words.map((word) => (
-								<WordChip
-									key={word}
-									word={word}
-									parentId={id}
-									onRemove={() => onRemoveWord(id, word)}
-								/>
-							))
-						)}
-					</div>
+				<div className="flex-1 flex flex-wrap h-full gap-2 text-xl justify-center items-center">
+					{words.length === 0 ? (
+						<p ref={setEmptyRef} className="text-rain-600">
+							Drag word here
+						</p>
+					) : (
+						words.map((word) => (
+							<WordChip
+								key={word}
+								word={word}
+								parentId={id}
+								onRemove={() => onRemoveWord(id, word)}
+							/>
+						))
+					)}
 				</div>
 			</SortableContext>
 		</div>

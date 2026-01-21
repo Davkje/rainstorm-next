@@ -1,6 +1,7 @@
 import { Word, WordBankName } from "@/models/wordBanks";
 import WordChip from "./WordChip";
 import { RiArrowRightSFill, RiCloseLine } from "@remixicon/react";
+import { SortableContext, rectSortingStrategy } from "@dnd-kit/sortable";
 
 type Props = {
 	currentWord: Word | null;
@@ -41,7 +42,11 @@ export default function WordGenerator({
 						</span>
 					)}
 
-					{currentWord && <WordChip word={currentWord} parentId="generator" />}
+					{currentWord && (
+						<SortableContext items={[`generator-${currentWord}`]} strategy={rectSortingStrategy}>
+							<WordChip word={currentWord} parentId="generator" onRemove={onNewWord} />
+						</SortableContext>
+					)}
 				</div>
 			</div>
 			<div
