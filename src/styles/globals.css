@@ -1,26 +1,26 @@
 @import "tailwindcss";
 @import "./theme.css";
 
-:root {
+/* :root {
 	--background: #ffffff;
 	--foreground: #171717;
-}
+} */
 
-@theme inline {
+/* @theme inline {
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
-}
-
+} */
+/* 
 @media (prefers-color-scheme: dark) {
 	:root {
 		--background: var(--color-rain-800);
 		--foreground: #ededed;
 	}
-}
+} */
 
 body {
-	background: var(--background);
-	color: var(--foreground);
+	background: var(--color-rain-800);
+	color: var(--color-rain-200);
 	font-family: var(--font-lateef), Helvetica, serif;
 }
 
