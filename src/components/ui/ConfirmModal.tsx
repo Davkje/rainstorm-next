@@ -49,10 +49,10 @@ export default function ConfirmModal({
 			className="fixed inset-0 z-50 flex items-center justify-center text-center bg-black/60"
 		>
 			<FocusTrap>
-				<div className="w-full max-w-fit rounded-xl bg-rain-800 py-6 px-8 shadow-xl">
-					<h2 className="text-lg">{title}?</h2>
+				<div className="w-[clamp(300px,90vw,600px)] rounded-xl bg-rain-800 py-6 px-8 shadow-xl">
+					<h2 className="text-xl mb-6">{title}?</h2>
 
-					{description && <p className="mt-2">{description}</p>}
+					{description && <p className="mt-2 text-md text-rain-300">{description}</p>}
 
 					<div className="mt-6 flex justify-center gap-2">
 						<button onClick={onCancel} className="btn--primary">

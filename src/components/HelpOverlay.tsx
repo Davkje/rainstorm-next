@@ -22,7 +22,7 @@ export default function HelpOverlay({ open, onClose }: Props) {
 	return (
 		<div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
 			<FocusTrap>
-				<div className="flex flex-col bg-rain-800 w-full max-w-4xl max-h-[80vh] rounded-xl p-4 sm:p-8 lg:p-12 mx-20 shadow-xl relative">
+				<div className="flex flex-col bg-rain-800 w-full max-w-4xl max-h-[80vh] rounded-xl p-4 sm:p-8 lg:p-12 mx-6 shadow-xl relative">
 					<button
 						onClick={onClose}
 						className="btn--icon absolute top-4 right-4"
@@ -30,7 +30,7 @@ export default function HelpOverlay({ open, onClose }: Props) {
 					>
 						<RiCloseLine />
 					</button>
-					<h2 className="text-xl font-bold uppercase text-center">Help</h2>
+					<h2 className="text-2xl font-bold uppercase text-center">Help</h2>
 
 					<section className="grid md:grid-cols-2 gap-2 mt-6 overflow-y-scroll">
 						<div className="flex flex-col grow">
@@ -55,7 +55,7 @@ export default function HelpOverlay({ open, onClose }: Props) {
 						<div className="grid gap-8">
 							<div>
 								<h3 className="text-center uppercase">Icons</h3>
-								<ul className="text-md pl-4 space-y-1">
+								<ul className="text-md pl-4 space-y-1 p-4">
 									<li className="flex gap-4 items-center">
 										<RiRainyFill />
 										<span>Toggle Ideate View</span>
@@ -92,7 +92,7 @@ export default function HelpOverlay({ open, onClose }: Props) {
 							</div>
 							<div>
 								<h3 className="text-center uppercase">Keyboard Shortcuts</h3>
-								<ul className="text-md pl-4 space-y-1">
+								<ul className="text-md pl-4 space-y-1 p-4">
 									<li>
 										<span>N - Generate new word</span>
 									</li>

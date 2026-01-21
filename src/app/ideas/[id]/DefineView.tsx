@@ -104,7 +104,7 @@ export default function DefineView({ idea, setIdea, onRemoveCategory, onAddCateg
 							))}
 						</div>
 						<textarea
-							className="text-lg flex grow border-2 border-rain-600 rounded-lg resize-none p-2 placeholder-rain-600 leading-normal min-h-24"
+							className="text-lg flex grow border-2 border-rain-600 rounded-lg resize-none p-2 placeholder-rain-600 leading-normal min-h-32"
 							value={cat.text}
 							name={`${cat.name}-text-field`}
 							onChange={(e) => updateCategoryText(cat.id, e.target.value)}

@@ -48,9 +48,9 @@ export default function DownloadDropdown({ idea }: { idea: Idea }) {
 	}, [open]);
 
 	return (
-		<div className="relative flex" ref={ref}>
+		<div className="relative flex h-full" ref={ref}>
 			<button
-				className="btn--link"
+				className="btn--icon"
 				onClick={() => setOpen((v) => !v)}
 				aria-haspopup="menu"
 				aria-expanded={open}

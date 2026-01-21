@@ -6,6 +6,7 @@ import {
 	closestCenter,
 	PointerSensor,
 	KeyboardSensor,
+	TouchSensor,
 	useSensor,
 	useSensors,
 	DragOverlay,
@@ -36,6 +37,7 @@ type Props = {
 export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCategory }: Props) {
 	const sensors = useSensors(
 		useSensor(PointerSensor),
+		useSensor(TouchSensor),
 		useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
 	);
 

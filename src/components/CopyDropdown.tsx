@@ -46,10 +46,10 @@ export default function CopyDropdown({ idea }: { idea: Idea }) {
 	}, [open]);
 
 	return (
-		<div ref={ref} className="relative flex">
+		<div ref={ref} className="relative flex h-full">
 			<button
 				onClick={() => setOpen((v) => !v)}
-				className="btn--link"
+				className="btn--icon h-full"
 				aria-haspopup="menu"
 				aria-expanded={open}
 			>

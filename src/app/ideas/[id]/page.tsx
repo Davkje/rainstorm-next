@@ -172,7 +172,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 					/>
 				</div>
 				<div className="flex justify-between gap-3">
-					<div className="flex gap-2 h-full">
+					<div className="flex gap-1 h-full">
 						<span
 							className={`hidden sm:flex text-md text-rain-400 font-bold transition-colors duration-400 ease-out ${
 								saveStatus === "saving" ? "text-rain-400" : "text-transparent"
@@ -188,7 +188,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 						<button onClick={addCategory} className={`btn--icon`}>
 							<RiAddBoxLine />
 						</button>
-						<div className="relative flex gap-2 h-full justify-center items-center">
+						<div className="relative flex gap-1 h-full justify-center items-center">
 							<CopyDropdown idea={idea} />
 							<DownloadDropdown idea={idea} />
 							{showExportHint && (
