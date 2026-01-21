@@ -80,10 +80,10 @@ body {
 	}
 
 	button {
-		@apply text-lg font-medium px-12 py-1 border-2 rounded-xl transition-colors duration-300 ease-in-out cursor-pointer;
+		@apply text-lg font-medium px-12 py-1 border-2 rounded-xl transition-colors duration-100 ease-linear cursor-pointer;
 	}
 	.btn--primary {
-		@apply text-rain-100 bg-rain-800 border-rain-400 hover:border-rain-300;
+		@apply text-rain-100 bg-linear-to-b from-rain-700 to-rain-800 border-rain-600 hover:border-rain-500/50 active:border-rain-600;
 	}
 	.btn--tertiary {
 		@apply text-rain-900 bg-rain-300 border-rain-900 hover:bg-rain-200;

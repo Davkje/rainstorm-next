@@ -16,7 +16,7 @@ export default function Header() {
 			</Link>
 
 			{/* DESKTOP */}
-			<nav className="hidden sm:flex gap-4">
+			<nav className="hidden sm:flex gap-6 uppercase font-bold">
 				<Link href="/ideas">Ideas</Link>
 				<Link href="/words">Words</Link>
 				<Link href="/templates">Templates</Link>
@@ -26,11 +26,13 @@ export default function Header() {
 			{/* MOBILE */}
 
 			{/* BUTTON */}
-			<div className="sm:hidden absolute top-1.5 right-3">
-				<button onClick={() => setOpen((p) => !p)} className="btn--icon" aria-label="Toggle menu">
-					{open ? <RiCloseLargeLine /> : <RiMenu3Line />}
-				</button>
-			</div>
+			{!open && (
+				<div className="sm:hidden absolute top-1.5 right-3">
+					<button onClick={() => setOpen((p) => !p)} className="btn--icon" aria-label="Toggle menu">
+						<RiMenu3Line />
+					</button>
+				</div>
+			)}
 
 			{/* MENU */}
 			<AnimatePresence>

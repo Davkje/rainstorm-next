@@ -69,7 +69,7 @@ export default function WordGenerator({
 								<button
 									key={bank}
 									onClick={() => onToggleSelectedBank(bank)}
-									className={`btn--primary text-md px-4 py-0 capitalize ${
+									className={`text-md px-4 py-0 capitalize ${
 										isSelected
 											? "text-rain-200 border-rain-500 bg-rain-800 hover:text-rain-100"
 											: "text-rain-400 border-transparent bg-rain-700 hover:text-rain-100"
@@ -83,13 +83,13 @@ export default function WordGenerator({
 					<div className="flex gap-2">
 						<button
 							onClick={onClearSelected}
-							className={`btn--primary flex items-center text-md py-0 px-4 border-rain-500 hover:border-rain-400 ${selectedBanks.length <= 0 && "text-rain-500 bg-rain-700 border-transparent hover:border-transparent"}`}
+							className={`flex items-center text-md py-0 px-4 border-rain-500 hover:border-rain-400 ${selectedBanks.length <= 0 && "text-rain-400 bg-rain-700 border-transparent hover:border-transparent"}`}
 						>
 							Clear <RiCloseLine />
 						</button>
 						<button
 							onClick={() => onOpenActiveBank()}
-							className="btn--primary text-md px-4 py-0 capitalize flex justify-center items-center pl-5 pr-2 text-rain-400 border-transparent bg-rain-700 hover:text-rain-100"
+							className="text-md px-4 py-0 capitalize flex justify-center items-center pl-5 pr-2 text-rain-400 border-transparent bg-rain-700 hover:text-rain-100"
 						>
 							Banks <RiArrowRightSFill />
 						</button>

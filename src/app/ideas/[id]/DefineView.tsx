@@ -73,8 +73,11 @@ export default function DefineView({ idea, setIdea, onRemoveCategory, onAddCateg
 					</div>
 				)}
 				{idea.categories.map((cat) => (
-					<div key={cat.id} className="flex flex-col grow">
-						<div className="flex justify-between">
+					<div
+						key={cat.id}
+						className="flex flex-col grow border-2 gap-1 p-2 border-rain-600 rounded-lg bg-linear-to-b from-transparent to-rain-900/20"
+					>
+						<div className="flex justify-between relative">
 							<EditableText
 								text={cat.name}
 								className="text-xl font-bold leading-normal"
@@ -84,27 +87,35 @@ export default function DefineView({ idea, setIdea, onRemoveCategory, onAddCateg
 								editButtonSize={20}
 							/>
 							<button
+								className="btn--icon p-1 text-rain-400 hover:text-rain-200 absolute top-0 right-0"
 								onClick={() => {
 									onRemoveCategory(cat.id);
 								}}
-								className="btn--icon p-0 text-rain-500 hover:text-rain-300"
 							>
 								<RiCloseFill />
 							</button>
 						</div>
-						<div className="flex gap-1 py-2">
+						<div className="flex gap-1">
 							{cat.words.map((word) => (
 								<EditableText
 									key={word}
 									text={word}
-									className="text-lg text-rain-400 font-bold leading-normal"
+									className="text-lg text-rain-300 font-bold leading-normal"
 									tag="span"
 									onChange={(v) => updateWord(cat.id, word, v)}
 								></EditableText>
 							))}
 						</div>
 						<textarea
-							className="text-lg flex grow border-2 border-rain-600 rounded-lg resize-none p-2 placeholder-rain-600 leading-normal min-h-32"
+							className="
+								text-lg flex grow rounded-md resize-none px-1
+								placeholder-rain-600 leading-normal min-h-32
+								bg-transparent
+								focus:bg-rain-500/0
+								focus:outline-none
+								focus:ring-0
+								focus:ring-offset-0
+							"
 							value={cat.text}
 							name={`${cat.name}-text-field`}
 							onChange={(e) => updateCategoryText(cat.id, e.target.value)}

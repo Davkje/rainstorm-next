@@ -20,9 +20,15 @@ export default function HelpOverlay({ open, onClose }: Props) {
 	if (!open) return null;
 
 	return (
-		<div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
-			<FocusTrap>
-				<div className="flex flex-col bg-rain-800 w-full max-w-4xl max-h-[80vh] rounded-xl p-4 sm:p-8 lg:p-12 mx-6 shadow-xl relative">
+		<FocusTrap>
+			<div
+				className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center"
+				onClick={onClose}
+			>
+				<div
+					className="flex flex-col bg-rain-800 w-full max-w-4xl max-h-[80vh] rounded-xl p-4 sm:p-8 lg:p-12 mx-6 shadow-xl relative"
+					onClick={(e) => e.stopPropagation()}
+				>
 					<button
 						onClick={onClose}
 						className="btn--icon absolute top-4 right-4"
@@ -113,7 +119,7 @@ export default function HelpOverlay({ open, onClose }: Props) {
 						</div>
 					</section>
 				</div>
-			</FocusTrap>
-		</div>
+			</div>
+		</FocusTrap>
 	);
 }

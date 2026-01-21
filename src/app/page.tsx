@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { loadIdeas, saveIdeas, loadTemplates, createIdeaFromTemplate } from "@/helpers/storage";
 import { Template } from "@/models/templates";
+import Link from "next/link";
 
 export default function Home() {
 	const router = useRouter();
@@ -28,16 +29,26 @@ export default function Home() {
 				<p className="italic">The one word, limiting, focused idea tool</p>
 				<div className="flex flex-col items-center justify-center gap-8">
 					<h2 className="font-bold">What do you want to create?</h2>
-					<div className="flex justify-center gap-4 flex-wrap text-lg">
-						{templates.map((t) => (
-							<button
-								className="btn--primary hover:scale-[1.1] transition-all duration-500 ease-in-out"
-								key={t.id}
-								onClick={() => handleCreateIdea(t)}
-							>
-								{t.name}
-							</button>
-						))}
+					<div className="grid gap-4">
+						<div className="flex justify-center gap-4 flex-wrap text-lg">
+							{templates
+								.filter((t) => t.highligted)
+								.map((t) => (
+									<button
+										className="btn--primary hover:scale-[1.1] transition-all duration-500 ease-in-out"
+										key={t.id}
+										onClick={() => handleCreateIdea(t)}
+									>
+										{t.name}
+									</button>
+								))}
+						</div>
+						<Link
+							href="/templates"
+							className="text-md place-self-center text-rain-500 hover:text-rain-200"
+						>
+							Or see all Templates
+						</Link>
 					</div>
 				</div>
 			</div>

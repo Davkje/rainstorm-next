@@ -1,5 +1,6 @@
 import { WordBankName } from "@/models/wordBanks";
 import { FocusTrap } from "focus-trap-react";
+import { useGlobalKeys } from "@/utils/useGlobalKeys";
 
 type Props = {
 	banks: WordBankName[];
@@ -9,6 +10,10 @@ type Props = {
 };
 
 export default function ActiveBanksOverlay({ banks, activeBanks, onToggleBank, onClose }: Props) {
+	useGlobalKeys("Escape", onClose, {
+		ignoreInputs: true,
+	});
+
 	return (
 		<FocusTrap>
 			<div

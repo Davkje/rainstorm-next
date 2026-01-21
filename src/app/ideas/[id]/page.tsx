@@ -179,8 +179,6 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 							}`}
 						>
 							Saving...
-							{/* {saveStatus === "saving" && "Saving…"}
-						{saveStatus === "saved" && ""} */}
 						</span>
 						<button onClick={() => setShowHelp((prev) => !prev)} className={`btn--icon`}>
 							<RiQuestionLine className="" />

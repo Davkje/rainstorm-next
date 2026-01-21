@@ -57,9 +57,9 @@ export default function IdeaCategory({
 	return (
 		<div
 			ref={setNodeRef}
-			className={`flex flex-col text-xl flex-1 p-2 gap-2 border-2 border-rain-600 rounded-lg transition-colors`}
+			className={`flex flex-col text-xl flex-1 p-2 gap-2 border-2 border-rain-600 rounded-lg transition-colors bg-linear-to-b from-transparent to-rain-900/10`}
 		>
-			<div className="flex justify-between items-center">
+			<div className="flex justify-between items-center relative">
 				<EditableText
 					text={title}
 					className="text-lg font-bold leading-8 inline-block"
@@ -67,7 +67,7 @@ export default function IdeaCategory({
 					onChange={(v) => onUpdateCategoryName(id, v)}
 					showEditButton
 				/>
-				<div className="flex">
+				<div className="flex absolute top-0 right-0">
 					<button
 						disabled={isMaxWords}
 						onClick={() => {
