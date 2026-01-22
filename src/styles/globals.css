@@ -155,7 +155,7 @@ body {
 }
 
 .anim-blink {
-	animation: blink 3s ease-in-out;
+	animation: blink 6s ease-in-out;
 }
 
 @keyframes blink {
@@ -181,37 +181,6 @@ body {
 	}
 }
 
-/* MOBILE MENU */
-.mobile-menu {
-	transform: translateX(100%);
-	animation-fill-mode: forwards;
-}
-
-.slide-in {
-	animation: slideIn 0.3s forwards ease-out;
-}
-
-.slide-out {
-	animation: slideOut 0.3s forwards ease-in;
-}
-
-@keyframes slideIn {
-	from {
-		transform: translateX(100%);
-	}
-	to {
-		transform: translateX(0);
-	}
-}
-
-@keyframes slideOut {
-	from {
-		transform: translateX(0);
-	}
-	to {
-		transform: translateX(100%);
-	}
-}
 .drag-wobble {
 	animation: drag-wobble 1s ease-in-out infinite;
 }

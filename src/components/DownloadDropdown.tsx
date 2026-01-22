@@ -60,14 +60,14 @@ export default function DownloadDropdown({ idea }: { idea: Idea }) {
 
 			{open && (
 				<div
-					className="absolute min-w-max right-0 mt-2 grid rounded-lg px-4 py-2 bg-rain-700 shadow-lg z-50 text-nowrap"
+					className="absolute min-w-max top-full right-0 mt-2 grid rounded-lg px-4 py-2 bg-rain-700 shadow-lg z-50 text-nowrap"
 					role="menu"
 				>
 					{options.map((opt) => (
 						<button
 							key={opt}
 							onClick={() => handleDownload(opt)}
-							className={`btn--link text-left capitalize`}
+							className={`btn--link font-normal text-left capitalize`}
 						>
 							{`${opt.toUpperCase()} file`}
 						</button>
@@ -76,7 +76,7 @@ export default function DownloadDropdown({ idea }: { idea: Idea }) {
 			)}
 
 			{downloaded && (
-				<div className="text-lg fixed bottom-4 right-4 bg-rain-700 border-2 border-rain-400 text-white px-4 py-1 rounded-lg shadow-lg transition-opacity duration-300">
+				<div className="text-lg fixed bottom-8 right-8 bg-rain-600 text-white px-4 py-1 rounded-lg shadow-lg transition-opacity duration-300">
 					Downloaded!
 				</div>
 			)}

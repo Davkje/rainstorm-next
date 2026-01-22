@@ -165,16 +165,16 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 							setIdea((prev) => (prev ? { ...prev, name: newName, updatedAt: Date.now() } : prev))
 						}
 					/>
+					<span
+						className={`hidden sm:flex ml-6 text-md font-bold transition-colors duration-400 ease-out ${
+							saveStatus === "saving" ? "text-rain-400/30" : "text-transparent"
+						}`}
+					>
+						Saving
+					</span>
 				</div>
 				<div className="flex justify-between gap-3">
 					<div className="flex gap-1 h-full">
-						<span
-							className={`hidden sm:flex text-md text-rain-400 font-bold transition-colors duration-400 ease-out ${
-								saveStatus === "saving" ? "text-rain-400" : "text-transparent"
-							}`}
-						>
-							Saving...
-						</span>
 						<Tooltip text="Help">
 							<button onClick={() => setShowHelp((prev) => !prev)} className={`btn--icon`}>
 								<RiQuestionLine className="" />
@@ -187,9 +187,9 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 						</Tooltip>
 						<div className="relative flex gap-1 h-full justify-center items-center">
 							{showExportHint && (
-								<div className="absolute top-0 right-full h-full font-bold bg-rain-600 text-white w-max ml-2 pl-5 pr-2 text-md flex justify-center items-center rounded shadow-lg z-50 anim-fade-in-right">
+								<div className="absolute top-0 right-full h-full font-bold bg-rain-600 text-white w-max ml-2 pl-5 pr-2 text-md flex justify-center items-center rounded shadow-lg z-50 anim-fade-in-right upper">
 									Ready to Export?
-									<RiArrowDropRightFill />
+									<RiArrowDropRightFill size={32} />
 								</div>
 							)}
 							<div className={`flex gap-1 ${showExportHint && "anim-blink"}`}>
@@ -206,11 +206,11 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 						{showDefineHint && !showExportHint && (
 							<div
 								className="
-										absolute top-0 right-full mr-2 pl-5 pr-2 font-bold
-										bg-rain-600 text-white w-max text-md h-full flex justify-center items-center rounded shadow-lg
-										anim-fade-in-right z-50"
+										absolute top-0 right-6 mr-2 pl-5 pr-2 font-bold
+										bg-rain-600 text-white w-max text-md h-full flex justify-center items-center rounded
+										anim-fade-in-right z-50 uppercase"
 							>
-								Ready to Define? <RiArrowDropRightFill />
+								Ready to Define? <RiArrowDropRightFill size={32} />
 							</div>
 						)}
 						<Tooltip text="Ideate View">

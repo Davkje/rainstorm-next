@@ -58,24 +58,27 @@ export default function CopyDropdown({ idea }: { idea: Idea }) {
 
 			{open && (
 				<div
-					className="absolute min-w-max right-0 mt-2 grid rounded-lg px-4 py-2 bg-rain-700 shadow-lg z-50 text-nowrap"
+					className="absolute min-w-max top-full right-0 mt-2 grid rounded-lg px-4 py-2 bg-rain-700 shadow-lg z-50 text-nowrap"
 					role="menu"
 				>
-					<button onClick={() => handleCopy("plain")} className="btn--link text-left">
+					<button onClick={() => handleCopy("plain")} className="btn--link text-left font-normal">
 						Plain text
 					</button>
-					<button onClick={() => handleCopy("markdown")} className="btn--link text-left">
+					<button
+						onClick={() => handleCopy("markdown")}
+						className="btn--link text-left font-normal"
+					>
 						Markdown
 					</button>
-					<button onClick={() => handleCopy("html")} className="btn--link text-left">
+					<button onClick={() => handleCopy("html")} className="btn--link text-left font-normal">
 						Formatted (Docs)
 					</button>
 				</div>
 			)}
 
 			{copied && (
-				<div className="text-lg fixed bottom-8 right-8 bg-rain-700 border-2 border-rain-400 text-white px-4 py-1 rounded-lg shadow-lg transition-opacity duration-300">
-					Copied!
+				<div className="text-lg fixed bottom-8 right-8 bg-rain-600 text-white px-4 py-1 rounded-lg shadow-lg transition-opacity duration-300">
+					Copied to Clipboard!
 				</div>
 			)}
 		</div>

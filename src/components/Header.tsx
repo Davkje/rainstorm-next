@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { RiMenu3Line, RiCloseLargeLine } from "@remixicon/react";
 import { AnimatePresence, motion } from "framer-motion";
+import { FullscreenButton } from "./ui/FullscreenButton";
 
 export default function Header() {
 	const [open, setOpen] = useState(false);
@@ -15,24 +16,31 @@ export default function Header() {
 				<Image src="/rainstorm.png" alt="rainstorm" width={150} height={167} />
 			</Link>
 
-			{/* DESKTOP */}
-			<nav className="hidden sm:flex gap-6 uppercase font-bold">
-				<Link href="/ideas">Ideas</Link>
-				<Link href="/words">Words</Link>
-				<Link href="/templates">Templates</Link>
-				<Link href="/about">About</Link>
-			</nav>
+			<FullscreenButton />
+			<div className="flex gap-6 justify-center items-center">
+				{/* DESKTOP */}
+				<nav className="hidden sm:flex gap-6 uppercase font-bold">
+					<Link href="/ideas">Ideas</Link>
+					<Link href="/words">Words</Link>
+					<Link href="/templates">Templates</Link>
+					<Link href="/about">About</Link>
+				</nav>
 
-			{/* MOBILE */}
+				{/* MOBILE */}
 
-			{/* BUTTON */}
-			{!open && (
-				<div className="sm:hidden absolute top-1.5 right-3">
-					<button onClick={() => setOpen((p) => !p)} className="btn--icon" aria-label="Toggle menu">
-						<RiMenu3Line />
-					</button>
-				</div>
-			)}
+				{/* BUTTON */}
+				{!open && (
+					<div className="sm:hidden absolute top-1.5 right-3">
+						<button
+							onClick={() => setOpen((p) => !p)}
+							className="btn--icon"
+							aria-label="Toggle menu"
+						>
+							<RiMenu3Line />
+						</button>
+					</div>
+				)}
+			</div>
 
 			{/* MENU */}
 			<AnimatePresence>
