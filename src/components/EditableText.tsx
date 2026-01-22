@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, ElementType } from "react";
 import { RiPencilFill } from "@remixicon/react";
+import Tooltip from "./ui/Tooltip";
 
 interface EditableTextProps {
 	text: string;
@@ -102,15 +103,17 @@ export default function EditableText({
 				{text}
 			</Tag>
 			{showEditButton && (
-				<button
-					type="button"
-					className="btn--icon absolute -right-7 top-1/2 -translate-y-1/2"
-					onClick={() => setEditing(true)}
-					aria-label="Edit text"
-					tabIndex={-1}
-				>
-					<RiPencilFill size={editButtonSize} />
-				</button>
+				<Tooltip text="Edit text">
+					<button
+						type="button"
+						className="btn--icon absolute -right-7 top-1/2 -translate-y-1/2"
+						onClick={() => setEditing(true)}
+						aria-label="Edit text"
+						tabIndex={-1}
+					>
+						<RiPencilFill size={editButtonSize} />
+					</button>
+				</Tooltip>
 			)}
 		</div>
 	);

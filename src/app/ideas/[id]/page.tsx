@@ -25,6 +25,7 @@ import { useGlobalKeys } from "@/utils/useGlobalKeys";
 import HelpOverlay from "@/components/HelpOverlay";
 import { useOneTimeHint } from "@/utils/useOneTimeHint";
 import { isCategoryEmpty } from "@/utils/IsCategoryEmpty";
+import Tooltip from "@/components/ui/Tooltip";
 
 interface IdeaPageProps {
 	params: Promise<{ id: string }>;
@@ -71,7 +72,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 	});
 
 	const showDefineHint = useOneTimeHint({
-		when: allHaveWords && totalWords >= 3,
+		when: allHaveWords && totalWords >= 3 && view === "ideate",
 		duration: 6000,
 	});
 
@@ -174,50 +175,62 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 						>
 							Saving...
 						</span>
-						<button onClick={() => setShowHelp((prev) => !prev)} className={`btn--icon`}>
-							<RiQuestionLine className="" />
-						</button>
-						<button onClick={addCategory} className={`btn--icon`}>
-							<RiAddBoxLine />
-						</button>
+						<Tooltip text="Help">
+							<button onClick={() => setShowHelp((prev) => !prev)} className={`btn--icon`}>
+								<RiQuestionLine className="" />
+							</button>
+						</Tooltip>
+						<Tooltip text="Add new category">
+							<button onClick={addCategory} className={`btn--icon`}>
+								<RiAddBoxLine />
+							</button>
+						</Tooltip>
 						<div className="relative flex gap-1 h-full justify-center items-center">
 							{showExportHint && (
-								<div className="absolute top-0 right-full h-full font-bold bg-rain-700 text-white w-max ml-2 pl-5 pr-2 text-md flex justify-center items-center rounded shadow-lg z-50 anim-fade-in-right">
+								<div className="absolute top-0 right-full h-full font-bold bg-rain-600 text-white w-max ml-2 pl-5 pr-2 text-md flex justify-center items-center rounded shadow-lg z-50 anim-fade-in-right">
 									Ready to Export?
 									<RiArrowDropRightFill />
 								</div>
 							)}
 							<div className={`flex gap-1 ${showExportHint && "anim-blink"}`}>
-								<CopyDropdown idea={idea} />
-								<DownloadDropdown idea={idea} />
+								<Tooltip text="Copy Idea">
+									<CopyDropdown idea={idea} />
+								</Tooltip>
+								<Tooltip text="Export Idea">
+									<DownloadDropdown idea={idea} />
+								</Tooltip>
 							</div>
 						</div>
 					</div>
 					<div className="flex items-center gap-3 bg-rain-600 p-2 rounded-lg relative">
-						<button
-							onClick={() => setView("ideate")}
-							className={`btn--link ${view === "ideate" ? "text-rain-100" : "text-rain-400"}`}
-						>
-							<RiThunderstormsFill />
-						</button>
 						{showDefineHint && !showExportHint && (
 							<div
 								className="
-									absolute top-0 right-full mr-2 pl-5 pr-2 font-bold
-									bg-rain-700 text-white w-max text-md h-full flex justify-center items-center rounded shadow-lg
-									anim-fade-in-right z-50"
+										absolute top-0 right-full mr-2 pl-5 pr-2 font-bold
+										bg-rain-600 text-white w-max text-md h-full flex justify-center items-center rounded shadow-lg
+										anim-fade-in-right z-50"
 							>
 								Ready to Define? <RiArrowDropRightFill />
 							</div>
 						)}
-						<button
-							onClick={() => setView("define")}
-							className={`btn--link ${showDefineHint && !showExportHint && "anim-blink"} ${
-								view === "define" ? "text-rain-100" : "text-rain-500"
-							}`}
-						>
-							<RiEdit2Fill />
-						</button>
+						<Tooltip text="Ideate View">
+							<button
+								onClick={() => setView("ideate")}
+								className={`btn--link ${view === "ideate" ? "text-rain-100" : "text-rain-400"}`}
+							>
+								<RiThunderstormsFill />
+							</button>
+						</Tooltip>
+						<Tooltip text="Define View" position="topright">
+							<button
+								onClick={() => setView("define")}
+								className={`btn--link ${showDefineHint && !showExportHint && "anim-blink"} ${
+									view === "define" ? "text-rain-100" : "text-rain-500"
+								}`}
+							>
+								<RiEdit2Fill />
+							</button>
+						</Tooltip>
 					</div>
 				</div>
 			</div>

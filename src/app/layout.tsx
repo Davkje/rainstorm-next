@@ -33,7 +33,7 @@ export default function RootLayout({
 			`}
 			>
 				<Header />
-				<main className="bg-linear-to-b from-rain-800 to-rain-900/10 h-full p-4">{children}</main>
+				<main className="bg-main h-full p-4">{children}</main>
 			</body>
 		</html>
 	);

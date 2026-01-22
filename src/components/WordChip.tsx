@@ -8,9 +8,10 @@ type WordChipProps = {
 	word: Word | null;
 	parentId: Category["id"] | "generator";
 	onRemove?: () => void;
+	isOverlay?: boolean;
 };
 
-export default function WordChip({ word, parentId, onRemove }: WordChipProps) {
+export default function WordChip({ word, parentId, onRemove, isOverlay }: WordChipProps) {
 	const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
 		id: `${parentId}-${word}`,
 		data: {
@@ -33,7 +34,8 @@ export default function WordChip({ word, parentId, onRemove }: WordChipProps) {
 	const generatorClasses =
 		"px-10 py-3 text-3xl bg-rain-700 font-bold uppercase hover:bg-rain-600 shadow-black-red shadow-[0_10px_24px_rgba(0,0,0,0.20)]";
 	const categoryClasses =
-		"group relative gap-1 bg-rain-700 px-4 py-1 text-lg font-bold hover:bg-rain-600";
+		"group relative gap-1 bg-rain-600/60 px-4 py-1 text-lg font-bold hover:bg-rain-600";
+	const overlayClasses = "!shadow-3xl !cursor-grabbing drag-wobble drag-scale";
 
 	// DELETE (WITHOUT KILLING DND FOCUS)
 	const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -60,10 +62,10 @@ export default function WordChip({ word, parentId, onRemove }: WordChipProps) {
 			onKeyDown={handleKeyDown}
 			className={`
 				touch-none
-				
 				${baseClasses}
 				${parentId === "generator" ? generatorClasses : categoryClasses}
 				${isDragging ? "bg-transparent text-transparent shadow-transparent" : ""}
+				${isOverlay ? overlayClasses : ""}
 				`}
 		>
 			<span id={`word-${word}-instructions`} className="sr-only">

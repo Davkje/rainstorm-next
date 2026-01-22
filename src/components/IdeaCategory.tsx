@@ -5,6 +5,7 @@ import { RiAddLine, RiCloseFill, RiDeleteBinLine } from "@remixicon/react";
 import { Category } from "@/models/ideas";
 import EditableText from "./EditableText";
 import { Word } from "@/models/wordBanks";
+import Tooltip from "./ui/Tooltip";
 
 type Props = {
 	id: string;
@@ -68,34 +69,40 @@ export default function IdeaCategory({
 					showEditButton
 				/>
 				<div className="flex absolute top-0 right-0">
-					<button
-						disabled={isMaxWords}
-						onClick={() => {
-							handleAddWord();
-						}}
-						className="btn--icon text-rain-400 hover:text-rain-200 disabled:text-rain-600"
-					>
-						<RiAddLine />
-					</button>
-					<button
-						type="button"
-						ref={setTrashRef}
-						onClick={() => onClearCategory(id)}
-						aria-label={`Clear all words in ${title}`}
-						className={`btn--icon text-rain-400 hover:text-rain-200 rounded-lg ${
-							isOverTrash && "text-white bg-red-800/50"
-						}`}
-					>
-						<RiDeleteBinLine />
-					</button>
-					<button
-						onClick={() => {
-							handleRemoveCategory(id);
-						}}
-						className="btn--icon text-rain-400 hover:text-rain-200"
-					>
-						<RiCloseFill />
-					</button>
+					<Tooltip text="Add word">
+						<button
+							disabled={isMaxWords}
+							onClick={() => {
+								handleAddWord();
+							}}
+							className="btn--icon p-2 text-rain-400 hover:text-rain-200 disabled:text-rain-600"
+						>
+							<RiAddLine size={20} />
+						</button>
+					</Tooltip>
+					<Tooltip text="Delete all or drag single words" position="topright">
+						<button
+							type="button"
+							ref={setTrashRef}
+							onClick={() => onClearCategory(id)}
+							aria-label={`Clear all words in ${title}`}
+							className={`btn--icon p-2 text-rain-400 hover:text-rain-200 rounded-lg ${
+								isOverTrash && "text-red-500/80 bg-rain-600"
+							}`}
+						>
+							<RiDeleteBinLine size={20} />
+						</button>
+					</Tooltip>
+					<Tooltip text="Remove category" position="topright">
+						<button
+							onClick={() => {
+								handleRemoveCategory(id);
+							}}
+							className="btn--icon p-2 text-rain-400 hover:text-rain-200"
+						>
+							<RiCloseFill size={20} />
+						</button>
+					</Tooltip>
 				</div>
 			</div>
 

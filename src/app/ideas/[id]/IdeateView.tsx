@@ -451,7 +451,7 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 
 				<DragOverlay dropAnimation={null}>
 					{draggingWord ? (
-						<WordChip word={draggingWord.word} parentId={draggingWord.parentId} />
+						<WordChip word={draggingWord.word} parentId={draggingWord.parentId} isOverlay={true} />
 					) : null}
 				</DragOverlay>
 			</div>

@@ -101,12 +101,12 @@ export default function DefineView({ idea, setIdea, onRemoveCategory, onAddCateg
 								editButtonSize={20}
 							/>
 							<button
-								className="btn--icon p-1 text-rain-400 hover:text-rain-200 absolute top-0 right-0"
+								className="btn--icon p-2 text-rain-400 hover:text-rain-200 absolute top-0 right-0"
 								onClick={() => {
 									onRemoveCategory(cat.id);
 								}}
 							>
-								<RiCloseFill />
+								<RiCloseFill size={20} />
 							</button>
 						</div>
 						<div className="flex gap-1">
