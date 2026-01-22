@@ -5,7 +5,7 @@ type UseOneTimeHintOptions = {
 	duration?: number;
 };
 
-export function useOneTimeHint({ when, duration = 3000 }: UseOneTimeHintOptions) {
+export function useOneTimeHint({ when, duration = 6000 }: UseOneTimeHintOptions) {
 	const hasShownRef = useRef(false);
 	const [visible, setVisible] = useState(false);
 

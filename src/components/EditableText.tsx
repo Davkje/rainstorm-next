@@ -22,7 +22,7 @@ export default function EditableText({
 	const original = useRef(text);
 	const [editing, setEditing] = useState(false);
 
-	// Keep original text in sync if parent updates
+	// KEEP ORIGINAL IN SYNC
 	useEffect(() => {
 		original.current = text;
 		if (!editing && ref.current) {
@@ -62,7 +62,7 @@ export default function EditableText({
 	};
 
 	return (
-		<div className="inline-flex items-center gap-1">
+		<div className="inline-flex items-center relative w-max">
 			<Tag
 				ref={ref}
 				contentEditable={editing}
@@ -79,13 +79,11 @@ export default function EditableText({
 				cursor-pointer
 				outline-none
 				rounded
-				bg-transparent
 				focus:bg-rain-500/0
 				focus:outline-none
 				focus:ring-0
 				focus:ring-offset-0
 				`}
-				// focus:ring-2 focus:ring-rain-600
 				onClick={() => setEditing(true)}
 				onFocus={() => setEditing(true)}
 				onBlur={commit}
@@ -103,11 +101,10 @@ export default function EditableText({
 			>
 				{text}
 			</Tag>
-
 			{showEditButton && (
 				<button
 					type="button"
-					className="btn--icon"
+					className="btn--icon absolute -right-7 top-1/2 -translate-y-1/2"
 					onClick={() => setEditing(true)}
 					aria-label="Edit text"
 					tabIndex={-1}

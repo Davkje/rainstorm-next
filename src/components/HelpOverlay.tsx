@@ -90,10 +90,6 @@ export default function HelpOverlay({ open, onClose }: Props) {
 										<RiDeleteBinLine />
 										<span>Remove all words or drag single word to delete.</span>
 									</li>
-									<li className="flex gap-4 items-center">
-										<RiLockLine />
-										<span>Toggle Lock Wordbank</span>
-									</li>
 								</ul>
 							</div>
 							<div>
@@ -103,13 +99,13 @@ export default function HelpOverlay({ open, onClose }: Props) {
 										<span>N - Generate new word</span>
 									</li>
 									<li>
-										<span>V - Toggle view</span>
-									</li>
-									<li>
-										<span>L - Toggle Bank Lock</span>
+										<span>V - Toggle Views</span>
 									</li>
 									<li>
 										<span>H - Toggle Help</span>
+									</li>
+									<li>
+										<span>B - Toggle Banks</span>
 									</li>
 									<li>
 										<span>Esc - Close dialogs and cancel</span>

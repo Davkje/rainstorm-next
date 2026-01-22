@@ -43,7 +43,7 @@ export default function WordGenerator({
 					)}
 					{!currentWord && (
 						<span className="px-10 text-3xl bg-transparent font-bold flex justify-center items-center text-transparent select-none">
-							TEST
+							PLACEHOLDER
 						</span>
 					)}
 					{currentWord && (

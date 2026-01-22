@@ -13,6 +13,14 @@ type Props = {
 };
 
 export default function DefineView({ idea, setIdea, onRemoveCategory, onAddCategory }: Props) {
+	const placeholderTexts = [
+		"Write something about",
+		"What do you associate with",
+		"Something about",
+		"Once upon a time, the",
+		"How does this idea relate to",
+	];
+
 	const updateCategoryText = (catId: Category["id"], newText: string) => {
 		setIdea((prev) => {
 			if (!prev) return prev;
@@ -78,7 +86,7 @@ export default function DefineView({ idea, setIdea, onRemoveCategory, onAddCateg
 						</button>
 					</div>
 				)}
-				{idea.categories.map((cat) => (
+				{idea.categories.map((cat, index) => (
 					<div
 						key={cat.id}
 						className="flex flex-col grow border-2 gap-1 p-2 border-rain-600 rounded-lg bg-linear-to-b from-transparent to-rain-900/20"
@@ -106,7 +114,7 @@ export default function DefineView({ idea, setIdea, onRemoveCategory, onAddCateg
 								<EditableText
 									key={word}
 									text={word}
-									className="text-lg text-rain-300 font-bold leading-normal"
+									className="text-lg text-rain-400 font-medium leading-normal"
 									tag="span"
 									onChange={(v) => updateWord(cat.id, word, v)}
 								></EditableText>
@@ -126,7 +134,7 @@ export default function DefineView({ idea, setIdea, onRemoveCategory, onAddCateg
 							name={`${cat.name}-text-field`}
 							onChange={(e) => updateCategoryText(cat.id, e.target.value)}
 							rows={1}
-							placeholder={`${cat.words.join(", ")}...`}
+							placeholder={`${placeholderTexts[index % placeholderTexts.length]} ${cat.words.join(", ")}`}
 						/>
 					</div>
 				))}

@@ -105,7 +105,7 @@ body {
 /* ----- ANIMATIONS ----- */
 
 .anim-fade-in-right {
-	animation: fade-in-right 3s ease-in-out;
+	animation: fade-in-right 6s ease-in-out;
 }
 
 @keyframes fade-in-right {
@@ -113,11 +113,11 @@ body {
 		opacity: 0;
 		transform: translateX(200px);
 	}
-	10% {
+	5% {
 		opacity: 1;
 		transform: translateX(0);
 	}
-	90% {
+	95% {
 		opacity: 1;
 		transform: translateX(0);
 	}
@@ -128,7 +128,7 @@ body {
 }
 
 .anim-fade-in-left {
-	animation: fade-in-left 3s ease-in-out;
+	animation: fade-in-left 6s ease-in-out;
 }
 
 @keyframes fade-in-left {
@@ -136,11 +136,11 @@ body {
 		opacity: 0;
 		transform: translateX(-200px);
 	}
-	10% {
+	5% {
 		opacity: 1;
 		transform: translateX(0);
 	}
-	90% {
+	95% {
 		opacity: 1;
 		transform: translateX(0);
 	}

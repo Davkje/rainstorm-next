@@ -59,10 +59,10 @@ export default function IdeaCategory({
 			ref={setNodeRef}
 			className={`flex flex-col text-xl flex-1 p-2 gap-2 border-2 border-rain-600 rounded-lg transition-colors bg-linear-to-b from-transparent to-rain-900/10`}
 		>
-			<div className="flex justify-between items-center relative">
+			<div className="flex justify-between h-max items-center relative">
 				<EditableText
 					text={title}
-					className="text-lg font-bold leading-8 inline-block"
+					className="text-lg font-bold leading-8 inline-block pr-0"
 					tag="h2"
 					onChange={(v) => onUpdateCategoryName(id, v)}
 					showEditButton

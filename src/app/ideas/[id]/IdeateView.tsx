@@ -335,6 +335,14 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 			ignoreInputs: true,
 		},
 	);
+	// SHOW BANKS
+	useGlobalKeys(
+		"b",
+		() => {
+			setShowActiveBanksOverlay(true);
+		},
+		{ ignoreInputs: true },
+	);
 
 	/* -------------------- INIT -------------------- */
 	useEffect(() => {

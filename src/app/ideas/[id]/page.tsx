@@ -16,7 +16,6 @@ import { createCategory } from "@/utils/createCategory";
 import ConfirmModal from "@/components/ui/ConfirmModal";
 import {
 	RiAddBoxLine,
-	RiArrowDropLeftFill,
 	RiArrowDropRightFill,
 	RiEdit2Fill,
 	RiQuestionLine,
@@ -65,17 +64,19 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 	}, [id]);
 
 	/* -------------------- HINTS -------------------- */
-	const showDefineHint = useOneTimeHint({
-		when: allHaveWords && totalWords >= 3,
-		duration: 3000,
-	});
 
 	const showExportHint = useOneTimeHint({
 		when: allHaveWords && totalWords >= 3 && allHaveSomeText && totalText >= 25,
-		duration: 3000,
+		duration: 6000,
+	});
+
+	const showDefineHint = useOneTimeHint({
+		when: allHaveWords && totalWords >= 3,
+		duration: 6000,
 	});
 
 	/* -------------------- GLOBAL KEYS -------------------- */
+	// TOGGLE VIEW
 	useGlobalKeys(
 		"v",
 		() => {
@@ -85,15 +86,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 			ignoreInputs: true,
 		},
 	);
-	useGlobalKeys(
-		"d",
-		() => {
-			setView("define");
-		},
-		{
-			ignoreInputs: true,
-		},
-	);
+	// SHOW HELP
 	useGlobalKeys(
 		"h",
 		() => {
@@ -101,6 +94,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 		},
 		{ ignoreInputs: true },
 	);
+	// CLOSE HELP
 	useGlobalKeys("Escape", () => setShowHelp(false));
 
 	/* --------------------CATEGORIES -------------------- */
@@ -163,7 +157,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 					<EditableText
 						text={idea.name}
 						tag="h1"
-						className="text-2xl font-bold leading-9"
+						className="text-2xl leading-9 px-2"
 						showEditButton
 						editButtonSize={24}
 						onChange={(newName) =>
@@ -187,13 +181,16 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 							<RiAddBoxLine />
 						</button>
 						<div className="relative flex gap-1 h-full justify-center items-center">
-							<CopyDropdown idea={idea} />
-							<DownloadDropdown idea={idea} />
 							{showExportHint && (
-								<div className="absolute top-0 left-full h-full font-bold bg-rain-700 text-white w-max ml-2 pl-2 pr-5 text-md flex justify-center items-center rounded shadow-lg z-50 anim-fade-in-left">
-									<RiArrowDropLeftFill /> Ready to Export?
+								<div className="absolute top-0 right-full h-full font-bold bg-rain-700 text-white w-max ml-2 pl-5 pr-2 text-md flex justify-center items-center rounded shadow-lg z-50 anim-fade-in-right">
+									Ready to Export?
+									<RiArrowDropRightFill />
 								</div>
 							)}
+							<div className={`flex gap-1 ${showExportHint && "anim-blink"}`}>
+								<CopyDropdown idea={idea} />
+								<DownloadDropdown idea={idea} />
+							</div>
 						</div>
 					</div>
 					<div className="flex items-center gap-3 bg-rain-600 p-2 rounded-lg relative">
@@ -203,7 +200,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 						>
 							<RiThunderstormsFill />
 						</button>
-						{showDefineHint && (
+						{showDefineHint && !showExportHint && (
 							<div
 								className="
 									absolute top-0 right-full mr-2 pl-5 pr-2 font-bold
@@ -215,7 +212,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 						)}
 						<button
 							onClick={() => setView("define")}
-							className={`btn--link ${showDefineHint && "anim-blink"} ${
+							className={`btn--link ${showDefineHint && !showExportHint && "anim-blink"} ${
 								view === "define" ? "text-rain-100" : "text-rain-500"
 							}`}
 						>
