@@ -12,11 +12,6 @@ export default function Header() {
 	const [open, setOpen] = useState(false);
 	const pathname = usePathname();
 
-	const linkClass = (href: string) =>
-		pathname === href
-			? "text-rain-100 border-b-2 border-rain-400"
-			: "text-rain-400 hover:text-rain-200 transition-colors";
-
 	return (
 		<header className="bg-rain-800 px-4 gap-2 flex justify-between items-center relative">
 			<Link href="/">

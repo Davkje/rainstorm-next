@@ -54,8 +54,8 @@ export default function WordGenerator({
 					)}
 				</div>
 			</div>
-			<div className="flex sm:flex-col w-full gap-2 sm:gap-2">
-				<div className="flex flex-col items-center p-2 gap-2 border-2 rounded-xl w-full border-rain-600">
+			<div className="flex sm:flex-col-reverse w-full gap-2 sm:gap-2">
+				<div className="flex flex-col items-center p-2 gap-2 border-2 rounded-xl w-full border-rain-600 bg-linear-to-b from-transparent to-rain-900/10">
 					<div className="flex w-full rounded-xl justify-between gap-2">
 						<div className="flex gap-4 justify-center items-center">
 							<span className="text-md text-rain-300 uppercase pl-2 font-bold leading-3.5">
@@ -70,7 +70,7 @@ export default function WordGenerator({
 											onClick={onClearSelected}
 											className="flex items-center gap-1 uppercase leading-3.5 font-bold text-md py-2 px-4 bg-rain-700 text-rain-300 border-none hover:text-rain-100 hover:bg-rain-600"
 										>
-											Clear filters
+											Clear filters:
 											<span>{selectedBanks.length}</span>
 											<RiCloseLine />
 										</button>

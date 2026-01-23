@@ -30,7 +30,7 @@ export default function ActiveBanksOverlay({
 				onClick={onClose}
 			>
 				<div
-					className="relative bg-rain-800 p-8 rounded-2xl mx-8 w-max max-h-[60vh] overflow-y-auto flex items-center flex-col gap-8"
+					className="relative bg-rain-800 border-2 border-rain-700 p-8 rounded-2xl mx-8 w-max max-h-[60vh] overflow-y-auto flex items-center flex-col gap-8"
 					onClick={(e) => e.stopPropagation()}
 				>
 					<button
