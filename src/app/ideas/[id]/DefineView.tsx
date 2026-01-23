@@ -77,7 +77,7 @@ export default function DefineView({ idea, setIdea, onRemoveCategory, onAddCateg
 
 	return (
 		<div className="flex flex-col gap-4 h-full">
-			<div className="flex flex-col h-full gap-4">
+			<div className="flex flex-col h-full gap-2">
 				{idea.categories.length === 0 && (
 					<div className="flex flex-col text-center grow justify-center items-center text-rain-400">
 						<span className="text-xl">No categoires</span>
@@ -94,7 +94,7 @@ export default function DefineView({ idea, setIdea, onRemoveCategory, onAddCateg
 						<div className="flex justify-between relative">
 							<EditableText
 								text={cat.name}
-								className="text-xl font-bold leading-normal"
+								className="text-lg leading-normal"
 								tag="h2"
 								onChange={(v) => updateCategoryName(cat.id, v)}
 								showEditButton

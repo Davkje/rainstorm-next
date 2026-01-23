@@ -63,7 +63,7 @@ export default function IdeaCategory({
 			<div className="flex justify-between h-max items-center relative">
 				<EditableText
 					text={title}
-					className="text-lg font-bold leading-8 inline-block pr-0"
+					className="text-md sm:text-lg font-bold leading-8 inline-block pr-0"
 					tag="h2"
 					onChange={(v) => onUpdateCategoryName(id, v)}
 					showEditButton
@@ -107,9 +107,9 @@ export default function IdeaCategory({
 			</div>
 
 			<SortableContext items={words.map((w) => `${id}-${w}`)} strategy={rectSortingStrategy}>
-				<div className="flex-1 flex flex-wrap h-full gap-2 text-xl justify-center items-center">
+				<div className="flex-1 flex flex-wrap h-full gap-2 justify-center items-center">
 					{words.length === 0 ? (
-						<p ref={setEmptyRef} className="text-rain-600">
+						<p ref={setEmptyRef} className="text-rain-600 text-xs sm:text-xl uppercase font-bold">
 							Drag word here
 						</p>
 					) : (

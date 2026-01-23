@@ -153,13 +153,14 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 	return (
 		<div className="grid grid-rows-[auto_1fr] gap-2 h-full">
 			{/* HEADER */}
-			<div className="grid sm:flex sm:justify-between gap-2 h-full w-full ">
+			<div className="grid sm:flex sm:justify-between gap-0 sm:gap-2 h-full w-full ">
 				<div className="flex gap-2 justify-center items-center h-full">
 					<EditableText
 						text={idea.name}
 						tag="h1"
-						className="text-2xl leading-9 px-2"
+						className="text-xl leading-9 px-2 max-w-[80vw] text-wrap sm:text-nowrap text-center"
 						showEditButton
+						maxLength={50}
 						editButtonSize={24}
 						onChange={(newName) =>
 							setIdea((prev) => (prev ? { ...prev, name: newName, updatedAt: Date.now() } : prev))
@@ -216,7 +217,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 						<Tooltip text="Ideate View">
 							<button
 								onClick={() => setView("ideate")}
-								className={`btn--link ${view === "ideate" ? "text-rain-100" : "text-rain-400"}`}
+								className={`btn--link ${view === "ideate" ? "text-rain-100" : "text-rain-400 hover:text-rain-300/50"}`}
 							>
 								<RiThunderstormsFill />
 							</button>
@@ -225,7 +226,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 							<button
 								onClick={() => setView("define")}
 								className={`btn--link ${showDefineHint && !showExportHint && "anim-blink"} ${
-									view === "define" ? "text-rain-100" : "text-rain-500"
+									view === "define" ? "text-rain-100" : "text-rain-400 hover:text-rain-300/50"
 								}`}
 							>
 								<RiEdit2Fill />

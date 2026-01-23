@@ -9,6 +9,7 @@ interface EditableTextProps {
 	tag?: ElementType;
 	showEditButton?: boolean;
 	editButtonSize?: number;
+	maxLength?: number;
 }
 
 export default function EditableText({
@@ -18,6 +19,7 @@ export default function EditableText({
 	onChange,
 	showEditButton,
 	editButtonSize = 16,
+	maxLength = 30,
 }: EditableTextProps) {
 	const ref = useRef<HTMLElement | null>(null);
 	const original = useRef(text);
@@ -53,7 +55,12 @@ export default function EditableText({
 	const commit = () => {
 		if (!ref.current) return;
 
-		const value = ref.current.innerText.trim();
+		let value = ref.current.innerText.trim();
+
+		if (value.length > maxLength) {
+			value = value.slice(0, maxLength);
+			ref.current.innerText = value;
+		}
 
 		if (value !== original.current) {
 			onChange(value);
@@ -74,20 +81,37 @@ export default function EditableText({
 				aria-multiline="false"
 				aria-readonly={!editing}
 				className={`
-				${className}
-				inline-block
-				px-1
-				cursor-pointer
-				outline-none
-				rounded
-				focus:bg-rain-500/0
-				focus:outline-none
-				focus:ring-0
-				focus:ring-offset-0
+					inline-block
+					px-1
+					cursor-pointer
+					outline-none
+					rounded
+					focus:bg-rain-500/0
+					focus:outline-none
+					focus:ring-0
+					focus:ring-offset-0
+					${className}
 				`}
 				onClick={() => setEditing(true)}
 				onFocus={() => setEditing(true)}
 				onBlur={commit}
+				onInput={() => {
+					if (!ref.current) return;
+
+					const text = ref.current.innerText;
+
+					if (text.length > maxLength) {
+						ref.current.innerText = text.slice(0, maxLength);
+
+						// MOVE CARET
+						const range = document.createRange();
+						range.selectNodeContents(ref.current);
+						range.collapse(false);
+						const sel = window.getSelection();
+						sel?.removeAllRanges();
+						sel?.addRange(range);
+					}
+				}}
 				onKeyDown={(e: React.KeyboardEvent<HTMLElement>) => {
 					if (e.key === "Enter") {
 						e.preventDefault();

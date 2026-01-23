@@ -33,7 +33,7 @@ export default function RootLayout({
 			`}
 			>
 				<Header />
-				<main className="bg-main h-full p-4">{children}</main>
+				<main className="bg-main h-full px-2 pt-2 pb sm:p-2">{children}</main>
 			</body>
 		</html>
 	);

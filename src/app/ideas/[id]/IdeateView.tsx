@@ -50,6 +50,8 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 	const [banks, setBanks] = useState<WordBankName[]>([]);
 	// ACTIVE BANKS IN PROJECT
 	const activeBanks = idea.activeBanks;
+	const allActive = activeBanks.length === banks.length;
+
 	// SELECTED BANKS FOR FILTER
 	const [selectedBanks, setSelectedBanks] = useState<WordBankName[]>([]);
 	// WORD IN GENERATOR
@@ -168,6 +170,23 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 
 	const clearSelectedBanks = () => {
 		setSelectedBanks([]);
+	};
+
+	const toggleAllBanks = () => {
+		setIdea((prev) => {
+			if (!prev) return prev;
+
+			const nextActive = prev.activeBanks.length === banks.length ? [] : banks;
+
+			return {
+				...prev,
+				activeBanks: nextActive,
+				updatedAt: Date.now(),
+			};
+		});
+
+		// Se till att selectedBanks inte pekar på inaktiva banker
+		setSelectedBanks((sel) => (allActive ? [] : sel.filter((b) => banks.includes(b))));
 	};
 
 	/* -------------------- CATEGORY -------------------- */
@@ -403,7 +422,7 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 			onDragStart={handleDragStart}
 			onDragEnd={handleDragEnd}
 		>
-			<div className="flex flex-col-reverse gap-4 sm:grid grid-cols-1 sm:grid-cols-2">
+			<div className="flex flex-col-reverse gap-2 sm:gap-2 sm:grid grid-cols-1 sm:grid-cols-2">
 				<WordGenerator
 					currentWord={currentWord}
 					currentBank={currentBank}
@@ -416,8 +435,7 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 					areBanksLoading={areBanksLoading}
 					onOpenActiveBank={() => setShowActiveBanksOverlay(true)}
 				/>
-
-				<div className="flex flex-col gap-2 sm:gap-4">
+				<div className="flex flex-col gap-1 sm:gap-2">
 					{idea.categories.length === 0 && (
 						<div className="flex flex-col text-center grow justify-center items-center text-rain-400">
 							<span className="text-xl">No categoires</span>
@@ -446,6 +464,7 @@ export default function IdeateView({ idea, setIdea, onRemoveCategory, onAddCateg
 						activeBanks={activeBanks}
 						onToggleBank={toggleActiveBank}
 						onClose={() => setShowActiveBanksOverlay(false)}
+						onToggleAll={toggleAllBanks}
 					/>
 				)}
 

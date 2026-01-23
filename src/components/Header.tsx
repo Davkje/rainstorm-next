@@ -6,9 +6,16 @@ import Image from "next/image";
 import { RiMenu3Line, RiCloseLargeLine } from "@remixicon/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FullscreenButton } from "./ui/FullscreenButton";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
 	const [open, setOpen] = useState(false);
+	const pathname = usePathname();
+
+	const linkClass = (href: string) =>
+		pathname === href
+			? "text-rain-100 border-b-2 border-rain-400"
+			: "text-rain-400 hover:text-rain-200 transition-colors";
 
 	return (
 		<header className="bg-rain-800 px-4 gap-2 flex justify-between items-center relative">
@@ -16,31 +23,53 @@ export default function Header() {
 				<Image src="/rainstorm.png" alt="rainstorm" width={150} height={167} />
 			</Link>
 
-			<FullscreenButton />
-			<div className="flex gap-6 justify-center items-center">
-				{/* DESKTOP */}
-				<nav className="hidden sm:flex gap-6 uppercase font-bold">
-					<Link href="/ideas">Ideas</Link>
-					<Link href="/words">Words</Link>
-					<Link href="/templates">Templates</Link>
-					<Link href="/about">About</Link>
-				</nav>
+			{/* DESKTOP */}
+			<nav className="hidden sm:flex gap-6 uppercase font-bold justify-center items-center relative">
+				{[
+					{ href: "/ideas", label: "Ideas" },
+					{ href: "/words", label: "Words" },
+					{ href: "/templates", label: "Templates" },
+					{ href: "/about", label: "About" },
+				].map(({ href, label }) => {
+					const active = pathname === href;
 
-				{/* MOBILE */}
-
-				{/* BUTTON */}
-				{!open && (
-					<div className="sm:hidden absolute top-1.5 right-3">
-						<button
-							onClick={() => setOpen((p) => !p)}
-							className="btn--icon"
-							aria-label="Toggle menu"
+					return (
+						<Link
+							key={href}
+							href={href}
+							className={`relative px-1 ${
+								active ? "text-rain-200" : "text-rain-300/80 hover:text-rain-300"
+							}`}
 						>
-							<RiMenu3Line />
-						</button>
-					</div>
-				)}
-			</div>
+							{label}
+
+							{active && (
+								<motion.span
+									layoutId="nav-underline"
+									className="absolute left-0 -bottom-1 h-0.5 w-full bg-rain-300 rounded"
+									transition={{
+										type: "spring",
+										stiffness: 500,
+										damping: 30,
+									}}
+								/>
+							)}
+						</Link>
+					);
+				})}
+
+				<FullscreenButton />
+			</nav>
+
+			{/* MOBILE */}
+			{/* BUTTON */}
+			{!open && (
+				<div className="sm:hidden absolute top-1.5 right-3">
+					<button onClick={() => setOpen((p) => !p)} className="btn--icon" aria-label="Toggle menu">
+						<RiMenu3Line />
+					</button>
+				</div>
+			)}
 
 			{/* MENU */}
 			<AnimatePresence>
@@ -76,25 +105,44 @@ export default function Header() {
 								</button>
 							</div>
 
-							<Image
-								src="/rainstorm.png"
-								alt="rainstorm"
-								width={150}
-								height={167}
-								className="mb-8"
-							/>
-							<Link href="/ideas" onClick={() => setOpen(false)} className="text-2xl text-rain-200">
-								Ideas
-							</Link>
-							<Link href="/words" onClick={() => setOpen(false)} className="text-2xl">
-								Words
-							</Link>
-							<Link href="/templates" onClick={() => setOpen(false)} className="text-2xl">
-								Templates
-							</Link>
-							<Link href="/about" onClick={() => setOpen(false)} className="text-2xl">
-								About
-							</Link>
+							<div className="flex flex-col gap-2">
+								<Image
+									className="mb-2"
+									src="/rainstorm.png"
+									alt="rainstorm"
+									width={120}
+									height={167}
+								/>
+								<Link
+									href="/ideas"
+									onClick={() => setOpen(false)}
+									className={`text-xl ${pathname === "/ideas" ? "text-rain-200 leading-normal border-b-2 border-rain-200" : "text-rain-300/80"}`}
+								>
+									Ideas
+								</Link>
+
+								<Link
+									href="/words"
+									onClick={() => setOpen(false)}
+									className={`text-xl ${pathname === "/words" ? "text-rain-200 leading-normal border-b-2 border-rain-200" : "text-rain-300/80"}`}
+								>
+									Words
+								</Link>
+								<Link
+									href="/templates"
+									onClick={() => setOpen(false)}
+									className={`text-xl ${pathname === "/templates" ? "text-rain-200 leading-normal border-b-2 border-rain-200" : "text-rain-300/80"}`}
+								>
+									Templates
+								</Link>
+								<Link
+									href="/about"
+									onClick={() => setOpen(false)}
+									className={`text-xl ${pathname === "/about" ? "text-rain-200 leading-normal border-b-2 border-rain-200" : "text-rain-300/80"}`}
+								>
+									About
+								</Link>
+							</div>
 						</motion.div>
 					</>
 				)}

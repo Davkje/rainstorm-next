@@ -41,7 +41,7 @@ body {
 		@apply text-2xl font-bold leading-normal;
 	}
 	h2 {
-		@apply text-xl font-bold leading-normal;
+		@apply text-xl font-normal leading-normal;
 	}
 	h3 {
 		@apply text-lg font-bold;
@@ -90,7 +90,7 @@ body {
 		@apply text-rain-100 bg-linear-to-b from-rain-700 to-rain-800 border-rain-600 hover:border-rain-500/50 active:border-rain-600;
 	}
 	.btn--tertiary {
-		@apply text-rain-900 bg-rain-300 border-rain-900 hover:bg-rain-200;
+		@apply text-rain-200 bg-rain-700 border-transparent hover:bg-rain-600/80;
 	}
 	.btn--ghost {
 		@apply bg-transparent text-rain-300 border-transparent hover:text-rain-100 hover:border-rain-300;

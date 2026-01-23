@@ -7,7 +7,7 @@ export function FullscreenButton() {
 	return (
 		<button
 			onClick={isFullscreen ? exit : enter}
-			className="btn--icon"
+			className="btn--icon text-rain-300/80 hover:text-rain-300"
 			aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
 		>
 			{isFullscreen ? <RiFullscreenExitLine size={20} /> : <RiFullscreenLine size={20} />}

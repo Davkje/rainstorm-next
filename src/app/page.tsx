@@ -24,11 +24,15 @@ export default function Home() {
 		<>
 			{/* <h1 className="text-2xl font-bold">Home</h1> */}
 			{/* BYT TILL RIKTIG TEXT INTE BILD */}
-			<div className="h-full flex flex-col items-center justify-center gap-8">
-				<Image src="/rainstorm.png" alt="rainstorm" width={600} height={167} />
-				<p className="italic">The one word, limiting, focused idea tool</p>
-				<div className="flex flex-col items-center justify-center gap-8">
-					<h2 className="font-bold">What do you want to create?</h2>
+			<div className="h-full flex flex-col items-center justify-center gap-10">
+				<div className="flex flex-col gap-4 justify-center items-center">
+					<Image className="px-4" src="/rainstorm.png" alt="rainstorm" width={900} height={167} />
+					<p className="leading-normal text-rain-300 italic">
+						The one word, limiting, focused idea tool
+					</p>
+				</div>
+				<div className="flex flex-col items-center justify-center gap-4">
+					<h2 className="leading-normal">What do you want to create?</h2>
 					<div className="grid gap-4">
 						<div className="flex justify-center gap-4 flex-wrap text-lg">
 							{templates

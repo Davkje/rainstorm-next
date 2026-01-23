@@ -11,6 +11,7 @@
 	--text-lg: clamp(1.5rem, 3vw, 2rem);
 	--text-md: clamp(1.2rem, 2.7vw, 1.5rem);
 	--text-sm: clamp(1rem, 2vw, 1.2rem);
+	--text-xs: clamp(1.2rem, 3vw, 1.3rem);
 
 	/* Headings */
 	--text-heading-md: clamp(1.5rem, 2.5vw, 3.5rem);
@@ -23,15 +24,14 @@
 	--leading-normal: 1;
 	--leading-snug: 1.2;
 	--leading-relaxed: clamp(1.4, 1vw + 1, 1.6);
-	/* 
-  --leading-loose: clamp(1.6, 2vw + 1, 2); */
 
 	/* Color */
 	--color-rain-100: #f9f5f5;
 	--color-rain-200: #e6e7ee;
 	--color-rain-300: #bfc0c8;
 	--color-rain-400: #575664;
-	--color-rain-500: #3f3f4c;
+	--color-rain-500: #35354a;
+	/* --color-rain-500: #3f3f4c; */
 	--color-rain-600: #1b1e2f;
 	--color-rain-700: #131522;
 	--color-rain-800: #0e0f19;
