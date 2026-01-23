@@ -3,13 +3,19 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { RiMenu3Line, RiCloseLargeLine } from "@remixicon/react";
+import { RiMenu3Line, RiCloseLargeLine, RiRainyLine, RiRainyFill } from "@remixicon/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FullscreenButton } from "./ui/FullscreenButton";
 import { usePathname } from "next/navigation";
+import { useRainMixer } from "@/utils/useRainMixer";
+import RainMixerDropdown from "./RainMixerDropdown";
 
 export default function Header() {
-	const [open, setOpen] = useState(false);
+	const [openMenu, setOpenMenu] = useState(false);
+	const [openMixer, setOpenMixer] = useState(false);
+
+	const rain = useRainMixer();
+
 	const pathname = usePathname();
 
 	return (
@@ -32,7 +38,7 @@ export default function Header() {
 						<Link
 							key={href}
 							href={href}
-							className={`relative px-1 ${
+							className={`relative font-normal ${
 								active ? "text-rain-200" : "text-rain-300/80 hover:text-rain-300"
 							}`}
 						>
@@ -53,14 +59,31 @@ export default function Header() {
 					);
 				})}
 
+				{/* RAIN MIXER */}
+				<div className="relative">
+					<button
+						className={`btn--icon ${rain.playing ? "rain-blink" : "text-rain-300/80 hover:text-rain-300"}`}
+						onClick={() => setOpenMixer((p) => !p)}
+					>
+						<RiRainyFill />
+					</button>
+					<AnimatePresence>
+						{openMixer && <RainMixerDropdown rain={rain} onClose={() => setOpenMixer(false)} />}
+					</AnimatePresence>
+				</div>
+
 				<FullscreenButton />
 			</nav>
 
 			{/* MOBILE */}
 			{/* BUTTON */}
-			{!open && (
+			{!openMenu && (
 				<div className="sm:hidden absolute top-1.5 right-3">
-					<button onClick={() => setOpen((p) => !p)} className="btn--icon" aria-label="Toggle menu">
+					<button
+						onClick={() => setOpenMenu((p) => !p)}
+						className="btn--icon"
+						aria-label="Toggle menu"
+					>
 						<RiMenu3Line />
 					</button>
 				</div>
@@ -68,7 +91,7 @@ export default function Header() {
 
 			{/* MENU */}
 			<AnimatePresence>
-				{open && (
+				{openMenu && (
 					<>
 						{/* OVERLAY*/}
 						<motion.div
@@ -78,7 +101,7 @@ export default function Header() {
 							exit={{ opacity: 0 }}
 							transition={{ duration: 0.3 }}
 							className="fixed inset-0 bg-black z-5"
-							onClick={() => setOpen(false)}
+							onClick={() => setOpenMenu(false)}
 						/>
 
 						<motion.div
@@ -92,11 +115,11 @@ export default function Header() {
 							{/* BUTTON */}
 							<div className="absolute top-1.5 right-3 z-50">
 								<button
-									onClick={() => setOpen((p) => !p)}
+									onClick={() => setOpenMenu((p) => !p)}
 									className="btn--icon"
 									aria-label="Toggle menu"
 								>
-									{open ? <RiCloseLargeLine /> : <RiMenu3Line />}
+									{openMenu ? <RiCloseLargeLine /> : <RiMenu3Line />}
 								</button>
 							</div>
 
@@ -110,7 +133,7 @@ export default function Header() {
 								/>
 								<Link
 									href="/ideas"
-									onClick={() => setOpen(false)}
+									onClick={() => setOpenMenu(false)}
 									className={`text-xl ${pathname === "/ideas" ? "text-rain-200 leading-normal border-b-2 border-rain-200" : "text-rain-300/80"}`}
 								>
 									Ideas
@@ -118,21 +141,21 @@ export default function Header() {
 
 								<Link
 									href="/words"
-									onClick={() => setOpen(false)}
+									onClick={() => setOpenMenu(false)}
 									className={`text-xl ${pathname === "/words" ? "text-rain-200 leading-normal border-b-2 border-rain-200" : "text-rain-300/80"}`}
 								>
 									Words
 								</Link>
 								<Link
 									href="/templates"
-									onClick={() => setOpen(false)}
+									onClick={() => setOpenMenu(false)}
 									className={`text-xl ${pathname === "/templates" ? "text-rain-200 leading-normal border-b-2 border-rain-200" : "text-rain-300/80"}`}
 								>
 									Templates
 								</Link>
 								<Link
 									href="/about"
-									onClick={() => setOpen(false)}
+									onClick={() => setOpenMenu(false)}
 									className={`text-xl ${pathname === "/about" ? "text-rain-200 leading-normal border-b-2 border-rain-200" : "text-rain-300/80"}`}
 								>
 									About

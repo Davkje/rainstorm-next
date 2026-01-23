@@ -63,7 +63,6 @@ export default function WordGenerator({
 							</span>
 							{selectedBanks.length > 0 && (
 								<>
-									{/* <span className="bg-rain-200 w-0.5 leading-3.5 h-full"></span> */}
 									<Tooltip text="Clear active filters">
 										<button
 											disabled={selectedBanks.length <= 0}
@@ -102,7 +101,7 @@ export default function WordGenerator({
 									<Tooltip key={bank} text="Activate filter">
 										<button
 											onClick={() => onToggleSelectedBank(bank)}
-											className={`text-md uppercase px-4 py-0 capitalize ${
+											className={`text-md uppercase px-4 py-0 ${
 												isSelected
 													? "text-rain-200 border-rain-500/70 bg-rain-800/50 hover:text-rain-100 hover:border-rain-500"
 													: "text-rain-300/60 border-transparent bg-rain-700 hover:text-rain-100"

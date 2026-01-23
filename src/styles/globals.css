@@ -196,3 +196,19 @@ body {
 		transform: rotate(-1deg);
 	}
 }
+
+.rain-blink {
+	animation: rain-blink 4s ease-in-out infinite;
+}
+
+@keyframes rain-blink {
+	0% {
+		color: var(--color-rain-100);
+	}
+	50% {
+		color: var(--color-rain-400);
+	}
+	100% {
+		color: var(--color-rain-100);
+	}
+}
