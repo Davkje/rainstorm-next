@@ -187,18 +187,18 @@ body {
 
 @keyframes drag-wobble {
 	0% {
-		transform: rotate(-1deg);
+		transform: rotate(-2deg);
 	}
 	50% {
-		transform: rotate(1deg);
+		transform: rotate(2deg);
 	}
 	100% {
-		transform: rotate(-1deg);
+		transform: rotate(-2deg);
 	}
 }
 
 .rain-blink {
-	animation: rain-blink 4s ease-in-out infinite;
+	animation: rain-blink 3s ease-in-out infinite;
 }
 
 @keyframes rain-blink {

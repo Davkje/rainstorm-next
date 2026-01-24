@@ -26,20 +26,22 @@ export default function Home() {
 			{/* BYT TILL RIKTIG TEXT INTE BILD */}
 			<div className="h-full flex flex-col items-center justify-center gap-10">
 				<div className="flex flex-col gap-4 justify-center items-center">
-					<Image className="px-4" src="/rainstorm.png" alt="rainstorm" width={900} height={167} />
-					<p className="leading-normal text-rain-300 italic">
+					<Image className="px-4" src="/rainstorm.png" alt="rainstorm" width={900} height={200} />
+					<p className="leading-normal text-rain-200 italic text-lg sm:text-xl">
 						The one word, limiting, focused idea tool
 					</p>
 				</div>
 				<div className="flex flex-col items-center justify-center gap-4">
-					<h2 className="leading-normal">What do you want to create?</h2>
-					<div className="grid gap-4">
-						<div className="flex justify-center gap-4 flex-wrap text-lg">
+					<h2 className="leading-normal text-xl sm:text-2xl text-rain-200">
+						What do you want to create?
+					</h2>
+					<div className="grid gap-2">
+						<div className="flex flex-col sm:flex-row justify-center gap-4 flex-wrap text-lg">
 							{templates
 								.filter((t) => t.highligted)
 								.map((t) => (
 									<button
-										className="btn--primary hover:scale-[1.1] transition-all duration-500 ease-in-out"
+										className="btn--primary text-xl sm:text-2xl font-bold hover:scale-[1.1] transition-all duration-500 ease-in-out"
 										key={t.id}
 										onClick={() => handleCreateIdea(t)}
 									>
@@ -49,9 +51,9 @@ export default function Home() {
 						</div>
 						<Link
 							href="/templates"
-							className="text-md place-self-center text-rain-500 hover:text-rain-200"
+							className="text-lg sm:text-xl place-self-center text-rain-400/50 hover:text-rain-200"
 						>
-							Or see all Templates
+							See all Templates
 						</Link>
 					</div>
 				</div>

@@ -72,6 +72,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 	});
 
 	const showDefineHint = useOneTimeHint({
+		// when: allHaveWords && totalWords >= 3 && view === "ideate",
 		when: allHaveWords && totalWords >= 3 && view === "ideate",
 		duration: 6000,
 	});

@@ -23,6 +23,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
+			<meta name="apple-mobile-web-app-title" content="Rainstorm" />
 			<body
 				className={`
 				${lateef.variable}

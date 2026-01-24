@@ -54,7 +54,7 @@ export default function WordGenerator({
 					)}
 				</div>
 			</div>
-			<div className="flex sm:flex-col-reverse w-full gap-2 sm:gap-2">
+			<div className="flex flex-col-reverse sm:flex-col-reverse w-full gap-2 sm:gap-2">
 				<div className="flex flex-col items-center p-2 gap-2 border-2 rounded-xl w-full border-rain-600 bg-linear-to-b from-transparent to-rain-900/10">
 					<div className="flex w-full rounded-xl justify-between gap-2">
 						<div className="flex gap-4 justify-center items-center">
