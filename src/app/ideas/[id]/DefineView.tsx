@@ -120,10 +120,11 @@ export default function DefineView({ idea, setIdea, onRemoveCategory, onAddCateg
 								></EditableText>
 							))}
 						</div>
+						<div className="bg-linear-to-r from-rain-500 to-transparent w-[30%] h-0.5 rounded"></div>
 						<textarea
 							className="
 								text-lg flex grow rounded-md resize-none px-1
-								placeholder-rain-600 leading-normal min-h-32
+								placeholder-rain-500 leading-normal min-h-32
 								bg-transparent
 								focus:bg-rain-500/0
 								focus:outline-none
@@ -134,7 +135,7 @@ export default function DefineView({ idea, setIdea, onRemoveCategory, onAddCateg
 							name={`${cat.name}-text-field`}
 							onChange={(e) => updateCategoryText(cat.id, e.target.value)}
 							rows={1}
-							placeholder={`${placeholderTexts[index % placeholderTexts.length]} ${cat.words.join(", ")}`}
+							placeholder={`${placeholderTexts[index % placeholderTexts.length]} ${cat.words.join(", ")}...`}
 						/>
 					</div>
 				))}

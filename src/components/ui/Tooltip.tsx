@@ -3,7 +3,15 @@ import { ReactNode, useState, useRef } from "react";
 type TooltipProps = {
 	text: string;
 	children: ReactNode;
-	position?: "top" | "topright" | "topleft" | "bottom" | "left" | "right";
+	position?:
+		| "top"
+		| "topright"
+		| "topleft"
+		| "bottom"
+		| "bottomleft"
+		| "bottomright"
+		| "left"
+		| "right";
 };
 
 export default function Tooltip({ text, children, position = "top" }: TooltipProps) {
@@ -17,6 +25,8 @@ export default function Tooltip({ text, children, position = "top" }: TooltipPro
 		bottom: "top-full mt-2 left-1/2 -translate-x-1/2",
 		left: "right-full mr-2 top-1/2 -translate-y-1/2",
 		right: "left-full ml-2 top-1/2 -translate-y-1/2",
+		bottomright: "top-full mb-4 -right-2",
+		bottomleft: "top-full mb-4 -left-2",
 	};
 
 	const handleMouseEnter = () => {
@@ -44,7 +54,7 @@ export default function Tooltip({ text, children, position = "top" }: TooltipPro
 				className={`
           absolute whitespace-nowrap
           ${posClass[position]}
-          bg-rain-600 text-rain-200 text-md px-4 py-1 rounded-md
+          bg-rain-600 text-rain-200 text-md tracking-wide font-normal normal-case px-4 py-1 rounded-md
           opacity-${visible ? "100" : "0"} transition-opacity duration-300
           pointer-events-none
           z-50 shadow-lg shadow-black/30

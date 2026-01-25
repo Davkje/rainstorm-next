@@ -177,12 +177,12 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 				</div>
 				<div className="flex justify-between gap-3">
 					<div className="flex gap-1 h-full">
-						<Tooltip text="Help">
+						<Tooltip text="Help" position="bottom">
 							<button onClick={() => setShowHelp((prev) => !prev)} className={`btn--icon`}>
-								<RiQuestionLine className="" />
+								<RiQuestionLine />
 							</button>
 						</Tooltip>
-						<Tooltip text="Add new category">
+						<Tooltip text="Add new category" position="bottom">
 							<button onClick={addCategory} className={`btn--icon`}>
 								<RiAddBoxLine />
 							</button>
@@ -195,10 +195,10 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 								</div>
 							)}
 							<div className={`flex gap-1 ${showExportHint && "anim-blink"}`}>
-								<Tooltip text="Copy Idea">
+								<Tooltip text="Copy Idea" position="bottom">
 									<CopyDropdown idea={idea} />
 								</Tooltip>
-								<Tooltip text="Export Idea">
+								<Tooltip text="Export Idea" position="bottom">
 									<DownloadDropdown idea={idea} />
 								</Tooltip>
 							</div>
@@ -215,7 +215,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 								Ready to Define? <RiArrowDropRightFill size={32} />
 							</div>
 						)}
-						<Tooltip text="Ideate View">
+						<Tooltip text="Ideate View" position="bottomright">
 							<button
 								onClick={() => setView("ideate")}
 								className={`btn--link ${view === "ideate" ? "text-rain-100" : "text-rain-400 hover:text-rain-300/50"}`}
@@ -223,7 +223,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 								<RiThunderstormsFill />
 							</button>
 						</Tooltip>
-						<Tooltip text="Define View" position="topright">
+						<Tooltip text="Define View" position="bottomright">
 							<button
 								onClick={() => setView("define")}
 								className={`btn--link ${showDefineHint && !showExportHint && "anim-blink"} ${

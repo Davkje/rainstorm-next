@@ -109,7 +109,7 @@ export default function IdeaCategory({
 			<SortableContext items={words.map((w) => `${id}-${w}`)} strategy={rectSortingStrategy}>
 				<div className="flex-1 flex flex-wrap h-full gap-2 justify-center items-center">
 					{words.length === 0 ? (
-						<p ref={setEmptyRef} className="text-rain-600 text-xs sm:text-xl uppercase font-bold">
+						<p ref={setEmptyRef} className="text-rain-600 text-xs sm:text-lg uppercase font-bold">
 							Drag word here
 						</p>
 					) : (

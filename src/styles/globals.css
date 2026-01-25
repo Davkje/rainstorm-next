@@ -102,7 +102,7 @@ body {
 		@apply bg-transparent text-rain-300 border-none p-1 hover:text-white;
 	}
 	.btn--danger {
-		@apply bg-transparent text-rain-300 border-transparent hover:border-red-500 hover:text-red-500;
+		@apply bg-transparent text-rain-300 border-transparent hover:border-red-500/80 hover:text-red-500/80;
 	}
 }
 

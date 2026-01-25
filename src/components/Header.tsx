@@ -3,20 +3,31 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { RiMenu3Line, RiCloseLargeLine, RiRainyLine, RiRainyFill } from "@remixicon/react";
+import { RiMenu3Line, RiCloseLargeLine, RiRainyFill } from "@remixicon/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FullscreenButton } from "./ui/FullscreenButton";
 import { usePathname } from "next/navigation";
 import { useRainMixer } from "@/utils/useRainMixer";
 import RainMixerDropdown from "./RainMixerDropdown";
+import { useGlobalKeys } from "@/utils/useGlobalKeys";
+import Tooltip from "./ui/Tooltip";
 
 export default function Header() {
 	const [openMenu, setOpenMenu] = useState(false);
 	const [openMixer, setOpenMixer] = useState(false);
 
 	const rain = useRainMixer();
-
 	const pathname = usePathname();
+
+	// OPEN RAIN MIXER
+	useGlobalKeys(
+		"R",
+		() => {
+			// rain.togglePlay();
+			setOpenMixer((p) => !p);
+		},
+		{ ignoreInputs: true },
+	);
 
 	return (
 		<header className="bg-rain-800 px-4 gap-2 flex justify-between items-center relative">
@@ -61,12 +72,14 @@ export default function Header() {
 
 				{/* RAIN MIXER */}
 				<div className="relative">
-					<button
-						className={`btn--icon ${rain.playing ? "rain-blink" : "text-rain-300/80 hover:text-rain-300"}`}
-						onClick={() => setOpenMixer((p) => !p)}
-					>
-						<RiRainyFill />
-					</button>
+					<Tooltip text="Open Rain Mixer [R]" position="bottomright">
+						<button
+							className={`btn--icon ${rain.playing ? "rain-blink" : "text-rain-300/80 hover:text-rain-300"}`}
+							onClick={() => setOpenMixer((p) => !p)}
+						>
+							<RiRainyFill />
+						</button>
+					</Tooltip>
 					<AnimatePresence>
 						{openMixer && <RainMixerDropdown rain={rain} onClose={() => setOpenMixer(false)} />}
 					</AnimatePresence>
@@ -160,6 +173,11 @@ export default function Header() {
 								>
 									About
 								</Link>
+
+								{/* RAIN MIXER */}
+								<div className="relative">
+									<RainMixerDropdown rain={rain} onClose={() => setOpenMixer(false)} />
+								</div>
 							</div>
 						</motion.div>
 					</>
