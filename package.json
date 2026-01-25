@@ -22,6 +22,7 @@
 		"react-dom": "19.2.0"
 	},
 	"devDependencies": {
+		"@svgr/webpack": "^8.1.0",
 		"@tailwindcss/postcss": "^4",
 		"@types/howler": "^2.2.12",
 		"@types/node": "^20",

@@ -11,6 +11,7 @@ import { useRainMixer } from "@/utils/useRainMixer";
 import RainMixerDropdown from "./RainMixerDropdown";
 import { useGlobalKeys } from "@/utils/useGlobalKeys";
 import Tooltip from "./ui/Tooltip";
+import RainMixerMobile from "./RainMixerMobile";
 
 export default function Header() {
 	const [openMenu, setOpenMenu] = useState(false);
@@ -19,12 +20,11 @@ export default function Header() {
 	const rain = useRainMixer();
 	const pathname = usePathname();
 
-	// OPEN RAIN MIXER
+	// PLAY / PAUSE RAIN
 	useGlobalKeys(
-		"R",
+		"",
 		() => {
-			// rain.togglePlay();
-			setOpenMixer((p) => !p);
+			rain.togglePlay();
 		},
 		{ ignoreInputs: true },
 	);
@@ -36,7 +36,7 @@ export default function Header() {
 			</Link>
 
 			{/* DESKTOP */}
-			<nav className="hidden sm:flex gap-6 uppercase font-bold justify-center items-center relative">
+			<nav className="hidden sm:flex gap-6 font-bold justify-center items-center relative">
 				{[
 					{ href: "/ideas", label: "Ideas" },
 					{ href: "/words", label: "Words" },
@@ -49,7 +49,7 @@ export default function Header() {
 						<Link
 							key={href}
 							href={href}
-							className={`relative font-normal ${
+							className={`relative font-normal text-md ${
 								active ? "text-rain-200" : "text-rain-300/80 hover:text-rain-300"
 							}`}
 						>
@@ -174,10 +174,9 @@ export default function Header() {
 									About
 								</Link>
 
-								{/* RAIN MIXER */}
-								<div className="relative">
-									<RainMixerDropdown rain={rain} onClose={() => setOpenMixer(false)} />
-								</div>
+								{/* RAIN MIXER MOBILE*/}
+
+								<RainMixerMobile rain={rain} />
 							</div>
 						</motion.div>
 					</>

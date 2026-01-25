@@ -14,18 +14,14 @@ import CopyDropdown from "@/components/CopyDropdown";
 import DownloadDropdown from "@/components/DownloadDropdown";
 import { createCategory } from "@/utils/createCategory";
 import ConfirmModal from "@/components/ui/ConfirmModal";
-import {
-	RiAddBoxLine,
-	RiArrowDropRightFill,
-	RiEdit2Fill,
-	RiQuestionLine,
-	RiThunderstormsFill,
-} from "@remixicon/react";
+import { RiAddBoxLine, RiArrowDropRightFill, RiEdit2Fill, RiQuestionLine } from "@remixicon/react";
+
 import { useGlobalKeys } from "@/utils/useGlobalKeys";
 import HelpOverlay from "@/components/HelpOverlay";
 import { useOneTimeHint } from "@/utils/useOneTimeHint";
 import { isCategoryEmpty } from "@/utils/IsCategoryEmpty";
 import Tooltip from "@/components/ui/Tooltip";
+import RainstormIcon from "@/components/ui/RainstormIcon";
 
 interface IdeaPageProps {
 	params: Promise<{ id: string }>;
@@ -218,9 +214,9 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 						<Tooltip text="Ideate View" position="bottomright">
 							<button
 								onClick={() => setView("ideate")}
-								className={`btn--link ${view === "ideate" ? "text-rain-100" : "text-rain-400 hover:text-rain-300/50"}`}
+								className={`btn--link ${view === "ideate" ? "text-rain-200" : "text-rain-400 hover:text-rain-300/50"}`}
 							>
-								<RiThunderstormsFill />
+								<RainstormIcon />
 							</button>
 						</Tooltip>
 						<Tooltip text="Define View" position="bottomright">
