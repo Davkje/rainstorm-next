@@ -32,11 +32,11 @@ export default function Header() {
 	return (
 		<header className="bg-rain-800 px-4 gap-2 flex justify-between items-center relative">
 			<Link href="/">
-				<Image src="/rainstorm.png" alt="rainstorm" width={150} height={167} />
+				<Image src="/rainstorm.png" alt="rainstorm" width={120} height={167} />
 			</Link>
 
 			{/* DESKTOP */}
-			<nav className="hidden sm:flex gap-6 font-bold justify-center items-center relative">
+			<nav className="hidden sm:flex gap-[clamp(16px,4vw,50px)] font-bold justify-center items-center relative">
 				{[
 					{ href: "/ideas", label: "Ideas" },
 					{ href: "/words", label: "Words" },
@@ -49,7 +49,7 @@ export default function Header() {
 						<Link
 							key={href}
 							href={href}
-							className={`relative font-normal text-md ${
+							className={`relative font-normal text-sm ${
 								active ? "text-rain-200" : "text-rain-300/80 hover:text-rain-300"
 							}`}
 						>
@@ -58,7 +58,7 @@ export default function Header() {
 							{active && (
 								<motion.span
 									layoutId="nav-underline"
-									className="absolute left-0 -bottom-1 h-0.5 w-full bg-rain-300 rounded"
+									className="absolute left-0 bottom-0 h-0.5 w-full bg-rain-300 rounded"
 									transition={{
 										type: "spring",
 										stiffness: 500,
@@ -71,21 +71,23 @@ export default function Header() {
 				})}
 
 				{/* RAIN MIXER */}
-				<div className="relative">
-					<Tooltip text="Open Rain Mixer [R]" position="bottomright">
-						<button
-							className={`btn--icon ${rain.playing ? "rain-blink" : "text-rain-300/80 hover:text-rain-300"}`}
-							onClick={() => setOpenMixer((p) => !p)}
-						>
-							<RiRainyFill />
-						</button>
-					</Tooltip>
-					<AnimatePresence>
-						{openMixer && <RainMixerDropdown rain={rain} onClose={() => setOpenMixer(false)} />}
-					</AnimatePresence>
-				</div>
+				<div className="flex gap-2">
+					<div className="relative">
+						<Tooltip text="Open Rain Mixer [R]" position="bottomright">
+							<button
+								className={`btn--icon ${rain.playing ? "rain-blink" : "text-rain-300/80 hover:text-rain-300"}`}
+								onClick={() => setOpenMixer((p) => !p)}
+							>
+								<RiRainyFill />
+							</button>
+						</Tooltip>
+						<AnimatePresence>
+							{openMixer && <RainMixerDropdown rain={rain} onClose={() => setOpenMixer(false)} />}
+						</AnimatePresence>
+					</div>
 
-				<FullscreenButton />
+					<FullscreenButton />
+				</div>
 			</nav>
 
 			{/* MOBILE */}

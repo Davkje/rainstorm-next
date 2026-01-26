@@ -58,31 +58,40 @@ export default function WordGenerator({
 					)}
 				</div>
 			</div>
-			<div className="flex flex-col-reverse sm:flex-col-reverse w-full gap-2 sm:gap-2">
+			<div className="flex flex-col sm:flex-col-reverse w-full gap-2 sm:gap-2">
+				{/* GEN BUTTON */}
+				<button
+					className="btn--primary justify-center w-full px-8 py-4 sm:py-8 text-xl uppercase font-extrabold"
+					onClick={() => onNewWord()}
+				>
+					New Word
+				</button>
 				{/* FILTERS AND BANKS */}
 				<div className="flex flex-col items-center p-2 gap-2 border-2 rounded-lg w-full border-rain-600 bg-linear-to-b from-transparent to-rain-900/10">
 					<div className="flex w-full rounded-lg justify-between gap-2">
 						<div className="flex w-max sm:gap-2">
-							<button
-								role="button"
-								onClick={() => setFiltersOpen((prev) => !prev)}
-								className="btn--link flex pl-2 gap-1 justify-center items-center"
-							>
-								<span className="btn--link text-sm text-rain-300 uppercase leading-5">
-									Select Filters
-								</span>
-								{filtersOpen ? <RiArrowLeftSFill /> : <RiArrowRightSFill />}
-							</button>
+							<Tooltip position="topright" text="View or hide filters">
+								<button
+									role="button"
+									onClick={() => setFiltersOpen((prev) => !prev)}
+									className="btn--link flex pl-2 gap-1 justify-center items-center"
+								>
+									<span className="btn--link text-sm text-rain-300 uppercase leading-5">
+										Select Filters
+									</span>
+									{filtersOpen ? <RiArrowLeftSFill /> : <RiArrowRightSFill />}
+								</button>
+							</Tooltip>
 							{selectedBanks.length > 0 && (
 								<>
 									<Tooltip text="Clear active filters">
 										<button
 											disabled={selectedBanks.length <= 0}
 											onClick={onClearSelected}
-											className="flex items-center text-sm gap-1 uppercase leading-5 p-2 sm:px-4 bg-rain-700 text-rain-300 border-none hover:text-rain-100 hover:bg-rain-600"
+											className="flex items-center h-full text-sm gap-1 uppercase leading-5 p-2 sm:px-4 bg-rain-700 text-rain-300 border-none hover:text-rain-100 hover:bg-rain-600"
 										>
-											Clear:
-											<span>{selectedBanks.length}</span>
+											{/* <span> Clear filter: {selectedBanks.length}</span> */}
+											<span>Clear</span>
 											<RiCloseLine />
 										</button>
 									</Tooltip>
@@ -95,7 +104,6 @@ export default function WordGenerator({
 								className="flex items-center text-sm uppercase leading-5 min-h-10 rounded-lg px-2 sm:px-4 py-2 bg-transparent text-rain-300 border-none hover:text-rain-100 hover:bg-rain-600"
 							>
 								Active Banks
-								{/* <RiArrowRightSFill /> */}
 							</button>
 						</Tooltip>
 					</div>
@@ -112,7 +120,7 @@ export default function WordGenerator({
 									const isSelected = selectedBanks.includes(bank);
 									const isCurrentBank = currentBank === bank;
 									return (
-										<Tooltip key={bank} text="Activate filter">
+										<Tooltip key={bank} text="Toggle filter">
 											<button
 												onClick={() => onToggleSelectedBank(bank)}
 												className={`text-sm rounded-lg uppercase font-normal px-4 py-0 ${
@@ -133,13 +141,6 @@ export default function WordGenerator({
 						</div>
 					)}
 				</div>
-				{/* GEN BUTTON */}
-				<button
-					className="btn--primary justify-center w-full px-8 py-4 sm:py-8 text-xl uppercase font-extrabold"
-					onClick={() => onNewWord()}
-				>
-					New Word
-				</button>
 			</div>
 		</div>
 	);

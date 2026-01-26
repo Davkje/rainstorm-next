@@ -184,7 +184,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 								<RiQuestionLine />
 							</button>
 						</Tooltip>
-						<Tooltip text="Add new category" position="bottom">
+						<Tooltip text="Add Category" position="bottomleft">
 							<button onClick={addCategory} className={`btn--icon`}>
 								<RiAddBoxLine />
 							</button>
