@@ -26,7 +26,7 @@ export default function HelpOverlay({ open, onClose }: Props) {
 				onClick={onClose}
 			>
 				<div
-					className="flex flex-col bg-rain-800 w-full max-w-4xl max-h-[80vh] border-2 border-rain-700 rounded-xl p-4 sm:p-8 lg:p-12 mx-6 shadow-xl relative"
+					className="flex flex-col bg-rain-800  max-w-4xl border-2 border-rain-700 rounded-xl p-4 sm:p-8 lg:p-12 shadow-xl relative mx-8 w-max max-h-[90vh]"
 					onClick={(e) => e.stopPropagation()}
 				>
 					<button

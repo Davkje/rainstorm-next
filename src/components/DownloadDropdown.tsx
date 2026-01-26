@@ -60,7 +60,7 @@ export default function DownloadDropdown({ idea }: { idea: Idea }) {
 
 			{open && (
 				<div
-					className="absolute min-w-max top-full right-0 mt-2 grid rounded-lg px-4 py-2 bg-rain-700 shadow-lg z-50 text-nowrap"
+					className="absolute min-w-max top-full left-0 sm:left-auto sm:right-0 mt-2 grid rounded-lg px-4 py-2 bg-rain-700 shadow-lg z-50 text-nowrap"
 					role="menu"
 				>
 					{options.map((opt) => (

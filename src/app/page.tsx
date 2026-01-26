@@ -26,13 +26,13 @@ export default function Home() {
 			{/* BYT TILL RIKTIG TEXT INTE BILD */}
 			<div className="h-full flex flex-col items-center justify-center gap-10">
 				<div className="flex flex-col gap-4 justify-center items-center">
-					<Image className="px-4" src="/rainstorm.png" alt="rainstorm" width={900} height={200} />
-					<p className="leading-normal text-rain-200 italic text-lg sm:text-xl">
+					<Image className="px-4" src="/rainstorm.png" alt="rainstorm" width={600} height={200} />
+					<p className="leading-normal text-rain-200 italic text-lg sm:text-lg">
 						The one word, limiting, focused idea tool
 					</p>
 				</div>
 				<div className="flex flex-col items-center justify-center gap-4">
-					<h2 className="leading-normal text-xl sm:text-2xl text-rain-200">
+					<h2 className="leading-normal text-xl sm:text-xl text-rain-200">
 						What do you want to create?
 					</h2>
 					<div className="grid gap-2">
@@ -41,7 +41,7 @@ export default function Home() {
 								.filter((t) => t.highligted)
 								.map((t) => (
 									<button
-										className="btn--primary text-xl sm:text-2xl font-bold hover:scale-[1.1] transition-all duration-500 ease-in-out"
+										className="btn--primary text-lg sm:text-lg font-bold hover:scale-[1.1] transition-all duration-500 ease-in-out"
 										key={t.id}
 										onClick={() => handleCreateIdea(t)}
 									>

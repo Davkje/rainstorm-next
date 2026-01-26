@@ -1,8 +1,9 @@
 import { Word, WordBankName } from "@/models/wordBanks";
 import WordChip from "./WordChip";
-import { RiArrowRightSFill, RiCloseLine } from "@remixicon/react";
+import { RiArrowLeftSFill, RiArrowRightSFill, RiCloseLine } from "@remixicon/react";
 import { SortableContext, rectSortingStrategy } from "@dnd-kit/sortable";
 import Tooltip from "./ui/Tooltip";
+import { useState } from "react";
 
 type Props = {
 	currentWord: Word | null;
@@ -29,6 +30,8 @@ export default function WordGenerator({
 	areBanksLoading,
 	onOpenActiveBank,
 }: Props) {
+	const [filtersOpen, setFiltersOpen] = useState<boolean>(true);
+
 	return (
 		<div className="h-full flex flex-col justify-end items-center gap-2 sm:gap-4">
 			<div className="flex justify-center h-full">
@@ -37,13 +40,14 @@ export default function WordGenerator({
 						isWordLoading ? "opacity-0" : "opacity-100"
 					}`}
 				>
-					{!currentWord && (
-						<span className="px-10 text-3xl bg-transparent font-bold flex justify-center items-center text-transparent select-none">
-							HIDDEN
+					{/* HIDDEN PLACEHOLDER */}
+					{!currentWord && isWordLoading && (
+						<span className="px-10 py-3 text-3xl uppercase font-bold flex justify-center items-center text-transparent select-none">
+							PLACEHOLDER
 						</span>
 					)}
 					{!currentWord && !isWordLoading && (
-						<span className="text-rain-600 select-none text-2xl font-bold uppercase">
+						<span className="text-rain-600 px-10 py-3 text-3xl select-none font-bold uppercase">
 							Generate below
 						</span>
 					)}
@@ -55,21 +59,29 @@ export default function WordGenerator({
 				</div>
 			</div>
 			<div className="flex flex-col-reverse sm:flex-col-reverse w-full gap-2 sm:gap-2">
-				<div className="flex flex-col items-center p-2 gap-2 border-2 rounded-xl w-full border-rain-600 bg-linear-to-b from-transparent to-rain-900/10">
-					<div className="flex w-full rounded-xl justify-between gap-2">
-						<div className="flex gap-4 justify-center items-center">
-							<span className="text-md text-rain-300 uppercase pl-2 font-bold leading-3.5">
-								Select Filters
-							</span>
+				{/* FILTERS AND BANKS */}
+				<div className="flex flex-col items-center p-2 gap-2 border-2 rounded-lg w-full border-rain-600 bg-linear-to-b from-transparent to-rain-900/10">
+					<div className="flex w-full rounded-lg justify-between gap-2">
+						<div className="flex w-max sm:gap-2">
+							<button
+								role="button"
+								onClick={() => setFiltersOpen((prev) => !prev)}
+								className="btn--link flex pl-2 gap-1 justify-center items-center"
+							>
+								<span className="btn--link text-sm text-rain-300 uppercase leading-5">
+									Select Filters
+								</span>
+								{filtersOpen ? <RiArrowLeftSFill /> : <RiArrowRightSFill />}
+							</button>
 							{selectedBanks.length > 0 && (
 								<>
 									<Tooltip text="Clear active filters">
 										<button
 											disabled={selectedBanks.length <= 0}
 											onClick={onClearSelected}
-											className="flex items-center gap-1 uppercase leading-3.5 font-bold text-md py-2 px-4 bg-rain-700 text-rain-300 border-none hover:text-rain-100 hover:bg-rain-600"
+											className="flex items-center text-sm gap-1 uppercase leading-5 p-2 sm:px-4 bg-rain-700 text-rain-300 border-none hover:text-rain-100 hover:bg-rain-600"
 										>
-											Clear filters:
+											Clear:
 											<span>{selectedBanks.length}</span>
 											<RiCloseLine />
 										</button>
@@ -77,70 +89,53 @@ export default function WordGenerator({
 								</>
 							)}
 						</div>
-						<Tooltip text="Select Wordbanks">
+						<Tooltip text="Select Wordbanks" position="topright">
 							<button
 								onClick={() => onOpenActiveBank()}
-								className="flex items-center text-md uppercase leading-3.5 font-bold rounded-xl py-2 pl-4 pr-2 bg-transparent text-rain-300 border-none hover:text-rain-100 hover:bg-rain-600"
+								className="flex items-center text-sm uppercase leading-5 min-h-10 rounded-lg px-2 sm:px-4 py-2 bg-transparent text-rain-300 border-none hover:text-rain-100 hover:bg-rain-600"
 							>
-								Active Banks <RiArrowRightSFill />
+								Active Banks
+								{/* <RiArrowRightSFill /> */}
 							</button>
 						</Tooltip>
 					</div>
-					<div
-						className={`flex flex-wrap gap-2 justify-center w-full transition-opacity duration-300 ${
-							areBanksLoading ? "opacity-0" : "opacity-100"
-						}`}
-					>
-						{activeBanks
-							.slice()
-							.sort((a, b) => a.localeCompare(b))
-							.map((bank) => {
-								const isSelected = selectedBanks.includes(bank);
-								const isCurrentBank = currentBank === bank;
-								return (
-									<Tooltip key={bank} text="Activate filter">
-										<button
-											onClick={() => onToggleSelectedBank(bank)}
-											className={`text-md uppercase px-4 py-0 ${
-												isSelected
-													? "text-rain-200 border-rain-500/70 bg-rain-800/50 hover:text-rain-100 hover:border-rain-500"
-													: "text-rain-300/60 border-transparent bg-rain-700 hover:text-rain-100"
-											} ${isCurrentBank && "!bg-rain-600/80 !text-rain-200"}
+					{filtersOpen && (
+						<div
+							className={`flex flex-wrap gap-2 justify-center w-full transition-opacity duration-300 ${
+								areBanksLoading ? "opacity-0" : "opacity-100"
+							}`}
+						>
+							{activeBanks
+								.slice()
+								.sort((a, b) => a.localeCompare(b))
+								.map((bank) => {
+									const isSelected = selectedBanks.includes(bank);
+									const isCurrentBank = currentBank === bank;
+									return (
+										<Tooltip key={bank} text="Activate filter">
+											<button
+												onClick={() => onToggleSelectedBank(bank)}
+												className={`text-sm rounded-lg uppercase font-normal px-4 py-0 ${
+													isSelected
+														? "text-rain-200 border-rain-500/70 bg-rain-800/50 hover:text-rain-100 hover:border-rain-500"
+														: "text-rain-300/60 border-transparent bg-rain-700 hover:text-rain-100"
+												} ${isCurrentBank && "!bg-rain-600/80 !text-rain-200"}
 								`}
-										>
-											{bank}
-										</button>
-									</Tooltip>
-								);
-							})}
-						{activeBanks.length === 0 && (
-							<span className="text-lg uppercase text-rain-600">Select Wordbanks</span>
-						)}
-						{/* <div className="flex gap-2">
-							<Tooltip text="Clear active filters">
-								<button
-									disabled={selectedBanks.length <= 0}
-									onClick={onClearSelected}
-									className="flex items-center text-md py-0 px-4 text-rain-200 border-rain-500/70 bg-rain-800/50 hover:text-rain-100 hover:border-rain-500 disabled:text-rain-300/60 disabled:bg-rain-700 disabled:border-transparent disabled:cursor-default"
-								>
-									Clear <RiCloseLine />
-								</button>
-							</Tooltip>
-							<Tooltip text="Select Wordbanks">
-								<button
-									onClick={() => onOpenActiveBank()}
-									className="text-md px-4 py-0 capitalize flex justify-center
-								items-center pl-5 pr-2 text-rain-300/60 border-transparent bg-rain-700
-							 hover:text-rain-100"
-								>
-									Banks <RiArrowRightSFill />
-								</button>
-							</Tooltip>
-						</div> */}
-					</div>
+											>
+												{bank}
+											</button>
+										</Tooltip>
+									);
+								})}
+							{activeBanks.length === 0 && (
+								<span className="text-lg uppercase text-rain-600">Select Wordbanks</span>
+							)}
+						</div>
+					)}
 				</div>
+				{/* GEN BUTTON */}
 				<button
-					className="btn--primary justify-center w-full px-8 py-8 text-xl uppercase font-extrabold"
+					className="btn--primary justify-center w-full px-8 py-4 sm:py-8 text-xl uppercase font-extrabold"
 					onClick={() => onNewWord()}
 				>
 					New Word

@@ -14,7 +14,13 @@ import CopyDropdown from "@/components/CopyDropdown";
 import DownloadDropdown from "@/components/DownloadDropdown";
 import { createCategory } from "@/utils/createCategory";
 import ConfirmModal from "@/components/ui/ConfirmModal";
-import { RiAddBoxLine, RiArrowDropRightFill, RiEdit2Fill, RiQuestionLine } from "@remixicon/react";
+import {
+	RiAddBoxLine,
+	RiArrowDropLeftFill,
+	RiArrowDropRightFill,
+	RiEdit2Fill,
+	RiQuestionLine,
+} from "@remixicon/react";
 
 import { useGlobalKeys } from "@/utils/useGlobalKeys";
 import HelpOverlay from "@/components/HelpOverlay";
@@ -69,7 +75,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 
 	const showDefineHint = useOneTimeHint({
 		// when: allHaveWords && totalWords >= 3 && view === "ideate",
-		when: allHaveWords && totalWords >= 3 && view === "ideate",
+		when: allHaveWords && totalWords >= 3,
 		duration: 6000,
 	});
 
@@ -184,10 +190,17 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 							</button>
 						</Tooltip>
 						<div className="relative flex gap-1 h-full justify-center items-center">
-							{showExportHint && (
-								<div className="absolute top-0 right-full h-full font-bold bg-rain-600 text-white w-max ml-2 pl-5 pr-2 text-md flex justify-center items-center rounded shadow-lg z-50 anim-fade-in-right upper">
+							{/* {!showExportHint && (
+								<div className="absolute top-0 right-full h-full font-bold bg-rain-600 text-white w-max ml-2 pl-5 pr-2 text-md flex justify-center items-center rounded shadow-lg z-50 anim-fade-in-right">
 									Ready to Export?
 									<RiArrowDropRightFill size={32} />
+								</div>
+							)} */}
+							{showExportHint && (
+								// MOBILE
+								<div className="absolute top-0 left-full h-full font-bold bg-rain-600 text-white w-max ml-2 pl-2 pr-5 text-md flex justify-center items-center rounded shadow-lg z-50 anim-fade-in-right">
+									<RiArrowDropLeftFill size={32} />
+									Ready to Export?
 								</div>
 							)}
 							<div className={`flex gap-1 ${showExportHint && "anim-blink"}`}>
@@ -200,13 +213,13 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 							</div>
 						</div>
 					</div>
-					<div className="flex items-center gap-3 bg-rain-600 p-2 rounded-lg relative">
+					<div className="flex items-center gap-3 bg-rain-600 p-2 rounded-lg relative shadow-rain-500/20 shadow-[0_4px_16px]">
 						{showDefineHint && !showExportHint && (
 							<div
 								className="
 										absolute top-0 right-6 mr-2 pl-5 pr-2 font-bold
 										bg-rain-600 text-white w-max text-md h-full flex justify-center items-center rounded
-										anim-fade-in-right z-50 uppercase"
+										anim-fade-in-right z-50"
 							>
 								Ready to Define? <RiArrowDropRightFill size={32} />
 							</div>

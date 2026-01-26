@@ -10,8 +10,8 @@
 	--text-xl: clamp(1.8rem, 4vw, 2.5rem);
 	--text-lg: clamp(1.5rem, 3vw, 2rem);
 	--text-md: clamp(1.2rem, 2.6vw, 1.8rem);
-	--text-sm: clamp(1rem, 2vw, 1.2rem);
-	--text-xs: clamp(1.2rem, 3vw, 1.3rem);
+	--text-sm: clamp(1.2rem, 3vw, 1.4rem);
+	--text-xs: clamp(1rem, 3vw, 1.3rem);
 
 	/* Headings */
 	--text-heading-md: clamp(1.5rem, 2.5vw, 3.5rem);

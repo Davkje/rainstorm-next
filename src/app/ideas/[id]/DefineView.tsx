@@ -120,7 +120,7 @@ export default function DefineView({ idea, setIdea, onRemoveCategory, onAddCateg
 								></EditableText>
 							))}
 						</div>
-						<div className="bg-linear-to-r from-rain-500 to-transparent w-[30%] h-0.5 rounded"></div>
+						<div className="bg-linear-to-r from-rain-600 to-transparent w-[30%] h-0.5 rounded"></div>
 						<textarea
 							className="
 								text-lg flex grow rounded-md resize-none px-1

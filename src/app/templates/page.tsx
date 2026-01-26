@@ -23,6 +23,8 @@ export default function TemplatesPage() {
 	const toggleExpand = (id: string) => {
 		setOpenId((prev) => (prev === id ? null : id));
 	};
+
+	// ------------- CREATE -------------
 	const handleCreateIdea = (template: Template) => {
 		const idea = createIdeaFromTemplate(template);
 		const allIdeas = loadIdeas();
