@@ -190,26 +190,23 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 							</button>
 						</Tooltip>
 						<div className="relative flex gap-1 h-full justify-center items-center">
-							{/* {!showExportHint && (
-								<div className="absolute top-0 right-full h-full font-bold bg-rain-600 text-white w-max ml-2 pl-5 pr-2 text-md flex justify-center items-center rounded shadow-lg z-50 anim-fade-in-right">
+							{/* EXPORT HINT DESKTOP */}
+							{showExportHint && (
+								<div className="hidden sm:flex absolute top-0 right-full h-full font-bold bg-rain-600 text-white w-max ml-2 pl-5 pr-2 text-md justify-center items-center rounded shadow-lg z-50 anim-fade-in-right">
 									Ready to Export?
 									<RiArrowDropRightFill size={32} />
 								</div>
-							)} */}
+							)}
+							{/* EXPORT HINT MOBILE */}
 							{showExportHint && (
-								// MOBILE
-								<div className="absolute top-0 left-full h-full font-bold bg-rain-600 text-white w-max ml-2 pl-2 pr-5 text-md flex justify-center items-center rounded shadow-lg z-50 anim-fade-in-right">
+								<div className="flex sm:hidden absolute top-0 left-full h-full font-bold bg-rain-600 text-white w-max ml-2 pl-2 pr-5 text-md justify-center items-center rounded shadow-lg z-50 anim-fade-in-right">
 									<RiArrowDropLeftFill size={32} />
 									Ready to Export?
 								</div>
 							)}
 							<div className={`flex gap-1 ${showExportHint && "anim-blink"}`}>
-								<Tooltip text="Copy Idea" position="bottom">
-									<CopyDropdown idea={idea} />
-								</Tooltip>
-								<Tooltip text="Export Idea" position="bottom">
-									<DownloadDropdown idea={idea} />
-								</Tooltip>
+								<CopyDropdown idea={idea} />
+								<DownloadDropdown idea={idea} />
 							</div>
 						</div>
 					</div>

@@ -41,7 +41,7 @@ export default function Home() {
 								.filter((t) => t.highligted)
 								.map((t) => (
 									<button
-										className="btn--primary text-lg sm:text-lg font-bold hover:scale-[1.1] transition-all duration-500 ease-in-out"
+										className="btn--primary uppercase text-lg sm:text-lg font-bold hover:scale-[1.1] transition-all duration-500 ease-in-out"
 										key={t.id}
 										onClick={() => handleCreateIdea(t)}
 									>
@@ -51,7 +51,7 @@ export default function Home() {
 						</div>
 						<Link
 							href="/templates"
-							className="text-lg sm:text-xl place-self-center text-rain-400/50 hover:text-rain-200"
+							className="text-lg place-self-center text-rain-400/50 hover:text-rain-200"
 						>
 							See all Templates
 						</Link>

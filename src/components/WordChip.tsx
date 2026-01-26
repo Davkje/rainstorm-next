@@ -30,9 +30,9 @@ export default function WordChip({ word, parentId, onRemove, isOverlay }: WordCh
 	};
 
 	const baseClasses =
-		"manipulation flex justify-center items-center rounded-lg text-rain-100 capitalize select-none transition-all";
+		"uppercase manipulation flex justify-center items-center rounded-lg text-rain-100 capitalize select-none transition-all";
 	const generatorClasses =
-		"px-10 py-3 text-3xl bg-rain-700 font-bold uppercase hover:bg-rain-600 shadow-black-red shadow-[0_10px_24px_rgba(0,0,0,0.20)]";
+		"px-10 py-3 text-3xl bg-rain-700 font-bold hover:bg-rain-600 shadow-black-red shadow-[0_10px_24px_rgba(0,0,0,0.20)]";
 	const categoryClasses =
 		"group relative gap-1 bg-rain-600/60 px-4 py-1 text-lg sm:text-lg font-bold hover:bg-rain-600";
 	const overlayClasses = "!shadow-3xl !cursor-grabbing drag-wobble drag-scale";

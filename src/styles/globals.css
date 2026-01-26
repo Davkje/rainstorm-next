@@ -160,7 +160,7 @@ body {
 
 @keyframes blink {
 	0% {
-		color: var(--color-rain-500);
+		color: var(--color-rain-400);
 		scale: 1;
 	}
 	25% {
@@ -168,7 +168,7 @@ body {
 		scale: 1.1;
 	}
 	50% {
-		color: var(--color-rain-500);
+		color: var(--color-rain-400);
 		scale: 1;
 	}
 	75% {
@@ -176,7 +176,7 @@ body {
 		scale: 1.1;
 	}
 	100% {
-		color: var(--color-rain-500);
+		color: var(--color-rain-400);
 		scale: 1;
 	}
 }

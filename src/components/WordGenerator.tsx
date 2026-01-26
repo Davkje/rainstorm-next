@@ -47,7 +47,7 @@ export default function WordGenerator({
 						</span>
 					)}
 					{!currentWord && !isWordLoading && (
-						<span className="text-rain-600 px-10 py-3 text-3xl select-none font-bold uppercase">
+						<span className="text-rain-500 px-10 py-3 text-3xl select-none font-bold uppercase text-center">
 							Generate below
 						</span>
 					)}

@@ -32,7 +32,7 @@ export default function Tooltip({ text, children, position = "top" }: TooltipPro
 	const handleMouseEnter = () => {
 		timeoutRef.current = setTimeout(() => {
 			setVisible(true);
-		}, 800);
+		}, 1000);
 	};
 
 	const handleMouseLeave = () => {

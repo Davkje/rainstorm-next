@@ -120,11 +120,12 @@ export default function DefineView({ idea, setIdea, onRemoveCategory, onAddCateg
 								></EditableText>
 							))}
 						</div>
+						{/* VISUAL SEPERATOR */}
 						<div className="bg-linear-to-r from-rain-600 to-transparent w-[30%] h-0.5 rounded"></div>
 						<textarea
 							className="
 								text-lg flex grow rounded-md resize-none px-1
-								placeholder-rain-500 leading-normal min-h-32
+								placeholder-rain-500 leading-normal min-h-20
 								bg-transparent
 								focus:bg-rain-500/0
 								focus:outline-none
