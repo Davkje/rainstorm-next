@@ -44,13 +44,13 @@ export default function TemplatesPage() {
 			{templates.length === 0 ? (
 				<p className="text-rain-500">No templates yet.</p>
 			) : (
-				<ul className="grid gap-4 w-full max-w-[800px]">
+				<ul className="grid gap-2 w-full max-w-[800px]">
 					{templates.map((t) => {
 						const isOpen = openId === t.id;
 
 						return (
-							<li key={t.id} className="overflow-hidden">
-								<div className="flex items-center justify-between cursor-pointer transition">
+							<li key={t.id} className="overflow-hidden rounded-lg ">
+								<div className="flex items-center justify-between px-2 hover:bg-rain-500/20 rounded-lg cursor-pointer transition">
 									<div className="flex items-center gap-2 w-full">
 										<button
 											onClick={(e) => {
@@ -61,7 +61,6 @@ export default function TemplatesPage() {
 										>
 											<h3 className="font-semibold">{t.name}</h3>
 											<RiArrowDownSFill
-												// size={56}
 												className={`w-6 h-6 transition-transform ${isOpen ? "rotate-180" : ""}`}
 											/>
 										</button>
@@ -71,15 +70,13 @@ export default function TemplatesPage() {
 											e.stopPropagation();
 											handleCreateIdea(t);
 										}}
-										className="btn--primary border-transparent hover:bg-rain-600 px-4 py-0"
+										className="btn--primary border-transparent hover:border-rain-400 hover:bg-rain-800/80 px-4 py-0"
 									>
 										Create
 									</button>
 								</div>
 
-								<div
-									className={`rounded w-full h-0.5 ${isOpen ? "bg-rain-300" : "bg-rain-400"} transition-colors`}
-								></div>
+								<div className={` w-full h-4`}></div>
 
 								<AnimatePresence initial={false}>
 									{isOpen && (
@@ -93,13 +90,13 @@ export default function TemplatesPage() {
 											}}
 											className="overflow-hidden"
 										>
-											<div className="bg-rain-800/80 rounded-lg p-4 mt-4 text-left space-y-3">
+											<div className="bg-rain-750 rounded-lg border-2 border-rain-400 p-4 text-left space-y-3">
 												{/* CONTENT */}
 												<div className="grid">
 													<h3 className="text-rain-200 leading-normal">Categories</h3>
-													<div className="px-4 flex gap-2 flex-wrap">
+													<div className="px-4 flex gap-x-8 flex-wrap">
 														{t.categories.map((cat) => (
-															<span key={cat.id} className="text-rain-100 text-lg">
+															<span key={cat.id} className="text-rain-300 text-lg">
 																{cat.name}
 															</span>
 														))}

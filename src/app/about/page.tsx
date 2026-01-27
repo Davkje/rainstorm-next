@@ -1,18 +1,17 @@
+import Image from "next/image";
+
 export default function AboutPage() {
 	return (
-		<div className="flex flex-col items-center text-center tracking-wide">
-			<div className="grid grid-cols-4 px-8 max-w-[1000px]">
+		<div className="p-2 flex flex-col items-center text-center tracking-wide">
+			<div className="grid grid-cols-4 gap-16 px-8 max-w-[1000px]">
 				<div className="col-span-4 text-center place-self-center">
-					<h1 className="text-3xl font-bold uppercase">About Rainstorm</h1>
-					<p className="text-md font-normal leading-snug tracking-wide text-rain-200 mb-6">
-						RainStorm is a creative tool designed to help you quickly generate, organize, and define
-						ideas without getting lost in details. It is inspired by role-playing games like
-						Dungeons & Dragons, where “roll-tables” provide random prompts to spark improvisation.
-						The core idea behind RainStorm is simple: provide constraints that encourage creativity,
-						rather than overwhelming users with pre-generated content. Unlike AI-based generators,
-						which often predict what you want and give multiple options, RainStorm focuses on
-						letting you discover associations on your own, guiding your thinking through randomness
-						and interpretation.
+					<h1 className="text-2xl font-bold uppercase">About Rainstorm</h1>
+					<p className="text-md font-normal leading-snug tracking-wide max-w-[1200px]">
+						Rainstorm is a creative tool designed by me, David, to help you quickly generate,
+						organize, and define ideas without getting lost in the details. It is inspired by
+						role-playing games like Dungeons & Dragons, where “roll-tables” provide random prompts
+						to spark improvisation. Similarly, Rainstorm provides a simple word generator that
+						encourages creativity and lets you discover and associate on your own.
 					</p>
 				</div>
 				<div className="col-span-3 text-left">
@@ -27,7 +26,17 @@ export default function AboutPage() {
 						finding patterns, and letting your mind take the lead.
 					</p>
 				</div>
-				<div className="col-start-2 col-span-3 text-left">
+				<div className="relative col-start-2 col-span-3 text-left">
+					<div className="absolute -left-100 -bottom-50">
+						<Image
+							src="/image6.svg"
+							alt="background"
+							width={500}
+							height={500}
+							priority
+							className="object-cover mix-blend-color-dodge opacity-15"
+						/>
+					</div>
 					<h2 className="text-xl font-bold uppercase mb-2">From ideas to defined concepts </h2>
 					<p className="text-md font-normal leading-snug tracking-wide text-rain-200 mb-6">
 						Once you have collected your words, switch to Define mode to add short notes and
@@ -40,7 +49,17 @@ export default function AboutPage() {
 					</p>
 				</div>
 
-				<div className="col-span-3 text-left">
+				<div className="relative col-span-3 text-left">
+					<div className="absolute -right-full top-full">
+						<Image
+							src="/image4.svg"
+							alt="background"
+							width={800}
+							height={500}
+							priority
+							className="object-cover mix-blend-color-dodge opacity-15"
+						/>
+					</div>
 					<h2 className="text-xl font-bold uppercase mb-2">Exporting and continuing your work</h2>
 					<p className="text-md font-normal leading-snug tracking-wide text-rain-200 mb-6">
 						When your idea feels ready, you can export it as text or PDF to continue working in your

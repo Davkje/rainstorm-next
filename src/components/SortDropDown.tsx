@@ -6,8 +6,8 @@ import { RiArrowDownSLine } from "@remixicon/react";
 export type SortOption = "latest" | "oldest" | "az" | "za";
 
 const options: { value: SortOption; label: string }[] = [
-	{ value: "latest", label: "Latest updated" },
-	{ value: "oldest", label: "Oldest updated" },
+	{ value: "latest", label: "Latest" },
+	{ value: "oldest", label: "Oldest" },
 	{ value: "az", label: "A-Z" },
 	{ value: "za", label: "Z-A" },
 ];
@@ -54,7 +54,7 @@ export default function SortDropdown({
 		<div className="relative place-items-center" ref={ref}>
 			<button
 				onClick={() => setOpen((v) => !v)}
-				className="btn--tertiary flex font-normal items-center text-md gap-2 px-4 py-1 w-max border-2"
+				className="btn--primary bg-rain-800/90 hover:border-rain-400 flex font-normal items-center text-md gap-2 px-4 py-1 w-max border-2"
 				aria-haspopup="menu"
 				aria-expanded={open}
 			>
@@ -64,7 +64,7 @@ export default function SortDropdown({
 
 			{open && (
 				<div
-					className="absolute w-max z-50 mt-2 right-0 min-w-full rounded-lg bg-rain-700 shadow-lg grid gap-2 p-4"
+					className="absolute w-max z-50 mt-2 right-0 min-w-full rounded-lg bg-rain-800 border-2 border-rain-600 shadow-lg grid gap-2 p-4"
 					role="menu"
 				>
 					{options.map((opt) => (

@@ -51,7 +51,7 @@ export default function Header() {
 							key={href}
 							href={href}
 							className={`relative font-normal text-sm uppercase ${
-								active ? "text-rain-200" : "text-rain-200/80 hover:text-rain-200"
+								active ? "text-rain-100" : "text-rain-200 hover:text-rain-100"
 							}`}
 						>
 							{label}
@@ -59,7 +59,7 @@ export default function Header() {
 							{active && (
 								<motion.span
 									layoutId="nav-underline"
-									className="absolute left-0 bottom-0 h-0.5 w-full bg-rain-300 rounded"
+									className="absolute left-0 bottom-0 h-0.5 w-full bg-rain-500"
 									transition={{
 										type: "spring",
 										stiffness: 500,
@@ -150,7 +150,7 @@ export default function Header() {
 								<Link
 									href="/ideas"
 									onClick={() => setOpenMenu(false)}
-									className={`text-xl ${pathname === "/ideas" ? "text-rain-200 leading-normal border-b-2 border-rain-200" : "text-rain-300/80"}`}
+									className={`uppercase text-lg font-bold ${pathname === "/ideas" ? "text-rain-200 leading-normal border-b-2 border-rain-200" : "text-rain-300/80"}`}
 								>
 									Ideas
 								</Link>
@@ -158,21 +158,21 @@ export default function Header() {
 								<Link
 									href="/words"
 									onClick={() => setOpenMenu(false)}
-									className={`text-xl ${pathname === "/words" ? "text-rain-200 leading-normal border-b-2 border-rain-200" : "text-rain-300/80"}`}
+									className={` uppercase text-lg font-bold ${pathname === "/words" ? "text-rain-200 leading-normal border-b-2 border-rain-200" : "text-rain-300/80"}`}
 								>
 									Words
 								</Link>
 								<Link
 									href="/templates"
 									onClick={() => setOpenMenu(false)}
-									className={`text-xl ${pathname === "/templates" ? "text-rain-200 leading-normal border-b-2 border-rain-200" : "text-rain-300/80"}`}
+									className={`uppercase text-lg font-bold ${pathname === "/templates" ? "text-rain-200 leading-normal border-b-2 border-rain-200" : "text-rain-300/80"}`}
 								>
 									Templates
 								</Link>
 								<Link
 									href="/about"
 									onClick={() => setOpenMenu(false)}
-									className={`text-xl ${pathname === "/about" ? "text-rain-200 leading-normal border-b-2 border-rain-200" : "text-rain-300/80"}`}
+									className={`uppercase text-lg font-bold ${pathname === "/about" ? "text-rain-200 leading-normal border-b-2 border-rain-200" : "text-rain-300/80"}`}
 								>
 									About
 								</Link>

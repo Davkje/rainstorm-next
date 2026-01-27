@@ -85,7 +85,7 @@ export default function IdeasPage() {
 						<button
 							key={t.id}
 							onClick={() => handleCreateIdea(t)}
-							className="btn--tertiary hover:bg-rain-600 px-6 py-0"
+							className="btn--primary border-2 hover:border-rain-400 bg-rain-800/90  px-8 py-0"
 						>
 							{t.name}
 						</button>
@@ -103,7 +103,7 @@ export default function IdeasPage() {
 							placeholder="Search..."
 							value={search}
 							onChange={(e) => setSearch(e.target.value)}
-							className="px-4 py-1 w-full h-full sm:w-max text-md font-normal rounded-md bg-transparent border-2 text-rain-100 placeholder:text-rain-300 border-rain-600 text-left"
+							className="px-4 py-1 w-full h-full sm:w-max text-md font-normal rounded-md bg-rain-800 border-2 text-rain-100 placeholder:text-rain-400 border-rain-600 text-left"
 						/>
 						<label htmlFor="search-idea" className="absolute top-1/2 -translate-y-1/2 right-4">
 							<RiSearchLine className="aspect-square w-4 sm:w-10 text-rain-300 group-hover:text-rain-100 transition-colors duration-200" />
@@ -120,21 +120,21 @@ export default function IdeasPage() {
 							<li key={idea.id} className="relative">
 								<button
 									onClick={() => router.push(`/ideas/${idea.id}`)}
-									className="btn--tertiary rounded-lg bg-transparent hover:bg-rain-600 w-full justify-between grid grid-cols-2 sm:grid-cols-4 text-left gap-2 px-2"
+									className="btn--tertiary rounded-lg bg-transparent hover:bg-rain-500/20 w-full justify-between grid grid-cols-2 sm:grid-cols-4 text-left gap-2 px-2"
 								>
 									<span className="place-content-center">{idea.name}</span>
 									<div className="flex flex-col sm:flex-row justify-center items-center sm:col-start-3 gap-0 sm:gap-8 w-max text-md leading-normal">
-										<span className="capitalize text-rain-500">
+										<span className="capitalize text-rain-400">
 											{formatDateOnly(idea.updatedAt)}
 										</span>
-										<span className="text-rain-500">
+										<span className="text-rain-400">
 											Updated {formatRelativeTime(idea.updatedAt)}
 										</span>
 									</div>
 								</button>
 								<button
 									onClick={() => setIdeaToDelete(idea)}
-									className="btn--icon absolute top-1/2 -translate-y-1/2 right-0 z-5 p-2 text-rain-500 hover:text-red-500/80"
+									className="btn--icon absolute top-1/2 -translate-y-1/2 right-0 z-5 p-2 text-rain-400 hover:text-red-500/80"
 								>
 									<RiDeleteBinLine />
 								</button>
@@ -146,7 +146,7 @@ export default function IdeasPage() {
 			{ideas.length > 0 && (
 				<button
 					onClick={() => setConfirmDeleteAll(true)}
-					className="btn--danger text-rain-500 gap-2 place-self-center m-4 flex items-center"
+					className="btn--danger text-rain-500 hover:text-red-500/80 gap-2 place-self-center m-4 flex items-center"
 					disabled={ideas.length === 0}
 				>
 					<RiDeleteBinLine />
