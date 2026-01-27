@@ -10,18 +10,21 @@ import CTAButtons from "@/components/ui/CTAButtons";
 
 export default function Home() {
 	const [templates, setTemplates] = useState<Template[]>([]);
-	const [emptyTemplate, setEmptyTemplate] = useState<Template | undefined>(undefined);
 
 	useEffect(() => {
 		const loaded = loadTemplates();
 		// eslint-disable-next-line react-hooks/set-state-in-effect
 		setTemplates(loaded);
-		setEmptyTemplate(loaded.find((t) => t.name === "Empty"));
 	}, []);
 
 	return (
 		<>
-			<div className="h-full flex flex-col items-center justify-center gap-10">
+			<div className="h-full flex flex-col items-center justify-center z-2">
+				{/* <div className="grid place-items-center w-full min-h-95dvh"></div> */}
+				{/* <div className="col-start-1 row-start-1 opacity-10 mix-blend-color-dodge w-full h-full relative overflow-hidden">
+						<Image src="/image7.svg" alt="background" fill className="object-cover" />
+					</div>
+					<div className="col-start-1 row-start-1 bg-linear-to-b from-transparent to-rain-800 h-full w-full z-3"></div> */}
 				<motion.section
 					initial={{ opacity: 0, scale: 0.92 }}
 					animate={{ opacity: 1, scale: 1 }}
@@ -29,11 +32,11 @@ export default function Home() {
 						opacity: { duration: 1.2, ease: easeOut },
 						scale: { duration: 4, ease: [0.16, 1, 0.3, 1] },
 					}}
-					className="h-screen grid place-content-center gap-8 text-center"
+					className="col-start-1 row-start-1 min-h-[95dvh] grid place-content-center gap-8 text-center z-5"
 				>
-					<div className="flex flex-col gap-8 justify-center items-center">
-						<Image className="px-8" src="/rainstorm.png" alt="rainstorm" width={900} height={200} />
-						<p className="leading-normal text-rain-200 italic text-lg sm:text-lg">
+					<div className="flex flex-col gap-6 justify-center items-center">
+						<Image className="px-8" src="/rainstorm.png" alt="rainstorm" width={450} height={200} />
+						<p className="leading-normal text-rain-300 italic text-lg sm:text-lg">
 							The one word, limiting, focused idea tool
 						</p>
 					</div>
@@ -45,43 +48,43 @@ export default function Home() {
 							duration: 1.6,
 							ease: easeInOut,
 						}}
-						className="flex flex-col items-center justify-center gap-4"
+						className="flex flex-col items-center justify-center gap-2"
 					>
-						<h2 className="leading-normal text-xl sm:text-xl text-rain-200">
+						<h2 className="leading-normal mb-4 text-xl sm:text-xl text-rain-300">
 							What do you want to create?
 						</h2>
 						{templates.length > 0 && <CTAButtons templates={templates} />}
-						<div className="grid gap-2">
-							<motion.div
-								initial={{ opacity: 0 }}
-								animate={{ opacity: 1 }}
-								transition={{
-									delay: 3,
-									duration: 2,
-									ease: easeOut,
-								}}
+
+						<motion.div
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							transition={{
+								delay: 3,
+								duration: 2,
+								ease: easeOut,
+							}}
+						>
+							<Link
+								href="/templates"
+								className="text-lg place-self-center text-rain-400 hover:text-rain-200"
 							>
-								<Link
-									href="/templates"
-									className="text-lg place-self-center text-rain-400/50 hover:text-rain-200"
-								>
-									See all Templates
-								</Link>
-							</motion.div>
-						</div>
+								See all Templates
+							</Link>
+						</motion.div>
 					</motion.div>
 				</motion.section>
-				<section className="min-h-screen flex flex-col place-items-center gap-30 text-center max-w-[1000px]">
-					<div>
-						<h2 className="text-2xl mb-4 uppercase tracking-wide">One drop, endless ripples</h2>
+
+				<section className="min-h-screen flex flex-col place-items-center gap-8 text-center max-w-[1000px]">
+					<div className="grid gap-8">
+						<h2 className="text-2xl uppercase tracking-wide">One drop, endless ripples</h2>
 						<p className="p-2 leading-snug place-self-center">
 							RainStorm is a creative tool that helps you quickly shape and define ideas. With a
 							simple word generator, customizable templates and a drag-and-drop system, it adds just
 							enough constraint while leaving freedom in how you use it.
 						</p>
+						<h2 className="text-2xl uppercase">How to use it?</h2>
 					</div>
-					<h2 className="text-2xl uppercase">How to use it?</h2>
-					<div className="grid grid-cols-2 gap-4 px-4">
+					<div className="grid sm:grid-cols-2 gap-4 px-4">
 						<div className="bg-red-600/ place-content-center text-left">
 							<h3 className="text-2xl uppercase font-normal">Pick a Template</h3>
 							<p className="p-2 leading-snug font-light">
@@ -96,23 +99,23 @@ export default function Home() {
 							className="place-self-center"
 						/>
 					</div>
-					<div className="grid grid-cols-2 gap-4 px-4">
+					<div className="grid sm:grid-cols-2 gap-4 px-4">
+						<div className="place-content-center text-left">
+							<h3 className="text-2xl uppercase font-normal">Ideate</h3>
+							<p className="p-2 leading-snug text-xl font-light">
+								Generate words and drag them into sections. Use the first word, or keep rolling
+								until it sparks an idea.
+							</p>
+						</div>
 						<Image
 							src="/dragTutorial.svg"
 							width={400}
 							height={300}
 							alt="Drag and drop"
-							className="place-self-start"
+							className="place-self-center sm:place-self-start"
 						/>
-						<div className="place-content-center text-left">
-							<h3 className="text-2xl uppercase font-normal">Ideate</h3>
-							<p className="p-2 leading-snug font-light">
-								Generate words and drag them into sections. Use the first word, or keep rolling
-								until it sparks an idea.
-							</p>
-						</div>
 					</div>
-					<div className="grid grid-cols-2 gap-4 px-4">
+					<div className="grid sm:grid-cols-2 gap-4 px-4">
 						<div className="bg-red-600/ place-content-center text-left">
 							<h3 className="text-2xl uppercase font-normal">Define</h3>
 							<p className="p-2 leading-snug font-light">

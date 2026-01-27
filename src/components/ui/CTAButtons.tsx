@@ -46,27 +46,25 @@ export default function CTAButtons({ templates }: Props) {
 	};
 
 	return (
-		<>
-			<motion.div
-				variants={containerVariants}
-				initial="hidden"
-				animate="show"
-				className="flex flex-col sm:flex-row justify-center gap-4 flex-wrap text-lg"
-			>
-				{templates
-					.filter((t) => t.highlighted)
-					.map((t) => (
-						<motion.button
-							key={t.id}
-							variants={itemVariants}
-							className="btn--primary uppercase text-lg sm:text-md font-bold hover:scale-[1.1]
+		<motion.div
+			variants={containerVariants}
+			initial="hidden"
+			animate="show"
+			className="flex flex-col sm:flex-row justify-center gap-4 flex-wrap text-lg"
+		>
+			{templates
+				.filter((t) => t.highlighted)
+				.map((t) => (
+					<motion.button
+						key={t.id}
+						variants={itemVariants}
+						className="btn--primary px-16 uppercase text-lg sm:text-md text-rain-300 shadow-rain-900/50 shadow-md font-bold hover:scale-[1.1]
              			  transition-all duration-500 ease-in-out"
-							onClick={() => handleCreateIdea(t)}
-						>
-							{t.name}
-						</motion.button>
-					))}
-			</motion.div>
-		</>
+						onClick={() => handleCreateIdea(t)}
+					>
+						{t.name}
+					</motion.button>
+				))}
+		</motion.div>
 	);
 }

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { RiMenu3Line, RiCloseLargeLine, RiRainyFill } from "@remixicon/react";
+import { RiMenu3Line, RiCloseLargeLine, RiRainyFill, RiVolumeDownFill } from "@remixicon/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FullscreenButton } from "./ui/FullscreenButton";
 import { usePathname } from "next/navigation";
@@ -22,7 +22,7 @@ export default function Header() {
 
 	// PLAY / PAUSE RAIN
 	useGlobalKeys(
-		"",
+		"p",
 		() => {
 			rain.togglePlay();
 		},
@@ -30,7 +30,7 @@ export default function Header() {
 	);
 
 	return (
-		<header className="bg-rain-800 px-4 gap-2 flex justify-between items-center relative">
+		<header className="px-4 gap-2 bg-linear-to-b from-rain-800 to-transparent flex justify-between items-center relative">
 			<Link href="/">
 				<Image src="/rainstorm.png" alt="rainstorm" width={120} height={167} />
 			</Link>
@@ -49,7 +49,7 @@ export default function Header() {
 						<Link
 							key={href}
 							href={href}
-							className={`relative font-normal text-sm ${
+							className={`relative font-normal text-sm uppercase ${
 								active ? "text-rain-200" : "text-rain-300/80 hover:text-rain-300"
 							}`}
 						>
@@ -78,7 +78,7 @@ export default function Header() {
 								className={`btn--icon ${rain.playing ? "rain-blink" : "text-rain-300/80 hover:text-rain-300"}`}
 								onClick={() => setOpenMixer((p) => !p)}
 							>
-								<RiRainyFill />
+								{rain.playing ? <RiRainyFill /> : <RiVolumeDownFill />}
 							</button>
 						</Tooltip>
 						<AnimatePresence>

@@ -154,7 +154,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 	if (!idea) return <h1 className="w-full text-xl font-bold">Loading...</h1>;
 
 	return (
-		<div className="grid grid-rows-[auto_1fr] gap-2 h-full">
+		<div className="grid grid-rows-[auto_1fr] gap-2 h-full p-2">
 			{/* HEADER */}
 			<div className="grid sm:flex sm:justify-between gap-0 sm:gap-2 h-full w-full ">
 				<div className="flex gap-2 justify-center items-center h-full">

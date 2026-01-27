@@ -143,10 +143,6 @@ export function DitheredParticles() {
 	}, []);
 
 	return (
-		<canvas
-			ref={canvasRef}
-			className="fixed inset-0 w-full h-full"
-			style={{ background: "#0a0a0a" }}
-		/>
+		<canvas ref={canvasRef} className="fixed inset-0 w-full" style={{ background: "#0e0f19" }} />
 	);
 }

@@ -1,10 +1,10 @@
 export default function AboutPage() {
 	return (
 		<div className="flex flex-col items-center text-center tracking-wide">
-			<div className="grid grid-cols-4 px-8">
+			<div className="grid grid-cols-4 px-8 max-w-[1000px]">
 				<div className="col-span-4 text-center place-self-center">
 					<h1 className="text-3xl font-bold uppercase">About Rainstorm</h1>
-					<p className="text-md font-normal leading-snug tracking-wide text-rain-200 mb-6 max-w-[800px]">
+					<p className="text-md font-normal leading-snug tracking-wide text-rain-200 mb-6">
 						RainStorm is a creative tool designed to help you quickly generate, organize, and define
 						ideas without getting lost in details. It is inspired by role-playing games like
 						Dungeons & Dragons, where “roll-tables” provide random prompts to spark improvisation.
@@ -17,7 +17,7 @@ export default function AboutPage() {
 				</div>
 				<div className="col-span-3 text-left">
 					<h2 className="text-xl font-bold uppercase mb-2">How it works</h2>
-					<p className="text-md font-normal leading-snug tracking-wide text-rain-200 mb-6 max-w-[800px]">
+					<p className="text-md font-normal leading-snug tracking-wide text-rain-200 mb-6">
 						Using RainStorm is flexible — the tool adapts to your workflow. Start by choosing a
 						template, such as Song, Story, Game, or an empty canvas. Templates give you predefined
 						sections to organize your ideas, but everything can be renamed, rearranged, or removed.
@@ -29,7 +29,7 @@ export default function AboutPage() {
 				</div>
 				<div className="col-start-2 col-span-3 text-left">
 					<h2 className="text-xl font-bold uppercase mb-2">From ideas to defined concepts </h2>
-					<p className="text-md font-normal leading-snug tracking-wide text-rain-200 mb-6 max-w-[800px]">
+					<p className="text-md font-normal leading-snug tracking-wide text-rain-200 mb-6">
 						Once you have collected your words, switch to Define mode to add short notes and
 						interpretations for each section. Here you reflect on what the words mean to you and how
 						they connect to the bigger idea. For example, a section labeled Theme might include
@@ -42,7 +42,7 @@ export default function AboutPage() {
 
 				<div className="col-span-3 text-left">
 					<h2 className="text-xl font-bold uppercase mb-2">Exporting and continuing your work</h2>
-					<p className="text-md font-normal leading-snug tracking-wide text-rain-200 mb-6 max-w-[800px]">
+					<p className="text-md font-normal leading-snug tracking-wide text-rain-200 mb-6">
 						When your idea feels ready, you can export it as text or PDF to continue working in your
 						preferred tool. RainStorm is not meant to replace detailed writing or production
 						software — it is a starting point, a creative playground for ideation. Whether you
@@ -53,13 +53,23 @@ export default function AboutPage() {
 
 				<div className="col-start-2 col-span-3 text-left">
 					<h2 className="text-xl font-bold uppercase mb-2">Why RainStorm</h2>
-					<p className="text-md font-normal leading-snug tracking-wide text-rain-200 mb-6 max-w-[800px]">
+					<p className="text-md font-normal leading-snug tracking-wide text-rain-200 mb-6">
 						RainStorm was created to give writers, musicians, game designers, and creators a
 						lightweight, focused, and inspiring tool for idea generation. Its combination of
 						randomness, constraints, and structured sections encourages independent thinking,
 						helping users overcome creative blocks and find unique connections. By making ideation
 						both fun and purposeful, RainStorm supports the early stages of creation while keeping
 						the process simple, playful, and deeply personal.
+					</p>
+				</div>
+
+				<div className="col-span-3 text-left">
+					<h2 className="text-xl font-bold uppercase mb-2">Data & privacy</h2>
+					<p className="text-md font-normal leading-snug tracking-wide text-rain-200 mb-6">
+						RainStorm stores your projects and settings locally in your browser using local storage.
+						This data never leaves your device, is not sent to any server, and is not shared with
+						third parties. Deleting your ideas or clearing your browser data will remove all locally
+						saved content.
 					</p>
 				</div>
 			</div>

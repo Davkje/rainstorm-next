@@ -58,7 +58,7 @@ export default function WordGenerator({
 					)}
 				</div>
 			</div>
-			<div className="flex flex-col sm:flex-col-reverse w-full gap-2 sm:gap-2">
+			<div className="flex flex-col w-full gap-2 sm:gap-2">
 				{/* GEN BUTTON */}
 				<button
 					className="btn--primary justify-center w-full px-8 py-4 sm:py-8 text-xl uppercase font-extrabold"
