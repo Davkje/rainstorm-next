@@ -30,7 +30,8 @@ export default function Header() {
 	);
 
 	return (
-		<header className="px-4 gap-2 bg-linear-to-b from-rain-800 to-transparent flex justify-between items-center relative">
+		// <header className="px-4 gap-2 bg-linear-to-b from-rain-800 to-transparent flex justify-between items-center relative">
+		<header className="px-4 gap-2 flex justify-between items-center relative">
 			<Link href="/">
 				<Image src="/rainstorm.png" alt="rainstorm" width={120} height={167} />
 			</Link>
@@ -50,7 +51,7 @@ export default function Header() {
 							key={href}
 							href={href}
 							className={`relative font-normal text-sm uppercase ${
-								active ? "text-rain-200" : "text-rain-300/80 hover:text-rain-300"
+								active ? "text-rain-200" : "text-rain-200/80 hover:text-rain-200"
 							}`}
 						>
 							{label}

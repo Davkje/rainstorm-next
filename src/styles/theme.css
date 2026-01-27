@@ -28,15 +28,16 @@
 
 	/* Color */
 	--color-rain-100: #f9f5f5;
-	--color-rain-200: #e6e7ee;
-	--color-rain-300: #bfc0c8;
+	--color-rain-200: #e6e7ef;
+	--color-rain-300: #c1c2cb;
+	--color-rain-350: #8e8e9e;
 	--color-rain-400: #575664;
 	--color-rain-500: #35354a;
-	/* --color-rain-500: #3f3f4c; */
 	--color-rain-600: #1a1d2c;
-	--color-rain-700: #131522;
+	--color-rain-700: #161928;
+	--color-rain-750: #131523;
 	--color-rain-800: #0e0f19;
-	--color-rain-900: #0d0d17;
+	--color-rain-900: #09090f;
 
 	--color-black: #000;
 	--color-black-trans: #0000001e;

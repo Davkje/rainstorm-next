@@ -25,7 +25,7 @@ body {
 }
 
 .bg-main {
-	@apply bg-linear-to-b from-rain-800 to-rain-900/10;
+	@apply bg-linear-to-b from-transparent to-rain-800;
 }
 
 @layer components {
@@ -87,7 +87,7 @@ body {
 		@apply text-lg font-medium px-12 py-1 border-2 rounded-xl transition-colors duration-100 ease-linear cursor-pointer;
 	}
 	.btn--primary {
-		@apply text-rain-100 bg-linear-to-b from-rain-600/90 to-rain-900/90 border-rain-600/80 hover:border-rain-500/50 active:border-rain-600;
+		@apply text-rain-200 bg-transparent hover:bg-rain-600/20 border-rain-600 hover:border-rain-500/60 active:border-rain-500/60;
 	}
 	.btn--tertiary {
 		@apply text-rain-200 bg-rain-700 border-transparent hover:bg-rain-600/80;

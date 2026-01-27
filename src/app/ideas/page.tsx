@@ -70,21 +70,22 @@ export default function IdeasPage() {
 		});
 
 	return (
-		<div className="flex flex-col place-items-center tracking-wide text-center">
-			<h1 className="text-3xl font-bold uppercase">Ideas</h1>
+		<div className="p-2 flex flex-col place-items-center tracking-wide text-center">
+			<h1 className="text-2xl font-bold uppercase">ideas</h1>
 
 			<div className="grid gap-2 max-w-[1200px]">
-				<h2 className="text-xg sm:text-2xl">Create something new</h2>
-				<p className="text-md font-light leading-snug tracking-wide text-rain-300 mb-2 max-w-200 place-self-center">
+				<p className="text-md place-self-center font-normal leading-snug tracking-wide mb-6 max-w-[600px]">
 					Start creating by choosing one of our templates below. You can ofcourse customize them to
 					fit your needs but they start you of with a few categories and wordbanks.
 				</p>
+
+				<h2 className="text-xl font-normal uppercase">CREATE</h2>
 				<div className="flex mt-2 justify-center gap-2 flex-wrap">
 					{templates.map((t) => (
 						<button
 							key={t.id}
 							onClick={() => handleCreateIdea(t)}
-							className="btn--tertiary px-6 py-0"
+							className="btn--tertiary hover:bg-rain-600 px-6 py-0"
 						>
 							{t.name}
 						</button>
@@ -93,19 +94,19 @@ export default function IdeasPage() {
 			</div>
 
 			<div className="grid gap-2 mt-16 max-w-[1200px] w-full">
-				<h2 className="text-xg sm:text-2xl">Existing Ideas</h2>
-				<div className="flex flex-col sm:flex-row justify-between gap-2">
-					<div className="relative group">
+				<h2 className="text-xl font-normal uppercase">ALL IDEAS</h2>
+				<div className="flex flex-row justify-between gap-2">
+					<div className="relative group w-full sm:w-max">
 						<input
 							id="search-idea"
 							type="text"
 							placeholder="Search..."
 							value={search}
 							onChange={(e) => setSearch(e.target.value)}
-							className="px-4 py-2 w-max text-lg font-bold rounded-md bg-transparent border-2 text-rain-100 placeholder:text-rain-300 border-rain-600 text-left"
+							className="px-4 py-1 w-full h-full sm:w-max text-md font-normal rounded-md bg-transparent border-2 text-rain-100 placeholder:text-rain-300 border-rain-600 text-left"
 						/>
-						<label htmlFor="search-idea">
-							<RiSearchLine className=" absolute top-1/2 -translate-y-1/2 right-4 text-rain-300 group-hover:text-rain-100 transition-colors duration-200" />
+						<label htmlFor="search-idea" className="absolute top-1/2 -translate-y-1/2 right-4">
+							<RiSearchLine className="aspect-square w-4 sm:w-10 text-rain-300 group-hover:text-rain-100 transition-colors duration-200" />
 						</label>
 					</div>
 					<SortDropdown value={sortBy} onChange={setSortBy} />

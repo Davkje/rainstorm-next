@@ -6,6 +6,7 @@ import { loadTemplates } from "@/helpers/storage";
 import { createIdeaFromTemplate, saveIdeas, loadIdeas } from "@/helpers/storage";
 import { useRouter } from "next/navigation";
 import { RiArrowDownSFill } from "@remixicon/react";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function TemplatesPage() {
 	const [templates, setTemplates] = useState<Template[]>([]);
@@ -33,11 +34,11 @@ export default function TemplatesPage() {
 	};
 
 	return (
-		<div className="flex flex-col items-center text-center tracking-wide">
-			<h1 className="text-3xl font-bold uppercase">Templates</h1>
-			<p className="text-md font-light leading-snug tracking-wide text-rain-300 mb-6 max-w-[600px]">
-				Here are all your templates. Click a template to expand and view details or create a new
-				idea from it.
+		<div className="p-2 flex flex-col items-center text-center tracking-wide">
+			<h1 className="text-2xl font-bold uppercase">Templates</h1>
+			<p className="text-md font-normal leading-snug tracking-wide mb-6 max-w-[600px]">
+				These templates starts you of with a few categoires and word banks. Click a template for
+				more info or create a new idea directly.
 			</p>
 
 			{templates.length === 0 ? (
@@ -48,62 +49,77 @@ export default function TemplatesPage() {
 						const isOpen = openId === t.id;
 
 						return (
-							<li key={t.id} className="rounded-lg overflow-hidden bg-rain-600">
-								<div
-									className="flex items-center justify-between px-4 py-2 cursor-pointer hover:bg-rain-500 transition"
-									onClick={() => toggleExpand(t.id)}
-								>
-									<div className="flex items-center gap-2">
-										<h3 className="font-semibold">{t.name}</h3>
+							<li key={t.id} className="overflow-hidden">
+								<div className="flex items-center justify-between cursor-pointer transition">
+									<div className="flex items-center gap-2 w-full">
 										<button
 											onClick={(e) => {
 												e.stopPropagation();
 												toggleExpand(t.id);
 											}}
-											className="btn--icon"
+											className="btn--link w-full place-content-start pl-4 py-2 flex gap-2 place-items-center"
 										>
+											<h3 className="font-semibold">{t.name}</h3>
 											<RiArrowDownSFill
-												className={`w-5 h-5 transition-transform ${isOpen ? "rotate-180" : ""}`}
+												// size={56}
+												className={`w-6 h-6 transition-transform ${isOpen ? "rotate-180" : ""}`}
 											/>
 										</button>
 									</div>
-
 									<button
 										onClick={(e) => {
 											e.stopPropagation();
 											handleCreateIdea(t);
 										}}
-										className="btn--tertiary px-4 py-1"
+										className="btn--primary border-transparent hover:bg-rain-600 px-4 py-0"
 									>
 										Create
 									</button>
 								</div>
 
-								{isOpen && (
-									<div className="bg-rain-700 p-4 text-left space-y-3">
-										<div>
-											<h3 className="font-semibold text-rain-200">Categories</h3>
-											<div className="flex gap-2 flex-wrap place-content-center">
-												{t.categories.map((cat) => (
-													<span key={cat.id} className="text-rain-100 text-xl">
-														{cat.name}
-													</span>
-												))}
-											</div>
-										</div>
+								<div
+									className={`rounded w-full h-0.5 ${isOpen ? "bg-rain-300" : "bg-rain-400"} transition-colors`}
+								></div>
 
-										<div>
-											<h3 className="font-semibold text-rain-200">Banks</h3>
-											<div className="flex gap-8 flex-wrap place-content-center">
-												{t.activeBanks?.map((bank) => (
-													<span key={bank} className="text-lg capitalize">
-														{bank}
-													</span>
-												))}
+								<AnimatePresence initial={false}>
+									{isOpen && (
+										<motion.div
+											initial={{ height: 0, opacity: 0 }}
+											animate={{ height: "auto", opacity: 1 }}
+											exit={{ height: 0, opacity: 0 }}
+											transition={{
+												height: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
+												opacity: { duration: 0.2 },
+											}}
+											className="overflow-hidden"
+										>
+											<div className="bg-rain-800/80 rounded-lg p-4 mt-4 text-left space-y-3">
+												{/* CONTENT */}
+												<div className="grid">
+													<h3 className="text-rain-200 leading-normal">Categories</h3>
+													<div className="px-4 flex gap-2 flex-wrap">
+														{t.categories.map((cat) => (
+															<span key={cat.id} className="text-rain-100 text-lg">
+																{cat.name}
+															</span>
+														))}
+													</div>
+												</div>
+
+												<div className="grid">
+													<h3 className="text-rain-200 leading-normal">Banks</h3>
+													<div className="px-4 flex gap-x-8 flex-wrap font-normal text-rain-300">
+														{t.activeBanks?.map((bank) => (
+															<span key={bank} className="text-lg capitalize">
+																{bank}
+															</span>
+														))}
+													</div>
+												</div>
 											</div>
-										</div>
-									</div>
-								)}
+										</motion.div>
+									)}
+								</AnimatePresence>
 							</li>
 						);
 					})}

@@ -38,7 +38,7 @@ export function DitheredParticles() {
 		window.addEventListener("mousemove", handleMouseMove);
 
 		// Create particles with dithered pattern
-		const particleCount = Math.floor((canvas.width * canvas.height) / 2000); // Less dense
+		const particleCount = Math.floor((canvas.width * canvas.height) / 1000); // Less dense
 		const particles: Particle[] = [];
 
 		// Create some cluster points for clumping
@@ -52,8 +52,8 @@ export function DitheredParticles() {
 			// Vary speed - most fast, some slow
 			const speedMultiplier =
 				Math.random() < 0.7
-					? 0.5 + Math.random() * 1.5 // 70% faster particles
-					: 0.5 + Math.random() * 0.7; // 30% slower particles (but not too slow)
+					? 0.5 + Math.random() * 3 // 70% faster particles
+					: 0.5 + Math.random() * 1.5; // 30% slower particles (but not too slow)
 
 			// All particles move diagonally (right and down) like rain
 			const baseVx = (0.2 + Math.random() * 0.3) * speedMultiplier; // All move right
@@ -93,7 +93,7 @@ export function DitheredParticles() {
 		let animationId: number;
 		const animate = () => {
 			// Clear with dark background
-			ctx.fillStyle = "#0a0a0a";
+			ctx.fillStyle = "#0e0f19";
 			ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 			// Update and draw particles
@@ -102,7 +102,7 @@ export function DitheredParticles() {
 				const dx = particle.x - mouseRef.current.x;
 				const dy = particle.y - mouseRef.current.y;
 				const distance = Math.sqrt(dx * dx + dy * dy);
-				const repulsionRadius = 30; // Larger radius of mouse influence
+				const repulsionRadius = 20; // Larger radius of mouse influence
 
 				if (distance < repulsionRadius && distance > 0) {
 					const force = (repulsionRadius - distance) / repulsionRadius;
@@ -143,6 +143,11 @@ export function DitheredParticles() {
 	}, []);
 
 	return (
-		<canvas ref={canvasRef} className="fixed inset-0 w-full" style={{ background: "#0e0f19" }} />
+		<canvas
+			ref={canvasRef}
+			className="absolute inset-0 w-full"
+			style={{ background: "#0e0f19" }}
+			// style={{ background: "#0e0f190", mixBlendMode: "color" }}
+		/>
 	);
 }

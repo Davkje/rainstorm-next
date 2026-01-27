@@ -4,6 +4,7 @@ import { createIdeaFromTemplate, loadIdeas, saveIdeas } from "@/helpers/storage"
 import { Template } from "@/models/templates";
 import { Variants, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 type Props = {
 	templates: Template[];
@@ -33,6 +34,7 @@ const itemVariants: Variants = {
 
 export default function CTAButtons({ templates }: Props) {
 	const router = useRouter();
+	const [hoveredId, setHoveredId] = useState<string | null>(null);
 
 	// CREATE IDEA
 	const handleCreateIdea = (template?: Template) => {
@@ -50,21 +52,42 @@ export default function CTAButtons({ templates }: Props) {
 			variants={containerVariants}
 			initial="hidden"
 			animate="show"
-			className="flex flex-col sm:flex-row justify-center gap-4 flex-wrap text-lg"
+			className="flex flex-col sm:flex-row justify-center gap-6 flex-wrap text-lg"
 		>
 			{templates
 				.filter((t) => t.highlighted)
-				.map((t) => (
-					<motion.button
-						key={t.id}
-						variants={itemVariants}
-						className="btn--primary px-16 uppercase text-lg sm:text-md text-rain-300 shadow-rain-900/50 shadow-md font-bold hover:scale-[1.1]
-             			  transition-all duration-500 ease-in-out"
-						onClick={() => handleCreateIdea(t)}
-					>
-						{t.name}
-					</motion.button>
-				))}
+				.map((t) => {
+					const isDimmed = hoveredId && hoveredId !== t.id;
+
+					return (
+						<motion.button
+							key={t.id}
+							variants={itemVariants}
+							onHoverStart={() => setHoveredId(t.id)}
+							onHoverEnd={() => setHoveredId(null)}
+							animate={{
+								opacity: isDimmed ? 0.5 : 1,
+								scale: hoveredId === t.id ? 1.1 : 1,
+							}}
+							transition={{ duration: 0.3, ease: "easeOut" }}
+							className="
+							bg-rain-800/70
+							px-16
+							uppercase
+							text-lg sm:text-md
+							text-rain-300
+							hover:text-rain-100
+							hover:border-rain-300
+							shadow-rain-900/50 shadow-md
+							font-bold
+							transition-colors
+							duration-300"
+							onClick={() => handleCreateIdea(t)}
+						>
+							{t.name}
+						</motion.button>
+					);
+				})}
 		</motion.div>
 	);
 }

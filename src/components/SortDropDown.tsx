@@ -51,10 +51,10 @@ export default function SortDropdown({
 	}, [open]);
 
 	return (
-		<div className="relative" ref={ref}>
+		<div className="relative place-items-center" ref={ref}>
 			<button
 				onClick={() => setOpen((v) => !v)}
-				className="btn--tertiary flex items-center text-lg gap-2 px-4 py-2 w-max"
+				className="btn--tertiary flex font-normal items-center text-md gap-2 px-4 py-1 w-max border-2"
 				aria-haspopup="menu"
 				aria-expanded={open}
 			>

@@ -20,11 +20,6 @@ export default function Home() {
 	return (
 		<>
 			<div className="h-full flex flex-col items-center justify-center z-2">
-				{/* <div className="grid place-items-center w-full min-h-95dvh"></div> */}
-				{/* <div className="col-start-1 row-start-1 opacity-10 mix-blend-color-dodge w-full h-full relative overflow-hidden">
-						<Image src="/image7.svg" alt="background" fill className="object-cover" />
-					</div>
-					<div className="col-start-1 row-start-1 bg-linear-to-b from-transparent to-rain-800 h-full w-full z-3"></div> */}
 				<motion.section
 					initial={{ opacity: 0, scale: 0.92 }}
 					animate={{ opacity: 1, scale: 1 }}

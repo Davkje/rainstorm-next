@@ -61,7 +61,7 @@ export default function WordGenerator({
 			<div className="flex flex-col w-full gap-2 sm:gap-2">
 				{/* GEN BUTTON */}
 				<button
-					className="btn--primary justify-center w-full px-8 py-4 sm:py-8 text-xl uppercase font-extrabold"
+					className="bg-transparent hover:bg-rain-600/20 border-rain-600 hover:border-rain-500/60 justify-center w-full px-8 py-4 sm:py-8 text-xl uppercase font-extrabold"
 					onClick={() => onNewWord()}
 				>
 					New Word
@@ -70,15 +70,13 @@ export default function WordGenerator({
 				<div className="flex flex-col items-center p-2 gap-2 border-2 rounded-lg w-full border-rain-600 bg-linear-to-b from-transparent to-rain-900/10">
 					<div className="flex w-full rounded-lg justify-between gap-2">
 						<div className="flex w-max sm:gap-2">
-							<Tooltip position="topright" text="View or hide filters">
+							<Tooltip position="topleft" text="View or hide filters">
 								<button
 									role="button"
 									onClick={() => setFiltersOpen((prev) => !prev)}
-									className="btn--link flex pl-2 gap-1 justify-center items-center"
+									className="btn--link flex pl-2 gap-1 justify-center items-center text-rain-300 hover:text-rain-100"
 								>
-									<span className="btn--link text-sm text-rain-300 uppercase leading-5">
-										Select Filters
-									</span>
+									<span className="btn--link text-sm  uppercase leading-5">Select Filters</span>
 									{filtersOpen ? <RiArrowLeftSFill /> : <RiArrowRightSFill />}
 								</button>
 							</Tooltip>
