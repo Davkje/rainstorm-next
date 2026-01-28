@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
 
+// MADE WITH FIGMA MAKE
+
 interface Particle {
 	x: number;
 	y: number;
@@ -52,8 +54,8 @@ export function DitheredParticles() {
 			// Vary speed - most fast, some slow
 			const speedMultiplier =
 				Math.random() < 0.7
-					? 0.5 + Math.random() * 3 // 70% faster particles
-					: 0.5 + Math.random() * 1.5; // 30% slower particles (but not too slow)
+					? 0.5 + Math.random() * 4 // 70% faster particles
+					: 0.5 + Math.random() * 2; // 30% slower particles (but not too slow)
 
 			// All particles move diagonally (right and down) like rain
 			const baseVx = (0.2 + Math.random() * 0.3) * speedMultiplier; // All move right
@@ -82,7 +84,7 @@ export function DitheredParticles() {
 				vy: baseVy, // Very slow vertical movement
 				baseVx: baseVx, // Store base velocity
 				baseVy: baseVy, // Store base velocity
-				size: 4, // Slightly larger pixels
+				size: 3, // Slightly larger pixels
 				// opacity: 0.3 + Math.random() * 0.7, // Varying opacity for depth
 				opacity: 1, // Varying opacity for depth
 				speed: speedMultiplier,
@@ -102,7 +104,7 @@ export function DitheredParticles() {
 				const dx = particle.x - mouseRef.current.x;
 				const dy = particle.y - mouseRef.current.y;
 				const distance = Math.sqrt(dx * dx + dy * dy);
-				const repulsionRadius = 20; // Larger radius of mouse influence
+				const repulsionRadius = 40; // Larger radius of mouse influence
 
 				if (distance < repulsionRadius && distance > 0) {
 					const force = (repulsionRadius - distance) / repulsionRadius;

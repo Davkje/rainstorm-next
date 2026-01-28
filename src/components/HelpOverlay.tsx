@@ -6,8 +6,6 @@ import {
 	RiEdit2Fill,
 	RiFileCopyLine,
 	RiFileDownloadLine,
-	RiPencilFill,
-	RiRainyFill,
 } from "@remixicon/react";
 import { FocusTrap } from "focus-trap-react";
 import RainstormIcon from "./ui/RainstormIcon";

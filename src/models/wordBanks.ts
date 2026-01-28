@@ -1,14 +1,31 @@
 export type WordBankName =
-	| "nature"
+	| "verb"
+	| "adjective"
+	| "objects"
+	| "people"
 	| "place"
 	| "abstract"
-	| "verb"
-	| "creature"
+	| "material"
+	| "time"
 	| "emotion"
-	| "object"
-	| "role"
-	| "adjective"
-	| "magic";
+	| "action"
+	| "society"
+	| "relationship"
+	| "nature"
+	| "animal"
+	| "anatomy"
+	| "technology"
+	| "sound"
+	| "fantasy"
+	| "creature"
+	| "scifi"
+	| "horror"
+	| "adventure"
+	| "conflict"
+	| "mystery"
+	| "modern"
+	| "romance"
+	| "food";
 
 export type Word = string;
 
