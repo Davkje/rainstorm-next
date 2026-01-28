@@ -43,8 +43,8 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 	const [categoryToDelete, setCategoryToDelete] = useState<Category | null>(null);
 	const [showHelp, setShowHelp] = useState(false);
 
-	const allHaveWords = categories?.every((cat) => cat.words.length > 0);
-	const allHaveSomeText = categories?.every((cat) => cat.text.length > 10);
+	const allHaveWords = categories?.every((cat) => cat.words.length > 1);
+	const allHaveSomeText = categories?.every((cat) => cat.text.length > 30);
 	const totalWords = categories?.reduce((sum, cat) => sum + cat.words.length, 0);
 	const totalText = categories?.reduce((sum, cat) => sum + cat.text.length, 0);
 
@@ -69,7 +69,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 	/* -------------------- HINTS -------------------- */
 
 	const showExportHint = useOneTimeHint({
-		when: allHaveWords && totalWords >= 3 && allHaveSomeText && totalText >= 25,
+		when: allHaveWords && totalWords >= 3 && allHaveSomeText && totalText >= 50,
 		duration: 6000,
 	});
 
