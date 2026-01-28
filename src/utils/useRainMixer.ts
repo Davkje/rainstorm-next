@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Howl } from "howler";
 
-const FADE_DURATION = 800;
+const FADE_DURATION = 400;
 
 export function useRainMixer() {
 	// TWO RAIN SOUNDS YOU CAN CROSSFADE BETWEEN
@@ -21,13 +21,13 @@ export function useRainMixer() {
 
 	useEffect(() => {
 		lightRain.current = new Howl({
-			src: ["/audio/rain_light.mp3"],
+			src: ["/audio/light-rain.mp3"],
 			loop: true,
 			volume: 0,
 		});
 
 		heavyRain.current = new Howl({
-			src: ["/audio/rain_heavy.mp3"],
+			src: ["/audio/heavy-rain-drone.mp3"],
 			loop: true,
 			volume: 0,
 		});
