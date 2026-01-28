@@ -12,6 +12,7 @@ import RainMixerDropdown from "./RainMixerDropdown";
 import { useGlobalKeys } from "@/utils/useGlobalKeys";
 import Tooltip from "./ui/Tooltip";
 import RainMixerMobile from "./RainMixerMobile";
+import { useMediaQuery } from "@/utils/useMediaQuery";
 
 export default function Header() {
 	const [openMenu, setOpenMenu] = useState(false);
@@ -19,12 +20,23 @@ export default function Header() {
 
 	const rain = useRainMixer();
 	const pathname = usePathname();
+	const isDesktop = useMediaQuery("(min-width: 640px)");
 
 	// PLAY / PAUSE RAIN
 	useGlobalKeys(
 		"p",
 		() => {
+			if (!isDesktop) return;
 			rain.togglePlay();
+		},
+		{ ignoreInputs: true },
+	);
+
+	useGlobalKeys(
+		"r",
+		() => {
+			if (!isDesktop) return;
+			setOpenMixer((prev) => !prev);
 		},
 		{ ignoreInputs: true },
 	);
@@ -74,12 +86,15 @@ export default function Header() {
 				{/* RAIN MIXER */}
 				<div className="flex gap-2">
 					<div className="relative">
-						<Tooltip text="Open Rain Mixer [R]" position="bottomright">
+						<Tooltip text="Toggle Rain Mixer [R]" position="bottomright">
 							<button
-								className={`btn--icon ${rain.playing ? "rain-blink" : "text-rain-300/80 hover:text-rain-300"}`}
+								className={`btn--icon ${rain.playing ? "rain-blink" : "text-rain-400 hover:text-rain-200"}`}
 								onClick={() => setOpenMixer((p) => !p)}
+								aria-label="Toggle Rain Mixer"
+								aria-pressed={openMixer}
+								aria-keyshortcuts="R"
 							>
-								{rain.playing ? <RiRainyFill /> : <RiVolumeDownFill />}
+								{rain.playing ? <RiRainyFill aria-hidden /> : <RiVolumeDownFill aria-hidden />}
 							</button>
 						</Tooltip>
 						<AnimatePresence>
@@ -138,15 +153,16 @@ export default function Header() {
 									{openMenu ? <RiCloseLargeLine /> : <RiMenu3Line />}
 								</button>
 							</div>
-
 							<div className="flex flex-col gap-2">
-								<Image
-									className="mb-2"
-									src="/rainstorm.png"
-									alt="rainstorm"
-									width={120}
-									height={167}
-								/>
+								<Link href="/" onClick={() => setOpenMenu(false)}>
+									<Image
+										className="mb-2"
+										src="/rainstorm.png"
+										alt="rainstorm"
+										width={120}
+										height={167}
+									/>
+								</Link>
 								<Link
 									href="/ideas"
 									onClick={() => setOpenMenu(false)}
@@ -154,7 +170,6 @@ export default function Header() {
 								>
 									Ideas
 								</Link>
-
 								<Link
 									href="/words"
 									onClick={() => setOpenMenu(false)}
@@ -178,7 +193,6 @@ export default function Header() {
 								</Link>
 
 								{/* RAIN MIXER MOBILE*/}
-
 								<RainMixerMobile rain={rain} />
 							</div>
 						</motion.div>

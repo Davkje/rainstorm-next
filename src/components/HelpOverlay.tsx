@@ -3,13 +3,14 @@ import {
 	RiAddLine,
 	RiCloseLine,
 	RiDeleteBinLine,
+	RiEdit2Fill,
 	RiFileCopyLine,
 	RiFileDownloadLine,
-	RiLockLine,
 	RiPencilFill,
 	RiRainyFill,
 } from "@remixicon/react";
 import { FocusTrap } from "focus-trap-react";
+import RainstormIcon from "./ui/RainstormIcon";
 
 type Props = {
 	open: boolean;
@@ -26,7 +27,7 @@ export default function HelpOverlay({ open, onClose }: Props) {
 				onClick={onClose}
 			>
 				<div
-					className="flex flex-col bg-rain-800  max-w-4xl border-2 border-rain-700 rounded-xl p-4 sm:p-8 lg:p-12 shadow-xl relative mx-8 w-max max-h-[90vh]"
+					className="flex flex-col bg-rain-800 border-2 border-rain-700 rounded-xl p-4 sm:p-8 lg:p-12 shadow-xl relative mx-8 w-[max] max-h-[90vh]"
 					onClick={(e) => e.stopPropagation()}
 				>
 					<button
@@ -38,36 +39,29 @@ export default function HelpOverlay({ open, onClose }: Props) {
 					</button>
 					<h2 className="text-2xl font-bold uppercase text-center">Help</h2>
 
-					<section className="grid md:grid-cols-2 gap-2 mt-6 overflow-y-scroll">
+					<section className="grid gap-2 mt-2 overflow-y-scroll">
 						<div className="flex flex-col grow">
 							<h3 className="text-center uppercase">How to use</h3>
-							<ul className="text-md leading-relaxed flex flex-col justify-between grow p-4">
-								<li className="list-disc list-inside">
-									Generate words in Ideate View and drag them into categories.
-								</li>
-								<li className="list-disc list-inside">
-									Edit project and category names by clicking them.
-								</li>
-								<li className="list-disc list-inside">
-									Reorder or delete words if you change your mind.
-								</li>
-								<li className="list-disc list-inside">Add more catories if needed.</li>
-								<li className="list-disc list-inside">
-									Go to Define View to write describings text about your idea.
-								</li>
-								<li className="list-disc list-inside">Export your idea in a prefered format.</li>
+							<ul className="border-l-2 border-rain-400 text-md leading-relaxed flex flex-col justify-between grow px-4">
+								<li className="">Generate words in Ideate View and drag them into categories.</li>
+								<li className="">Filter and toggle acitve word banks.</li>
+								<li className="">Edit project and category names by clicking them.</li>
+								<li className="">Reorder or delete words if you change your mind.</li>
+								<li className="">Add more catories if needed.</li>
+								<li className="">Go to Define View to write describing text about your idea.</li>
+								<li className="">Export your idea in a prefered format.</li>
 							</ul>
 						</div>
-						<div className="grid gap-8">
+						<div className="grid sm:grid-cols-2 gap-8">
 							<div>
 								<h3 className="text-center uppercase">Icons</h3>
-								<ul className="text-md pl-4 space-y-1 p-4">
+								<ul className="text-md pl-4 grid gap-4 p-4 leading-normal text-center">
 									<li className="flex gap-4 items-center">
-										<RiRainyFill />
+										<RainstormIcon />
 										<span>Toggle Ideate View</span>
 									</li>
 									<li className="flex gap-4 items-center">
-										<RiPencilFill />
+										<RiEdit2Fill />
 										<span>Toggle Define View</span>
 									</li>
 									<li className="flex gap-4 items-center">
@@ -87,28 +81,58 @@ export default function HelpOverlay({ open, onClose }: Props) {
 										<span>Add current word to category</span>
 									</li>
 									<li className="flex gap-4 items-center">
-										<RiDeleteBinLine />
-										<span>Remove all words or drag single word to delete.</span>
+										<RiDeleteBinLine className="place-self-start" />
+										<div className="flex gap-2 flex-col text-left">
+											<span>Click: Remove all words</span>
+											<span>Drop: Remove sinlge word</span>
+										</div>
 									</li>
 								</ul>
 							</div>
 							<div>
 								<h3 className="text-center uppercase">Keyboard Shortcuts</h3>
-								<ul className="text-md pl-4 space-y-1 p-4">
-									<li>
-										<span>N - Generate new word</span>
+								<ul className="text-md grid gap-2 p-4">
+									<li className="flex gap-2">
+										<div className="aspect-square w-10 text-center rounded-sm leading-normal bg-rain-500 uppercase place-content-center">
+											N
+										</div>
+										<span>Generate new word</span>
 									</li>
-									<li>
-										<span>V - Toggle Views</span>
+									<li className="flex gap-2">
+										<div className="aspect-square w-10 text-center rounded-sm leading-normal bg-rain-500 uppercase place-content-center">
+											V
+										</div>
+										<span>Toggle Views</span>
 									</li>
-									<li>
-										<span>H - Toggle Help</span>
+									<li className="flex gap-2">
+										<div className="aspect-square w-10 text-center rounded-sm leading-normal bg-rain-500 uppercase place-content-center">
+											B
+										</div>
+										<span>Toggle Help</span>
 									</li>
-									<li>
-										<span>B - Toggle Banks</span>
+									<li className="flex gap-2">
+										<div className="aspect-square w-10 text-center rounded-sm leading-normal bg-rain-500 uppercase place-content-center">
+											B
+										</div>
+										<span>Toggle Banks</span>
 									</li>
-									<li>
-										<span>Esc - Close dialogs and cancel</span>
+									<li className="flex gap-2">
+										<div className="aspect-square w-10 text-center rounded-sm leading-normal bg-rain-500 uppercase place-content-center">
+											R
+										</div>
+										<span>Toggle Rain Mixer</span>
+									</li>
+									<li className="flex gap-2">
+										<div className="aspect-square w-10 text-center rounded-sm leading-normal bg-rain-500 uppercase place-content-center">
+											P
+										</div>
+										<span>Play / Pause Rain</span>
+									</li>
+									<li className="flex gap-2">
+										<div className="aspect-square w-10 text-center rounded-sm leading-normal bg-rain-500 uppercase place-content-center">
+											Esc
+										</div>
+										<span>Close dialogs and cancel</span>
 									</li>
 								</ul>
 							</div>

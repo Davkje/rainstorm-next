@@ -22,7 +22,7 @@ export function FullscreenButton() {
 		<Tooltip text="Toggle Fullscreen [F]" position="bottomright">
 			<button
 				onClick={isFullscreen ? exit : enter}
-				className="btn--icon text-rain-300/80 hover:text-rain-300"
+				className="btn--icon text-rain-400 hover:text-rain-300"
 				aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
 			>
 				{isFullscreen ? <RiFullscreenExitLine size={20} /> : <RiFullscreenLine size={20} />}

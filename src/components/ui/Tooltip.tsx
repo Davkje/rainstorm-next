@@ -29,25 +29,40 @@ export default function Tooltip({ text, children, position = "top" }: TooltipPro
 		bottomleft: "top-full mb-4 -left-2",
 	};
 
-	const handleMouseEnter = () => {
-		timeoutRef.current = setTimeout(() => {
-			setVisible(true);
-		}, 1000);
-	};
-
-	const handleMouseLeave = () => {
+	const clearTimer = () => {
 		if (timeoutRef.current) {
 			clearTimeout(timeoutRef.current);
 			timeoutRef.current = null;
 		}
-		setVisible(false);
 	};
+
+	const showWithDelay = (delay: number) => {
+		clearTimer();
+		timeoutRef.current = setTimeout(() => {
+			setVisible(true);
+		}, delay);
+	};
+
+	const hideWithDelay = (delay = 100) => {
+		clearTimer();
+		timeoutRef.current = setTimeout(() => {
+			setVisible(false);
+		}, delay);
+	};
+
+	const handleMouseEnter = () => showWithDelay(700);
+	const handleMouseLeave = () => hideWithDelay(100);
+
+	const handleFocus = () => showWithDelay(200);
+	const handleBlur = () => hideWithDelay(100);
 
 	return (
 		<div
-			className="relative flex justify-center items-center cursor-pointer"
+			className="relative flex justify-center items-center"
 			onMouseEnter={handleMouseEnter}
 			onMouseLeave={handleMouseLeave}
+			onFocus={handleFocus}
+			onBlur={handleBlur}
 		>
 			{children}
 			<div

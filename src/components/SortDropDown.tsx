@@ -54,7 +54,7 @@ export default function SortDropdown({
 		<div className="relative place-items-center" ref={ref}>
 			<button
 				onClick={() => setOpen((v) => !v)}
-				className="btn--primary bg-rain-800/90 hover:border-rain-400 flex font-normal items-center text-md gap-2 px-4 py-1 w-max border-2"
+				className="btn--primary bg-rain-800/90 rounded-md hover:border-rain-400 flex font-normal items-center text-md gap-2 px-4 py-1 w-max border-2"
 				aria-haspopup="menu"
 				aria-expanded={open}
 			>
@@ -74,7 +74,7 @@ export default function SortDropdown({
 								onChange(opt.value);
 								setOpen(false);
 							}}
-							className={`btn--link text-left leading-normal font-normal hover:text-rain-100 ${
+							className={`btn--link text-left rounded-md leading-normal font-normal hover:text-rain-100 ${
 								opt.value === value ? "text-white" : "text-rain-300"
 							}`}
 						>

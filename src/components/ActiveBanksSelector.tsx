@@ -21,6 +21,9 @@ export default function ActiveBanksOverlay({
 	useGlobalKeys("Escape", onClose, {
 		ignoreInputs: true,
 	});
+	useGlobalKeys("b", onClose, {
+		ignoreInputs: true,
+	});
 	const allActive = activeBanks.length === banks.length;
 
 	return (

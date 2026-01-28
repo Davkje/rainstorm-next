@@ -8,6 +8,7 @@ import { useRef } from "react";
 
 import { useGlobalKeys } from "@/utils/useGlobalKeys";
 import { VerticalSlider } from "./ui/VerticalSlider";
+import Tooltip from "./ui/Tooltip";
 
 type RainMixer = {
 	playing: boolean;
@@ -48,9 +49,11 @@ export default function RainMixerDropdown({ rain, onClose }: Props) {
 					<h3 className="uppercase text-sm text-rain-200 leading-normal tracking-wide text-center h-full">
 						Rain Sounds
 					</h3>
-					<button onClick={togglePlay} className="btn--icon">
-						{playing ? <RiPauseFill /> : <RiPlayFill />}
-					</button>
+					<Tooltip text="Play / Pause Rain Sound [P]" position="bottomright">
+						<button onClick={togglePlay} className="btn--icon">
+							{playing ? <RiPauseFill /> : <RiPlayFill />}
+						</button>
+					</Tooltip>
 				</div>
 
 				<div className="grid grid-cols-2 gap-1 place-content-center">

@@ -1,84 +1,80 @@
-import Image from "next/image";
+import AnimatedImage from "@/components/ui/AnimatedImage";
 
 export default function AboutPage() {
 	return (
-		<div className="p-2 flex flex-col items-center text-center tracking-wide">
-			<div className="grid grid-cols-4 gap-16 px-8 max-w-[1000px]">
+		<div className="p-2 flex flex-col items-center text-center tracking-wide overflow-hidden">
+			<div className="grid grid-cols-4 gap-8 sm:gap-16 px-8 w-[clamp(200px,90vw,1400px)]">
 				<div className="col-span-4 text-center place-self-center">
 					<h1 className="text-2xl font-bold uppercase">About Rainstorm</h1>
 					<p className="text-md font-normal leading-snug tracking-wide max-w-[1200px]">
-						Rainstorm is a creative tool designed by me, David, to help you quickly generate,
-						organize, and define ideas without getting lost in the details. It is inspired by
+						Rainstorm is a creative writing tool designed by me, David, to help you quickly
+						generate, and define ideas for without getting lost in the details. It is inspired by
 						role-playing games like Dungeons & Dragons, where “roll-tables” provide random prompts
 						to spark improvisation. Similarly, Rainstorm provides a simple word generator that
 						encourages creativity and lets you discover and associate on your own.
 					</p>
 				</div>
 				<div className="col-span-3 text-left">
-					<h2 className="text-xl font-bold uppercase mb-2">How it works</h2>
+					<h2 className="text-xl font-bold uppercase mb-2">A NEW IDEA</h2>
 					<p className="text-md font-normal leading-snug tracking-wide text-rain-200 mb-6">
-						Using RainStorm is flexible — the tool adapts to your workflow. Start by choosing a
-						template, such as Song, Story, Game, or an empty canvas. Templates give you predefined
-						sections to organize your ideas, but everything can be renamed, rearranged, or removed.
-						In Ideate mode, you generate words and drag them into different sections, using them to
-						inspire ideas. You can force yourself to use the first word you get, or keep generating
-						until something sparks your imagination. The process is about exploring connections,
-						finding patterns, and letting your mind take the lead.
+						Start your Idea by choosing a Template. They start you of with a few categoires and
+						wordbanks but you can always change them as you go. In Ideate mode, you generate words
+						and drag them into named category sections. How you tackle this process is up to you.
+						Limit yourself to use the first generated word, or keep trying until something sparks
+						your imagination. Explore and let your mind take the lead.
 					</p>
 				</div>
 				<div className="relative col-start-2 col-span-3 text-left">
-					<div className="absolute -left-100 -bottom-50">
-						<Image
-							src="/image6.svg"
-							alt="background"
-							width={500}
-							height={500}
-							priority
-							className="object-cover mix-blend-color-dodge opacity-15"
-						/>
-					</div>
-					<h2 className="text-xl font-bold uppercase mb-2">From ideas to defined concepts </h2>
+					<AnimatedImage
+						src="/image6.svg"
+						width={500}
+						height={500}
+						wrapperClassName="absolute -left-100 "
+						className="object-cover mix-blend-color-dodge"
+						parallax={60}
+					/>
+
+					<h2 className="text-xl font-bold uppercase mb-2">From idea to concept</h2>
 					<p className="text-md font-normal leading-snug tracking-wide text-rain-200 mb-6">
-						Once you have collected your words, switch to Define mode to add short notes and
-						interpretations for each section. Here you reflect on what the words mean to you and how
-						they connect to the bigger idea. For example, a section labeled Theme might include
-						words like Green, River, and Lost, and your notes could describe how these ideas fit
-						together in a song, story, or game concept. Define mode encourages concise, focused
-						thinking, helping you refine the most important aspects of your idea without diving into
-						full-scale writing too early.
+						Once you have collected your words, switch to Define mode to add notes and descriptions
+						for each section. Reflect on what the words could mean to you in the category context.
+						For example, in a Story idea, a category named <i className="font-bold">Genre</i> might
+						include the words <i className="font-bold">Night </i>and
+						<i className="font-bold"> West</i> and my first associasion could be{" "}
+						<i className="font-bold">A Dark Western Thriller</i>. Describe it even further or let
+						that be enough! Define the most important parts of your idea before finnishing up.
 					</p>
 				</div>
 
 				<div className="relative col-span-3 text-left">
-					<div className="absolute -right-full top-full">
-						<Image
-							src="/image4.svg"
-							alt="background"
-							width={800}
-							height={500}
-							priority
-							className="object-cover mix-blend-color-dodge opacity-15"
-						/>
-					</div>
-					<h2 className="text-xl font-bold uppercase mb-2">Exporting and continuing your work</h2>
+					<AnimatedImage
+						src="/image4.svg"
+						width={900}
+						height={700}
+						wrapperClassName="absolute -right-200"
+						className="object-cover mix-blend-color-dodge"
+						parallax={40}
+					/>
+
+					<h2 className="text-xl font-bold uppercase mb-2">Decide to be done</h2>
 					<p className="text-md font-normal leading-snug tracking-wide text-rain-200 mb-6">
-						When your idea feels ready, you can export it as text or PDF to continue working in your
-						preferred tool. RainStorm is not meant to replace detailed writing or production
-						software — it is a starting point, a creative playground for ideation. Whether you
-						continue on your computer, in a notebook, or in a digital document, RainStorm ensures
-						that your ideas are organized, accessible, and ready to expand.
+						When you&apos;re ready, you can export your idea however you want. Copy it to your
+						Clipboard and continue elswere or export it as a PDF or Text file. There&apos;s no rush
+						because they are also saved in your browser if you whant to continue another day.
+						Rainstorm is not meant to replace other writing software, it&apos;s a starting point. If
+						you continue in a digital document, a notebook or if these notes are perfectly enough,
+						thats up to you!
 					</p>
 				</div>
 
 				<div className="col-start-2 col-span-3 text-left">
 					<h2 className="text-xl font-bold uppercase mb-2">Why RainStorm</h2>
 					<p className="text-md font-normal leading-snug tracking-wide text-rain-200 mb-6">
-						RainStorm was created to give writers, musicians, game designers, and creators a
-						lightweight, focused, and inspiring tool for idea generation. Its combination of
-						randomness, constraints, and structured sections encourages independent thinking,
-						helping users overcome creative blocks and find unique connections. By making ideation
-						both fun and purposeful, RainStorm supports the early stages of creation while keeping
-						the process simple, playful, and deeply personal.
+						RainStorm was created to give creators of all kinds a lightweight, focused, and
+						inspiring tool. It&apos;s combination of randomness and constraints encourages
+						independent thinking, helping users overcome creative blocks and find unique ideas.
+						RainStorm supports your early creative process by keeping it simple, purposeful and
+						personal.
 					</p>
 				</div>
 

@@ -2,20 +2,33 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { loadTemplates } from "@/helpers/storage";
+import { createIdeaFromTemplate, loadIdeas, loadTemplates, saveIdeas } from "@/helpers/storage";
 import { Template } from "@/models/templates";
 import Link from "next/link";
 import { easeInOut, easeOut, motion } from "framer-motion";
 import CTAButtons from "@/components/ui/CTAButtons";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
 	const [templates, setTemplates] = useState<Template[]>([]);
+	const router = useRouter();
 
 	useEffect(() => {
 		const loaded = loadTemplates();
 		// eslint-disable-next-line react-hooks/set-state-in-effect
 		setTemplates(loaded);
 	}, []);
+
+	// CREATE IDEA
+	const handleCreateIdea = (template?: Template) => {
+		if (!template) return;
+
+		const idea = createIdeaFromTemplate(template);
+		const allIdeas = loadIdeas();
+
+		saveIdeas([...allIdeas, idea]);
+		router.push(`/ideas/${idea.id}`);
+	};
 
 	return (
 		<>
@@ -27,10 +40,17 @@ export default function Home() {
 						opacity: { duration: 1.2, ease: easeOut },
 						scale: { duration: 4, ease: [0.16, 1, 0.3, 1] },
 					}}
-					className="col-start-1 row-start-1 min-h-[95dvh] grid place-content-center gap-8 text-center z-5"
+					className="col-start-1 row-start-1 min-h-[90dvh] grid place-content-center gap-8 text-center z-5"
 				>
 					<div className="flex flex-col gap-6 justify-center items-center">
-						<Image className="px-8" src="/rainstorm.png" alt="rainstorm" width={450} height={200} />
+						<Image
+							className="px-8"
+							src="/rainstorm.png"
+							alt="rainstorm"
+							priority
+							width={450}
+							height={200}
+						/>
 						<p className="leading-normal text-rain-300 italic text-lg sm:text-lg">
 							The one word, limiting, focused idea tool
 						</p>
@@ -61,7 +81,7 @@ export default function Home() {
 						>
 							<Link
 								href="/templates"
-								className="text-lg place-self-center text-rain-400 hover:text-rain-200"
+								className="text-lg place-self-center text-rain-300/50 hover:text-rain-200"
 							>
 								See all Templates
 							</Link>
@@ -69,92 +89,167 @@ export default function Home() {
 					</motion.div>
 				</motion.section>
 
-				<section className="min-h-screen flex flex-col place-items-center gap-8 text-center max-w-[1000px]">
-					<div className="grid gap-8">
+				<section className="min-h-screen flex flex-col place-items-center gap-8 sm:gap-16 text-center w-[clamp(200px,90vw,1000px)]">
+					<motion.div
+						initial={{ opacity: 0 }}
+						whileInView={{ opacity: 1 }}
+						viewport={{ once: false, amount: 0.3 }}
+						transition={{
+							duration: 0.8,
+							ease: easeOut,
+						}}
+						className="grid gap-2"
+					>
 						<h2 className="text-2xl uppercase tracking-wide">One drop, endless ripples</h2>
-						<p className="p-2 leading-snug place-self-center">
-							RainStorm is a creative tool that helps you quickly shape and define ideas. With a
-							simple word generator, customizable templates and a drag-and-drop system, it adds just
-							enough constraint while leaving freedom in how you use it.
+						<p className="p-2 leading-snug place-self-center italic max-w-250">
+							Rainstorm is a creative writing tool that helps you quickly shape and define ideas.
+							With a simple word generator, customizable templates and a drag-and-drop system, it
+							adds just enough constraint while leaving freedom in how you use it.
 						</p>
+					</motion.div>
+					<div className="grid gap-8 sm:gap-12">
 						<h2 className="text-2xl uppercase">How to use it?</h2>
-					</div>
-					<div className="grid sm:grid-cols-2 gap-4 px-4">
-						<div className="bg-red-600/ place-content-center text-left">
-							<h3 className="text-2xl uppercase font-normal">Pick a Template</h3>
-							<p className="p-2 leading-snug font-light">
-								Start with structure or a blank canvas. You can always change things as you go.
-							</p>
-						</div>
-						<Image
-							src="pickTemplate.svg"
-							width={400}
-							height={300}
-							alt="Templates"
-							className="place-self-center"
-						/>
-					</div>
-					<div className="grid sm:grid-cols-2 gap-4 px-4">
-						<div className="place-content-center text-left">
-							<h3 className="text-2xl uppercase font-normal">Ideate</h3>
-							<p className="p-2 leading-snug text-xl font-light">
-								Generate words and drag them into sections. Use the first word, or keep rolling
-								until it sparks an idea.
-							</p>
-						</div>
-						<Image
-							src="/dragTutorial.svg"
-							width={400}
-							height={300}
-							alt="Drag and drop"
-							className="place-self-center sm:place-self-start"
-						/>
-					</div>
-					<div className="grid sm:grid-cols-2 gap-4 px-4">
-						<div className="bg-red-600/ place-content-center text-left">
-							<h3 className="text-2xl uppercase font-normal">Define</h3>
-							<p className="p-2 leading-snug font-light">
-								What do come up with with only a word and a category? Write short notes and clarify
-								what your ideas mean to you.
-							</p>
-						</div>
-						<Image
-							src="definetutorial.svg"
-							width={400}
-							height={300}
-							alt="Templates"
-							className="place-self-start"
-						/>
-					</div>
-					<div className="grid gap-4 px-4">
-						<div className="place-content-center text-left">
-							<h3 className="text-2xl uppercase font-normal">Continue your journey</h3>
-							<p className="p-2 leading-snug font-light">Export your idea and take it further!</p>
-						</div>
-						<Image
-							src="exportimage.svg"
-							width={300}
-							height={300}
-							alt="Templates"
-							className="place-self-center"
-						/>
-					</div>
-
-					<div>
-						<h3 className="text-xl">Try Rainstorm</h3>
-						{/* <button
-							className="btn--primary uppercase text-lg sm:text-md font-bold hover:scale-[1.1] transition-all duration-500 ease-in-out"
-							onClick={() => {
-								handleCreateIdea(emptyTemplate);
+						<motion.div
+							initial={{ opacity: 0, x: -20 }}
+							whileInView={{ opacity: 1, x: 1 }}
+							viewport={{ once: false, amount: 0.3 }}
+							transition={{
+								duration: 0.8,
+								ease: easeOut,
 							}}
+							className="grid sm:grid-cols-2 gap-8 sm:gap-12 px-4"
 						>
-							Create Idea
-						</button> */}
+							<div className="place-content-center text-left">
+								<h3 className="text-2xl uppercase font-normal">Pick a Template</h3>
+								<p className="p-2 leading-snug font-light">
+									Start with structure or a blank canvas. You can always change things as you go.
+								</p>
+							</div>
+							<Image
+								src="pickTemplate.svg"
+								width={400}
+								height={300}
+								alt="Templates"
+								className="place-self-center sm:place-self-start w-[clamp(200px,40vw,400px)]"
+							/>
+						</motion.div>
+						<motion.div
+							initial={{ opacity: 0, x: 20 }}
+							whileInView={{ opacity: 1, x: 1 }}
+							viewport={{ once: false, amount: 0.3 }}
+							transition={{
+								duration: 0.8,
+								ease: easeOut,
+							}}
+							className="grid sm:grid-cols-2 gap-8 sm:gap-12 px-4"
+						>
+							<div className="place-content-center text-left sm:order-2">
+								<h3 className="text-2xl uppercase font-normal">Ideate</h3>
+								<p className="p-2 leading-snug text-xl font-light">
+									Generate words and drag them into sections. Use the first word, or keep rolling
+									until it sparks an idea.
+								</p>
+							</div>
+							<Image
+								className="place-self-center sm:place-self-start sm:order-1 w-[clamp(300px,40vw,400px)]"
+								src="/dragTutorial.svg"
+								width={400}
+								height={300}
+								alt="Drag and drop"
+							/>
+						</motion.div>
+						<motion.div
+							initial={{ opacity: 0, x: -20 }}
+							whileInView={{ opacity: 1, x: 1 }}
+							viewport={{ once: false, amount: 0.3 }}
+							transition={{
+								duration: 0.8,
+								ease: easeOut,
+							}}
+							className="grid sm:grid-cols-2 gap-8 sm:gap-12 px-4"
+						>
+							<div className="place-content-center text-left">
+								<h3 className="text-2xl uppercase font-normal">Define</h3>
+								<p className="p-2 leading-snug font-light">
+									What do come up with with only a word and a category? Write short notes and
+									clarify what your ideas mean to you.
+								</p>
+							</div>
+							<Image
+								src="definetutorial.svg"
+								width={400}
+								height={300}
+								alt="Templates"
+								className="place-self-center sm:place-self-start w-[clamp(300px,40vw,400px)]"
+							/>
+						</motion.div>
+						<motion.div
+							initial={{ opacity: 0 }}
+							whileInView={{ opacity: 1 }}
+							viewport={{ once: false, amount: 0.3 }}
+							transition={{
+								duration: 0.8,
+								ease: easeOut,
+							}}
+							className="grid gap-4 px-4"
+						>
+							<div className="place-content-center text-center">
+								<h3 className="text-2xl uppercase font-normal leading-normal mb-2">
+									Continue your journey
+								</h3>
+								<p className="p-2 leading-snug font-light">Export your idea and take it further!</p>
+							</div>
+							<Image
+								src="exportimage.svg"
+								width={300}
+								height={300}
+								alt="Templates"
+								className="place-self-center w-[clamp(100px,40vw,200px)]"
+							/>
+						</motion.div>
+
+						<div className="mt-20 z-10">
+							<h3 className="text-lg uppercase font-light leading-normal mb-4">
+								Now give it a try!
+							</h3>
+							<button
+								className="btn--primary uppercase text-xl sm:text-2xl font-bold hover:scale-[1.1] transition-all duration-500 ease-in-out"
+								onClick={() => {
+									const defaultTemplate = templates[0];
+									handleCreateIdea(defaultTemplate);
+								}}
+							>
+								Create Idea
+							</button>
+						</div>
 					</div>
 				</section>
-				<footer className="grid place-items-center p-4 gap-2">
-					<Image className="px-8" src="/rainstorm.png" alt="rainstorm" width={200} height={100} />
-					<p className="text-rain-500">By David</p>
+				<footer className="relative flex justify-between place-items-center p-12 gap-2 pt-24 pb-12 w-full mt-12">
+					<button
+						onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+						aria-label="Scroll to top"
+						className="btn--icon p-0 w-24 z-2 opacity-20 hover:opacity-40 transition-opacity"
+					>
+						<Image src="/rainstorm.png" alt="Rainstorm logo" width={110} height={100} />
+					</button>
+					<a
+						className="text-rain-100 font-normal text-md opacity-20 hover:opacity-40 transition-opacity z-2 w-24 text-center"
+						href="https://www.linkedin.com/in/david-kjellstrand-b6760113a/"
+						target="_blank"
+						rel="noreferrer"
+					>
+						By David
+					</a>
+
+					<a
+						className="text-rain-100 font-normal text-md opacity-20 hover:opacity-40 transition-opacity z-2 w-24 text-center"
+						href="https://github.com/Davkje/rainstorm-next"
+						target="_blank"
+						rel="noreferrer"
+					>
+						Github
+					</a>
+					<div className="absolute bottom-0 left-0 bg-linear-to-b from-transparent to-rain-900 h-150 w-full"></div>
 				</footer>
 			</div>
 		</>

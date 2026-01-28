@@ -74,7 +74,7 @@ export default function WordGenerator({
 								<button
 									role="button"
 									onClick={() => setFiltersOpen((prev) => !prev)}
-									className="btn--link flex pl-2 gap-1 justify-center items-center text-rain-300 hover:text-rain-100"
+									className="btn--link h-full flex pl-2 gap-1 justify-center items-center text-rain-300 hover:text-rain-100"
 								>
 									<span className="btn--link text-sm  uppercase leading-5">Select Filters</span>
 									{filtersOpen ? <RiArrowLeftSFill /> : <RiArrowRightSFill />}
