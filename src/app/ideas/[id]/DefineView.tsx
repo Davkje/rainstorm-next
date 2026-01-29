@@ -101,6 +101,7 @@ export default function DefineView({ idea, setIdea, onRemoveCategory, onAddCateg
 								editButtonSize={20}
 							/>
 							<button
+								aria-label={`Remove category ${cat.name}`}
 								className="btn--icon p-2 text-rain-400 hover:text-rain-200 absolute top-0 right-0"
 								onClick={() => {
 									onRemoveCategory(cat.id);

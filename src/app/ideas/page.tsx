@@ -83,6 +83,7 @@ export default function IdeasPage() {
 				<div className="flex mt-2 justify-center gap-2 flex-wrap">
 					{templates.map((t) => (
 						<button
+							aria-label={`Create idea, template ${t.name}`}
 							key={t.id}
 							onClick={() => handleCreateIdea(t)}
 							className="btn--primary border-2 hover:border-rain-400 bg-rain-800/90  px-8 py-0"
@@ -119,6 +120,7 @@ export default function IdeasPage() {
 						{filteredAndSortedIdeas.map((idea) => (
 							<li key={idea.id} className="relative">
 								<button
+									aria-label={`Go to ${idea.name}´s page`}
 									onClick={() => router.push(`/ideas/${idea.id}`)}
 									className="btn--tertiary rounded-lg bg-transparent hover:bg-rain-500/20 w-full justify-between grid grid-cols-2 sm:grid-cols-4 text-left gap-2 px-2"
 								>
@@ -133,6 +135,7 @@ export default function IdeasPage() {
 									</div>
 								</button>
 								<button
+									aria-label={`Delete idea: ${idea.name}`}
 									onClick={() => setIdeaToDelete(idea)}
 									className="btn--icon absolute top-1/2 -translate-y-1/2 right-0 z-5 p-2 text-rain-400 hover:text-red-500/80"
 								>

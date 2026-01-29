@@ -53,6 +53,7 @@ export default function TemplatesPage() {
 								<div className="flex items-center justify-between px-2 hover:bg-rain-500/20 rounded-lg cursor-pointer transition">
 									<div className="flex items-center gap-2 w-full">
 										<button
+											aria-label={`Toggle ${t.name}`}
 											onClick={(e) => {
 												e.stopPropagation();
 												toggleExpand(t.id);
@@ -66,6 +67,7 @@ export default function TemplatesPage() {
 										</button>
 									</div>
 									<button
+										aria-label={`Create idea with ${t.name} template`}
 										onClick={(e) => {
 											e.stopPropagation();
 											handleCreateIdea(t);

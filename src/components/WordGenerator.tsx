@@ -84,6 +84,7 @@ export default function WordGenerator({
 								<>
 									<Tooltip text="Clear active filters">
 										<button
+											aria-label="Clear active filters"
 											disabled={selectedBanks.length <= 0}
 											onClick={onClearSelected}
 											className="flex items-center h-full text-sm gap-1 uppercase leading-5 p-2 sm:px-4 bg-rain-700 text-rain-300 border-none hover:text-rain-100 hover:bg-rain-600"
@@ -120,6 +121,7 @@ export default function WordGenerator({
 									return (
 										<Tooltip key={bank} text="Toggle filter">
 											<button
+												aria-label={`Toggle filter ${bank}`}
 												onClick={() => onToggleSelectedBank(bank)}
 												className={`text-sm rounded-lg uppercase font-normal px-4 py-0 ${
 													isSelected

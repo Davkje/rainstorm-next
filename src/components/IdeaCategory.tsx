@@ -98,6 +98,7 @@ export default function IdeaCategory({
 					</Tooltip>
 					<Tooltip text="Remove Category" position="topright">
 						<button
+							aria-label="Remove category"
 							onClick={() => {
 								handleRemoveCategory(id);
 							}}
