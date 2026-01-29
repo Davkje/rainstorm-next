@@ -44,12 +44,16 @@ export default function Header() {
 	return (
 		// <header className="px-4 gap-2 bg-linear-to-b from-rain-800 to-transparent flex justify-between items-center relative">
 		<header className="px-4 gap-2 flex justify-between items-center relative">
-			<Link href="/">
-				<Image src="/rainstorm.png" alt="rainstorm" width={120} height={167} />
+			<Link href="/" aria-label="Go to homepage">
+				<Image src="/rainstormlogo.svg" alt="" width={120} height={167} aria-hidden="true" />
+				<span className="sr-only">Rainstorm</span>
 			</Link>
 
 			{/* DESKTOP */}
-			<nav className="hidden sm:flex gap-[clamp(16px,4vw,50px)] font-bold justify-center items-center relative">
+			<nav
+				aria-label="Main navigation"
+				className="hidden sm:flex gap-[clamp(16px,4vw,50px)] font-bold justify-center items-center relative"
+			>
 				{[
 					{ href: "/ideas", label: "Ideas" },
 					{ href: "/words", label: "Words" },
@@ -114,8 +118,10 @@ export default function Header() {
 						onClick={() => setOpenMenu((p) => !p)}
 						className="btn--icon"
 						aria-label="Toggle menu"
+						aria-expanded={openMenu}
+						aria-controls="mobile-menu"
 					>
-						<RiMenu3Line />
+						<RiMenu3Line aria-hidden />
 					</button>
 				</div>
 			)}
@@ -127,6 +133,7 @@ export default function Header() {
 						{/* OVERLAY*/}
 						<motion.div
 							key="overlay"
+							aria-hidden="true"
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 0.5 }}
 							exit={{ opacity: 0 }}
@@ -137,6 +144,10 @@ export default function Header() {
 
 						<motion.div
 							key="menu"
+							id="mobile-menu"
+							role="dialog"
+							aria-modal="true"
+							aria-label="Mobile navigation"
 							initial={{ x: "100%" }}
 							animate={{ x: 0 }}
 							exit={{ x: "100%" }}
@@ -150,18 +161,20 @@ export default function Header() {
 									className="btn--icon"
 									aria-label="Toggle menu"
 								>
-									{openMenu ? <RiCloseLargeLine /> : <RiMenu3Line />}
+									{openMenu ? <RiCloseLargeLine aria-hidden /> : <RiMenu3Line />}
 								</button>
 							</div>
 							<div className="flex flex-col gap-2">
 								<Link href="/" onClick={() => setOpenMenu(false)}>
 									<Image
 										className="mb-2"
-										src="/rainstorm.png"
-										alt="rainstorm"
+										src="/rainstormlogo.svg"
+										alt=""
+										aria-hidden="true"
 										width={120}
 										height={167}
 									/>
+									<span className="sr-only">Rainstorm</span>
 								</Link>
 								<Link
 									href="/ideas"

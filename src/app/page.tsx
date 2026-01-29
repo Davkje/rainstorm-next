@@ -32,7 +32,7 @@ export default function Home() {
 
 	return (
 		<>
-			<div className="h-full flex flex-col items-center justify-center z-2">
+			<div className="h-full flex flex-col items-center justify-center z-2 overflow-hidden">
 				<motion.section
 					initial={{ opacity: 0, scale: 0.92 }}
 					animate={{ opacity: 1, scale: 1 }}
@@ -43,15 +43,19 @@ export default function Home() {
 					className="col-start-1 row-start-1 min-h-[90dvh] grid place-content-center gap-8 text-center z-5"
 				>
 					<div className="flex flex-col gap-6 justify-center items-center">
-						<Image
-							className="px-8"
-							src="/rainstorm.png"
-							alt="rainstorm"
-							priority
-							width={450}
-							height={200}
-						/>
-						<p className="leading-normal text-rain-300 italic text-lg sm:text-lg">
+						<h1 aria-describedby="site-tagline" className="relative">
+							<span className="absolute sr-only">Rainstorm</span>
+							<Image
+								className="px-8"
+								aria-hidden="true"
+								src="/rainstormlogo.svg"
+								alt="Rainstorm Logo"
+								priority
+								width={450}
+								height={200}
+							/>
+						</h1>
+						<p className="leading-normal text-rain-300 italic text-lg sm:text-lg" id="site-tagline">
 							The one word, limiting, focused idea tool
 						</p>
 					</div>
@@ -230,7 +234,7 @@ export default function Home() {
 						aria-label="Scroll to top"
 						className="btn--icon p-0 w-24 z-2 opacity-20 hover:opacity-40 transition-opacity"
 					>
-						<Image src="/rainstorm.png" alt="Rainstorm logo" width={110} height={100} />
+						<Image src="/rainstormlogo.svg" alt="Rainstorm logo" width={110} height={100} />
 					</button>
 					<a
 						className="text-rain-100 font-normal text-md opacity-20 hover:opacity-40 transition-opacity z-2 w-24 text-center"

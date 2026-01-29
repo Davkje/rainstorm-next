@@ -76,10 +76,10 @@ export default function EditableText({
 				contentEditable={editing}
 				suppressContentEditableWarning
 				tabIndex={0}
-				role="textbox"
+				role={editing ? "textbox" : undefined}
+				aria-readonly={editing ? false : undefined}
 				aria-label="Editable text"
 				aria-multiline="false"
-				aria-readonly={!editing}
 				className={`
 					inline-block
 					px-1
