@@ -84,16 +84,12 @@ export default function EditableText({
 					inline-block
 					px-1
 					cursor-pointer
-					outline-none
 					rounded
-					focus:bg-rain-500/0
-					focus:outline-none
-					focus:ring-0
-					focus:ring-offset-0
 					${className}
 				`}
 				onClick={() => setEditing(true)}
-				onFocus={() => setEditing(true)}
+				// onFocus={() => {}}
+
 				onBlur={commit}
 				onInput={() => {
 					if (!ref.current) return;
@@ -121,6 +117,11 @@ export default function EditableText({
 					if (e.key === "Escape") {
 						e.preventDefault();
 						abort();
+					}
+
+					if (!editing && (e.key === "Enter" || e.key === " ")) {
+						e.preventDefault();
+						setEditing(true);
 					}
 				}}
 			>

@@ -180,12 +180,16 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 				<div className="flex justify-between gap-3">
 					<div className="flex gap-1 h-full">
 						<Tooltip text="Help" position="bottom">
-							<button onClick={() => setShowHelp((prev) => !prev)} className={`btn--icon`}>
+							<button
+								onClick={() => setShowHelp((prev) => !prev)}
+								className={`btn--icon`}
+								aria-label="Show Help Window"
+							>
 								<RiQuestionLine />
 							</button>
 						</Tooltip>
 						<Tooltip text="Add Category" position="bottomleft">
-							<button onClick={addCategory} className={`btn--icon`}>
+							<button onClick={addCategory} className={`btn--icon`} aria-label="Add new category">
 								<RiAddBoxLine />
 							</button>
 						</Tooltip>
@@ -224,6 +228,8 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 						<Tooltip text="Ideate View" position="bottomright">
 							<button
 								onClick={() => setView("ideate")}
+								aria-label="Ideate view"
+								aria-pressed={view === "ideate"}
 								className={`btn--link ${view === "ideate" ? "text-rain-200" : "text-rain-400 hover:text-rain-300/50"}`}
 							>
 								<RainstormIcon />
@@ -232,6 +238,8 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 						<Tooltip text="Define View" position="bottomright">
 							<button
 								onClick={() => setView("define")}
+								aria-label="Define view"
+								aria-pressed={view === "define"}
 								className={`btn--link ${showDefineHint && !showExportHint && "anim-blink"} ${
 									view === "define" ? "text-rain-100" : "text-rain-400 hover:text-rain-300/50"
 								}`}

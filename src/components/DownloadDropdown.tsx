@@ -56,6 +56,7 @@ export default function DownloadDropdown({ idea }: { idea: Idea }) {
 					onClick={() => setOpen((v) => !v)}
 					aria-haspopup="menu"
 					aria-expanded={open}
+					aria-label="Show Export Drowdown"
 				>
 					<RiFileDownloadLine />
 				</button>
@@ -69,6 +70,7 @@ export default function DownloadDropdown({ idea }: { idea: Idea }) {
 					{options.map((opt) => (
 						<button
 							key={opt}
+							role="menuitem"
 							onClick={() => handleDownload(opt)}
 							className={`btn--link font-normal text-left capitalize`}
 						>
@@ -79,7 +81,10 @@ export default function DownloadDropdown({ idea }: { idea: Idea }) {
 			)}
 
 			{downloaded && (
-				<div className="text-lg fixed bottom-8 right-8 bg-rain-600 text-white px-4 py-1 rounded-lg shadow-lg transition-opacity duration-300">
+				<div
+					aria-live="polite"
+					className="text-lg fixed bottom-8 right-8 bg-rain-600 text-white px-4 py-1 rounded-lg shadow-lg transition-opacity duration-300"
+				>
 					Downloaded!
 				</div>
 			)}

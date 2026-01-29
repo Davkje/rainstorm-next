@@ -54,6 +54,7 @@ export default function CopyDropdown({ idea }: { idea: Idea }) {
 					className="btn--icon h-full"
 					aria-haspopup="menu"
 					aria-expanded={open}
+					aria-label="Show Copy Dropdown"
 				>
 					<RiFileCopyLine />
 				</button>
@@ -64,23 +65,35 @@ export default function CopyDropdown({ idea }: { idea: Idea }) {
 					role="menu"
 				>
 					<h3>Copy</h3>
-					<button onClick={() => handleCopy("plain")} className="btn--link text-left font-normal">
+					<button
+						role="menuitem"
+						onClick={() => handleCopy("plain")}
+						className="btn--link text-left font-normal"
+					>
 						Plain text
 					</button>
 					<button
+						role="menuitem"
 						onClick={() => handleCopy("markdown")}
 						className="btn--link text-left font-normal"
 					>
 						Markdown
 					</button>
-					<button onClick={() => handleCopy("html")} className="btn--link text-left font-normal">
+					<button
+						role="menuitem"
+						onClick={() => handleCopy("html")}
+						className="btn--link text-left font-normal"
+					>
 						Formatted (Docs)
 					</button>
 				</div>
 			)}
 
 			{copied && (
-				<div className="text-lg fixed bottom-8 right-8 bg-rain-600 text-white px-4 py-1 rounded-lg shadow-lg transition-opacity duration-300">
+				<div
+					aria-live="polite"
+					className="text-lg fixed bottom-8 right-8 bg-rain-600 text-white px-4 py-1 rounded-lg shadow-lg transition-opacity duration-300"
+				>
 					Copied to Clipboard!
 				</div>
 			)}
