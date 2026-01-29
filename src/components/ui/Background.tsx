@@ -10,7 +10,7 @@ export default function Background() {
 	const shouldReduceMotion = useReducedMotion();
 
 	let opacity = 0.1;
-	if (pathname === "/") opacity = 0.2;
+	if (pathname === "/") opacity = 0.4;
 	if (pathname.startsWith("/ideas/")) opacity = 0.03;
 
 	const showParticles = !shouldReduceMotion && pathname === "/";
