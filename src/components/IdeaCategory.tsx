@@ -73,6 +73,7 @@ export default function IdeaCategory({
 				<div className="flex absolute top-0 right-0">
 					<Tooltip text="Add word">
 						<button
+							aria-label="Add generated word"
 							disabled={isMaxWords}
 							onClick={() => {
 								handleAddWord();
@@ -82,7 +83,7 @@ export default function IdeaCategory({
 							<RiAddLine size={20} />
 						</button>
 					</Tooltip>
-					<Tooltip text="Click: Delete all /		 Drag: Delete Word" position="topright">
+					<Tooltip text="Click: Delete all / Drag: Delete Word" position="topright">
 						<button
 							type="button"
 							ref={setTrashRef}
