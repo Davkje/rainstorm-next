@@ -13,6 +13,7 @@ type Props = {
 };
 
 export default function DefineView({ idea, setIdea, onRemoveCategory, onAddCategory }: Props) {
+	// RANDOM PLACEHOLDERS
 	const placeholderTexts = [
 		"Write something about",
 		"What do you associate with",
@@ -45,6 +46,7 @@ export default function DefineView({ idea, setIdea, onRemoveCategory, onAddCateg
 		});
 	};
 
+	// UPDATE WORDS IN DEFINE VIEW ONLY
 	const updateWord = (catId: Category["id"], oldWord: Word, newWord: Word) => {
 		setIdea((prev) => {
 			if (!prev) return prev;
@@ -92,6 +94,7 @@ export default function DefineView({ idea, setIdea, onRemoveCategory, onAddCateg
 						className="flex flex-col grow border-2 gap-1 p-2 border-rain-600 rounded-lg bg-linear-to-b from-transparent to-rain-900/20"
 					>
 						<div className="flex justify-between relative">
+							{/* CAT NAME */}
 							<EditableText
 								text={cat.name}
 								className="text-lg leading-normal"
@@ -111,6 +114,7 @@ export default function DefineView({ idea, setIdea, onRemoveCategory, onAddCateg
 							</button>
 						</div>
 						<div className="flex gap-1">
+							{/* WORDS */}
 							{cat.words.map((word) => (
 								<EditableText
 									key={word}
@@ -123,6 +127,7 @@ export default function DefineView({ idea, setIdea, onRemoveCategory, onAddCateg
 						</div>
 						{/* VISUAL SEPERATOR */}
 						<div className="bg-linear-to-r from-rain-600 to-transparent w-[30%] h-0.5 rounded"></div>
+						{/* TEXT AREA */}
 						<textarea
 							className="
 								text-lg flex grow rounded-md resize-none px-1

@@ -9,7 +9,9 @@ import { RiArrowDownSFill } from "@remixicon/react";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function TemplatesPage() {
+	// IDEA TEMPLATES
 	const [templates, setTemplates] = useState<Template[]>([]);
+	// OPEN / CLOSED TEMPLATE OVERVIEW
 	const [openId, setOpenId] = useState<string | null>(null);
 
 	const router = useRouter();
@@ -79,7 +81,7 @@ export default function TemplatesPage() {
 								</div>
 
 								<div className={` w-full h-4`}></div>
-
+								{/* ANIMATE EXPANDABLE SECTION */}
 								<AnimatePresence initial={false}>
 									{isOpen && (
 										<motion.div

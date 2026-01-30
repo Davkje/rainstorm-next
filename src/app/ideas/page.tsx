@@ -23,12 +23,17 @@ export default function IdeasPage() {
 	const router = useRouter();
 	const [ideas, setIdeas] = useState<Idea[]>([]);
 	const [templates] = useState(loadTemplates());
+
+	// DELETE
 	const [ideaToDelete, setIdeaToDelete] = useState<Idea | null>(null);
 	const [confirmDeleteAll, setConfirmDeleteAll] = useState(false);
+
+	//SORT
 	type SortOption = "latest" | "oldest" | "az" | "za";
 	const [sortBy, setSortBy] = useState<SortOption>("latest");
 	const [search, setSearch] = useState("");
 
+	// INIT
 	useEffect(() => {
 		const timeout = setTimeout(() => {
 			setIdeas(loadIdeas());
@@ -37,12 +42,12 @@ export default function IdeasPage() {
 		return () => clearTimeout(timeout);
 	}, []);
 
+	// CREATE AND GO TO IDEA PAGE
 	const handleCreateIdea = (template: Template) => {
 		const idea = createIdeaFromTemplate(template);
 		const allIdeas = loadIdeas();
 
 		saveIdeas([...allIdeas, idea]);
-
 		router.push(`/ideas/${idea.id}`);
 	};
 
@@ -52,6 +57,7 @@ export default function IdeasPage() {
 		setIdeaToDelete(null);
 	};
 
+	//FILTER VIEW
 	const filteredAndSortedIdeas = [...ideas]
 		.filter((idea) => idea.name.toLowerCase().includes(search.toLowerCase()))
 		.sort((a, b) => {
@@ -156,9 +162,13 @@ export default function IdeasPage() {
 					Delete all
 				</button>
 			)}
+
+			{/* --- MODALS --- */}
+
+			{/* --- DELETE ALL --- */}
 			<ConfirmModal
 				open={confirmDeleteAll}
-				title="Delete ALL ideas"
+				title="Delete all ideas"
 				description={`This will permanently delete ${ideas.length} ideas. This action cannot be undone.`}
 				confirmText="Delete all"
 				danger
@@ -169,6 +179,7 @@ export default function IdeasPage() {
 					setConfirmDeleteAll(false);
 				}}
 			/>
+			{/* --- DELETE SINGLE --- */}
 			<ConfirmModal
 				open={!!ideaToDelete}
 				title={`Delete "${ideaToDelete?.name}"`}

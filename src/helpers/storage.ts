@@ -1,7 +1,7 @@
 import { Idea } from "@/models/ideas";
 import { Template, defaultTemplates } from "@/models/templates";
 
-// --- TEMPLEATE FUNCTIONS ---
+// -------------- TEMPLEATE FUNCTIONS --------------
 
 // LOAD TEMPLATE
 export function loadTemplates(): Template[] {
@@ -31,7 +31,7 @@ export function addTemplate(template: Template) {
 	return updated;
 }
 
-// --- IDEA FUNCTIONS ---
+// -------------- IDEA FUNCTIONS --------------
 
 // LOAD IDEAS
 export function loadIdeas(): Idea[] {
@@ -45,7 +45,7 @@ export function loadIdeas(): Idea[] {
 	}
 }
 
-// SAVE IDEAS
+// SAVE IDEAS (LOCAL STORAGE)
 export function saveIdeas(ideas: Idea[]) {
 	if (typeof window === "undefined") return;
 	localStorage.setItem("ideas", JSON.stringify(ideas));
@@ -68,7 +68,7 @@ export function createIdeaFromTemplate(template: Template): Idea {
 	};
 }
 
-// ADD IDEA
+// ADD IDEA TO ALL (UPDATE)
 export function addIdea(newIdea: Idea) {
 	const all = loadIdeas();
 	const updated = [...all, newIdea];

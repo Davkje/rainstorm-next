@@ -2,9 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { getRandomWordFromBank, getWordBankNames } from "@/lib/wordBanks";
 import { WordBankName } from "@/models/wordBanks";
 
+// GET RANDOM WORD
 export async function GET(req: NextRequest) {
 	const { searchParams } = req.nextUrl;
 	const bank = searchParams.get("bank");
+	// EXCLUDE PREVIOUS WORD
 	const exclude = searchParams.get("exclude") ?? undefined;
 
 	if (!bank) {
@@ -17,6 +19,7 @@ export async function GET(req: NextRequest) {
 		return NextResponse.json({ error: "Invalid bank" }, { status: 400 });
 	}
 
+	// RANDOM WORD
 	try {
 		const word = getRandomWordFromBank(bank as WordBankName, exclude);
 

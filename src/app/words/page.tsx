@@ -1,6 +1,7 @@
 import { getAllWordBanks } from "@/lib/wordBanks";
 
 export default function WordsPage() {
+	// ALL WORDS
 	const data = getAllWordBanks();
 
 	return (

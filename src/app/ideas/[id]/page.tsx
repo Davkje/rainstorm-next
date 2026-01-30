@@ -35,14 +35,16 @@ interface IdeaPageProps {
 
 export default function IdeaPage({ params }: IdeaPageProps) {
 	const { id } = React.use(params);
-
 	const [idea, setIdea] = useState<Idea | null>(null);
 	const categories = React.useMemo(() => idea?.categories ?? [], [idea]);
+	const [categoryToDelete, setCategoryToDelete] = useState<Category | null>(null);
+
+	// VIEWS
 	type View = "ideate" | "define";
 	const [view, setView] = useState<View>("ideate");
-	const [categoryToDelete, setCategoryToDelete] = useState<Category | null>(null);
 	const [showHelp, setShowHelp] = useState(false);
 
+	// HINT CHECKS
 	const allHaveWords = categories?.every((cat) => cat.words.length > 1);
 	const allHaveSomeText = categories?.every((cat) => cat.text.length > 30);
 	const totalWords = categories?.reduce((sum, cat) => sum + cat.words.length, 0);
@@ -58,7 +60,8 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 		800,
 	);
 
-	/* -------------------- LOAD IDEA -------------------- */
+	/* -------------------- INIT IDEA -------------------- */
+
 	useEffect(() => {
 		const allIdeas = loadIdeas();
 		const found = allIdeas.find((i) => i.id === id);
@@ -74,12 +77,12 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 	});
 
 	const showDefineHint = useOneTimeHint({
-		// when: allHaveWords && totalWords >= 3 && view === "ideate",
 		when: allHaveWords && totalWords >= 3,
 		duration: 6000,
 	});
 
 	/* -------------------- GLOBAL KEYS -------------------- */
+
 	// TOGGLE VIEW
 	useGlobalKeys(
 		"v",
@@ -90,6 +93,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 			ignoreInputs: true,
 		},
 	);
+
 	// SHOW HELP
 	useGlobalKeys(
 		"h",
@@ -98,6 +102,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 		},
 		{ ignoreInputs: true },
 	);
+
 	// CLOSE HELP
 	useGlobalKeys("Escape", () => setShowHelp(false));
 
@@ -120,7 +125,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 		const category = idea?.categories.find((c) => c.id === categoryId);
 		if (!category) return;
 
-		// EMPTY = DELETE NOW
+		// EMPTY = EASY / DELETE NOW
 		if (isCategoryEmpty(category)) {
 			setIdea((prev) => {
 				if (!prev) return prev;
@@ -134,7 +139,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 			return;
 		}
 
-		// NOT EMPTY = MODAL
+		// NOT EMPTY = DANGER / SHOW MODAL
 		setCategoryToDelete(category);
 	};
 
@@ -201,7 +206,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 									<RiArrowDropRightFill size={32} />
 								</div>
 							)}
-							{/* EXPORT HINT MOBILE */}
+							{/* EXPORT HINT MOBILE (POSITION CHANGE) */}
 							{showExportHint && (
 								<div className="flex sm:hidden absolute top-0 left-full h-full font-bold bg-rain-600 text-white w-max ml-2 pl-2 pr-5 text-md justify-center items-center rounded shadow-lg z-50 anim-fade-in-right">
 									<RiArrowDropLeftFill size={32} />
@@ -266,6 +271,9 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 					onAddCategory={addCategory}
 				/>
 			)}
+
+			{/* --- MODALS & OVERLAYS --- */}
+			{/* DELETE CATEGORY */}
 			<ConfirmModal
 				open={!!categoryToDelete}
 				title={`Delete "${categoryToDelete?.name}"`}
@@ -280,6 +288,7 @@ export default function IdeaPage({ params }: IdeaPageProps) {
 				onCancel={() => setCategoryToDelete(null)}
 				onConfirm={() => categoryToDelete && confirmRemoveCategory(categoryToDelete.id)}
 			/>
+			{/* HELP OVERLAY */}
 			<HelpOverlay open={showHelp} onClose={() => setShowHelp(false)} />
 		</div>
 	);
