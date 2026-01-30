@@ -7,11 +7,11 @@ export default function AboutPage() {
 				<div className="col-span-4 text-center place-self-center">
 					<h1 className="text-2xl font-bold uppercase">About Rainstorm</h1>
 					<p className="text-md font-normal leading-snug tracking-wide max-w-[1200px]">
-						Rainstorm is a creative writing tool designed by me, David, to help you quickly
-						generate, and define ideas for without getting lost in the details. It is inspired by
-						role-playing games like Dungeons & Dragons, where “roll-tables” provide random prompts
-						to spark improvisation. Similarly, Rainstorm provides a simple word generator that
-						encourages creativity and lets you discover and associate on your own.
+						Rainstorm is a creative writing tool designed by me, David, to help you quickly generate
+						and define ideas without getting lost in the details. It is inspired by role-playing
+						games like Dungeons & Dragons, where “roll-tables” provide random prompts to spark
+						improvisation. Similarly, Rainstorm provides a simple word generator that encourages
+						creativity and lets you discover and associate on your own.
 					</p>
 				</div>
 				<div className="col-span-3 text-left">
@@ -26,7 +26,7 @@ export default function AboutPage() {
 				</div>
 				<div className="relative col-start-2 col-span-3 text-left">
 					<AnimatedImage
-						src="/image6.svg"
+						src="/images/image6.svg"
 						width={500}
 						height={500}
 						wrapperClassName="absolute -left-100 "
@@ -48,7 +48,7 @@ export default function AboutPage() {
 
 				<div className="relative col-span-3 text-left">
 					<AnimatedImage
-						src="/image4.svg"
+						src="/images/image4.svg"
 						width={900}
 						height={700}
 						wrapperClassName="absolute -right-200"

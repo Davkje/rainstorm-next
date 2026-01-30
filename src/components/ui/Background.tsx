@@ -33,7 +33,7 @@ export default function Background() {
 			</AnimatePresence>
 
 			<Image
-				src="/image7.svg"
+				src="/images/image7.svg"
 				alt="background"
 				fill
 				priority

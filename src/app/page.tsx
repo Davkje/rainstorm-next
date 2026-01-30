@@ -48,7 +48,7 @@ export default function Home() {
 							<Image
 								className="px-8"
 								aria-hidden="true"
-								src="/rainstormlogo.svg"
+								src="/images/rainstormlogo.svg"
 								alt="Rainstorm Logo"
 								priority
 								width={450}
@@ -56,7 +56,7 @@ export default function Home() {
 							/>
 						</h1>
 						<p className="leading-normal text-rain-300 italic text-lg sm:text-lg" id="site-tagline">
-							The one word, limiting, focused idea tool
+							The one word, creative writing ideation tool
 						</p>
 					</div>
 					<motion.div
@@ -130,7 +130,7 @@ export default function Home() {
 								</p>
 							</div>
 							<Image
-								src="pickTemplate.svg"
+								src="images/pickTemplate.svg"
 								width={400}
 								height={300}
 								alt="Templates"
@@ -156,7 +156,7 @@ export default function Home() {
 							</div>
 							<Image
 								className="place-self-center sm:place-self-start sm:order-1 w-[clamp(300px,40vw,400px)]"
-								src="/dragTutorial.svg"
+								src="/images/dragTutorial.svg"
 								width={400}
 								height={300}
 								alt="Drag and drop"
@@ -180,7 +180,7 @@ export default function Home() {
 								</p>
 							</div>
 							<Image
-								src="definetutorial.svg"
+								src="/images/definetutorial.svg"
 								width={400}
 								height={300}
 								alt="Templates"
@@ -204,7 +204,7 @@ export default function Home() {
 								<p className="p-2 leading-snug font-light">Export your idea and take it further!</p>
 							</div>
 							<Image
-								src="exportimage.svg"
+								src="/images/exportimage.svg"
 								width={300}
 								height={300}
 								alt="Templates"
@@ -234,7 +234,7 @@ export default function Home() {
 						aria-label="Scroll to top"
 						className="btn--icon p-0 w-24 z-2 opacity-20 hover:opacity-40 transition-opacity"
 					>
-						<Image src="/rainstormlogo.svg" alt="Rainstorm logo" width={110} height={100} />
+						<Image src="/images/rainstormlogo.svg" alt="Rainstorm logo" width={110} height={100} />
 					</button>
 					<a
 						className="text-rain-100 font-normal text-md opacity-20 hover:opacity-40 transition-opacity z-2 w-24 text-center"

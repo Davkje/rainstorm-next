@@ -45,7 +45,7 @@ export default function Header() {
 		// <header className="px-4 gap-2 bg-linear-to-b from-rain-800 to-transparent flex justify-between items-center relative">
 		<header className="px-4 gap-2 flex justify-between items-center relative">
 			<Link href="/" aria-label="Go to homepage">
-				<Image src="/rainstormlogo.svg" alt="" width={120} height={167} aria-hidden="true" />
+				<Image src="/images/rainstormlogo.svg" alt="" width={120} height={167} aria-hidden="true" />
 				<span className="sr-only">Rainstorm</span>
 			</Link>
 
@@ -168,7 +168,7 @@ export default function Header() {
 								<Link href="/" onClick={() => setOpenMenu(false)}>
 									<Image
 										className="mb-2"
-										src="/rainstormlogo.svg"
+										src="/images/rainstormlogo.svg"
 										alt=""
 										aria-hidden="true"
 										width={120}
