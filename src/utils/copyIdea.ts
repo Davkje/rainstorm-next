@@ -3,6 +3,7 @@ import { ideaToHtml, ideaToMarkdown, ideaToPlainText } from "./useExportIdea";
 
 export type ExportFormat = "plain" | "markdown" | "html";
 
+// COPY TO CLIPBOARD
 export async function copyIdea(idea: Idea, format: ExportFormat) {
 	if (format === "html") {
 		await navigator.clipboard.write([

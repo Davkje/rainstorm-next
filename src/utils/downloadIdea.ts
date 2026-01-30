@@ -4,6 +4,7 @@ import jsPDF from "jspdf";
 
 export type DownloadFormat = "txt" | "pdf";
 
+// DOWNLOAD IDEA AS TEXT OR PDF
 export async function downloadIdea(idea: Idea, format: DownloadFormat) {
 	if (format === "txt") {
 		const text = ideaToPlainText(idea);

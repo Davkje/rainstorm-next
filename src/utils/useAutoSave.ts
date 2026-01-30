@@ -8,6 +8,7 @@ export function useAutosave<T>(value: T | null, onSave: (value: T) => void, dela
 	useEffect(() => {
 		if (!value) return;
 
+		// SAME = DONT SAVE
 		const serialized = JSON.stringify(value);
 		if (serialized === lastSavedRef.current) return;
 

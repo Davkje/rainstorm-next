@@ -15,16 +15,12 @@
 
 	/* Headings */
 	--text-heading-md: clamp(1.5rem, 2.5vw, 3.5rem);
-	/* --text-heading-sm: clamp(1.25rem, 2vw, 2.5rem);
-	--text-heading-lg: clamp(2rem, 3vw, 4.5rem);
-  --text-heading-xs: clamp(1rem, 1.5vw, 2rem); */
 
 	/* Line height */
 	--leading-tight: 0.8;
 	--leading-normal: 1;
 	--leading-snug: 1.2;
 	--leading-relaxed: 1.4;
-	/* --leading-relaxed: clamp(1.4, 1vw + 1, 1.6); */
 
 	/* Color */
 	--color-rain-100: #f9f5f5;

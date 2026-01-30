@@ -1,5 +1,4 @@
 import { useFullscreen } from "@/utils/useFullscreen";
-import { useGlobalKeys } from "@/utils/useGlobalKeys";
 import { RiFullscreenLine, RiFullscreenExitLine } from "@remixicon/react";
 import Tooltip from "./Tooltip";
 
