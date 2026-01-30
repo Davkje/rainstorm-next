@@ -229,16 +229,16 @@ export default function Home() {
 						</div>
 					</div>
 				</section>
-				<footer className="relative flex justify-between place-items-center p-12 gap-2 pt-24 pb-12 w-full mt-12">
+				<footer className="relative flex justify-between place-items-center px-4 sm:px-16 gap-2 pt-24 pb-12 w-full mt-12">
 					<button
 						onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 						aria-label="Scroll to top"
-						className="btn--icon p-0 w-24 z-2 opacity-20 hover:opacity-40 transition-opacity"
+						className="btn--icon p-0 w-16 sm:w-24 z-2 min-h-[20px] opacity-20 hover:opacity-40 transition-opacity"
 					>
 						<Image src="/images/rainstormlogo.svg" alt="Rainstorm logo" width={110} height={100} />
 					</button>
 					<a
-						className="text-rain-100 font-normal text-md opacity-20 hover:opacity-40 transition-opacity z-2 w-24 text-center"
+						className="text-rain-100 font-normal text-md opacity-20 hover:opacity-40 transition-opacity z-2 w-16 sm:w-24 text-center"
 						href="https://www.linkedin.com/in/david-kjellstrand-b6760113a/"
 						target="_blank"
 						rel="noreferrer"
@@ -247,7 +247,7 @@ export default function Home() {
 					</a>
 
 					<a
-						className="text-rain-100 font-normal text-md opacity-20 hover:opacity-40 transition-opacity z-2 w-24 text-center"
+						className="text-rain-100 font-normal text-md opacity-20 hover:opacity-40 transition-opacity z-2 w-16 sm:w-24 text-right"
 						href="https://github.com/Davkje/rainstorm-next"
 						target="_blank"
 						rel="noreferrer"
