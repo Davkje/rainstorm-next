@@ -30,10 +30,10 @@ export default function AnimatedImage({
 		offset: ["start end", "end start"],
 	});
 
-	// Parallax-rörelse
+	// PARALAX
 	const y = useTransform(scrollYProgress, [0, 1], [parallax, -parallax]);
 
-	// Fade in / out kopplat till scroll
+	// FADE OUT ON SCROLL
 	const opacityValue = useTransform(
 		scrollYProgress,
 		[0, amount, 1 - amount, 1],

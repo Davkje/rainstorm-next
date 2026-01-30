@@ -17,6 +17,7 @@ export default function Background() {
 
 	return (
 		<div className="relative col-start-1 row-start-1 w-full h-screen overflow-hidden">
+			{/* MOVING RAIN FADE IN / OUT */}
 			<AnimatePresence>
 				{showParticles && (
 					<motion.div
@@ -32,6 +33,7 @@ export default function Background() {
 				)}
 			</AnimatePresence>
 
+			{/* MAIN BG IMAGE */}
 			<Image
 				src="/images/image7.svg"
 				alt="background"

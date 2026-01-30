@@ -18,6 +18,7 @@ type Props = {
 	onOpenActiveBank: () => void;
 };
 
+// WORD GENERATOR, LEFT SIDE IDEATE VIEW
 export default function WordGenerator({
 	currentWord,
 	currentBank,
@@ -59,7 +60,7 @@ export default function WordGenerator({
 				</div>
 			</div>
 			<div className="flex flex-col w-full gap-2 sm:gap-2">
-				{/* GEN BUTTON */}
+				{/* GENERATE BUTTON */}
 				<button
 					className="bg-transparent hover:bg-rain-600/20 border-rain-600 hover:border-rain-500/60 justify-center w-full px-8 py-4 sm:py-8 text-xl uppercase font-extrabold"
 					onClick={() => onNewWord()}
@@ -89,7 +90,6 @@ export default function WordGenerator({
 											onClick={onClearSelected}
 											className="flex items-center h-full text-sm gap-1 uppercase leading-5 p-2 sm:px-4 bg-rain-700 text-rain-300 border-none hover:text-rain-100 hover:bg-rain-600"
 										>
-											{/* <span> Clear filter: {selectedBanks.length}</span> */}
 											<span>Clear</span>
 											<RiCloseLine />
 										</button>
@@ -106,6 +106,7 @@ export default function WordGenerator({
 							</button>
 						</Tooltip>
 					</div>
+					{/* FILTERS */}
 					{filtersOpen && (
 						<div
 							className={`flex flex-wrap gap-2 justify-center w-full transition-opacity duration-300 ${

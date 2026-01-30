@@ -12,6 +12,8 @@ const options: { value: SortOption; label: string }[] = [
 	{ value: "za", label: "Z-A" },
 ];
 
+// SORT IDEAS
+
 export default function SortDropdown({
 	value,
 	onChange,

@@ -18,7 +18,9 @@ export default function Header() {
 	const [openMenu, setOpenMenu] = useState(false);
 	const [openMixer, setOpenMixer] = useState(false);
 
+	// RAIN AUDIO LIVES HERE
 	const rain = useRainMixer();
+
 	const pathname = usePathname();
 	const isDesktop = useMediaQuery("(min-width: 640px)");
 
@@ -31,7 +33,7 @@ export default function Header() {
 		},
 		{ ignoreInputs: true },
 	);
-
+	// OPEN RAIN MIXER
 	useGlobalKeys(
 		"r",
 		() => {
@@ -42,7 +44,6 @@ export default function Header() {
 	);
 
 	return (
-		// <header className="px-4 gap-2 bg-linear-to-b from-rain-800 to-transparent flex justify-between items-center relative">
 		<header className="px-4 gap-2 flex justify-between items-center relative">
 			<Link href="/" aria-label="Go to homepage">
 				<Image src="/images/rainstormlogo.svg" alt="" width={120} height={167} aria-hidden="true" />
@@ -110,8 +111,7 @@ export default function Header() {
 				</div>
 			</nav>
 
-			{/* MOBILE */}
-			{/* BUTTON */}
+			{/* MOBILE BUTTON */}
 			{!openMenu && (
 				<div className="sm:hidden absolute top-1.5 right-3">
 					<button
@@ -126,7 +126,7 @@ export default function Header() {
 				</div>
 			)}
 
-			{/* MENU */}
+			{/* MOBILE MENU */}
 			<AnimatePresence>
 				{openMenu && (
 					<>

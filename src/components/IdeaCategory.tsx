@@ -18,6 +18,7 @@ type Props = {
 	onClearCategory: (catId: Category["id"]) => void;
 };
 
+// DROPABLE CATEGORIES IN IDEATE VIEW
 export default function IdeaCategory({
 	id,
 	title,
@@ -28,21 +29,23 @@ export default function IdeaCategory({
 	onRemoveWord,
 	onClearCategory,
 }: Props) {
+	// CAT REF
 	const { setNodeRef } = useDroppable({
 		id,
 		data: { parentId: id },
 	});
-
+	// TRASH REF
 	const { setNodeRef: setTrashRef, isOver: isOverTrash } = useDroppable({
 		id: `${id}-trash`,
 		data: { parentId: id, isTrash: true },
 	});
-
+	// CAT EMPTY REF
 	const { setNodeRef: setEmptyRef } = useDroppable({
 		id: `${id}-empty`,
 		data: { parentId: id },
 	});
 
+	// MAX AMOUNT OF WORDS IN CAT
 	const isMaxWords = words.length >= 10;
 
 	const onUpdateCategoryName = (id: string, v: string) => {

@@ -4,7 +4,6 @@ import "@/styles/globals.css";
 import Header from "@/components/Header";
 import Background from "@/components/ui/Background";
 
-// FONT
 const lateef = Lateef({
 	subsets: ["latin"],
 	weight: ["200", "300", "400", "500", "600", "700", "800"],
@@ -32,7 +31,7 @@ export const metadata: Metadata = {
 		locale: "en_US",
 		type: "website",
 	},
-	manifest: "/webmanifest",
+	manifest: "/webmanifest.json",
 	icons: {
 		icon: "/favicon.ico",
 		apple: "/apple-icon.png",
@@ -40,7 +39,7 @@ export const metadata: Metadata = {
 	appleWebApp: {
 		title: "Rainstorm",
 	},
-	metadataBase: new URL("https://rainstorm.app"),
+	metadataBase: new URL("https://rainstorm-project.vercel.app"),
 };
 
 export default function RootLayout({
@@ -55,7 +54,7 @@ export default function RootLayout({
 				className={`
 				${lateef.variable} antialiased min-h-dvh w-full grid`}
 			>
-				{/* BACKGROUND LAYER */}
+				{/* BACKGROUND LAYER (ALWAYS BEHIND) */}
 				<Background />
 
 				{/* APP / CONTENT LAYER */}

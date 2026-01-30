@@ -18,6 +18,8 @@ export default function ActiveBanksOverlay({
 	onToggleAll,
 	onClose,
 }: Props) {
+	// ------- GLOBAL KEYS -------
+
 	useGlobalKeys("Escape", onClose, {
 		ignoreInputs: true,
 	});

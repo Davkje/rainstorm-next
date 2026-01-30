@@ -11,6 +11,7 @@ type WordChipProps = {
 	isOverlay?: boolean;
 };
 
+// THE WORD CHIPS USED FOR DRAG & DROP, IDEATE VIEW
 export default function WordChip({ word, parentId, onRemove, isOverlay }: WordChipProps) {
 	const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
 		id: `${parentId}-${word}`,
@@ -21,7 +22,7 @@ export default function WordChip({ word, parentId, onRemove, isOverlay }: WordCh
 		},
 	});
 
-	// "Animation" for moving
+	// "ANIMATION" FOR WODS IN CATEGORY
 	const style = {
 		transform: CSS.Transform.toString(transform),
 		transition,
@@ -29,6 +30,7 @@ export default function WordChip({ word, parentId, onRemove, isOverlay }: WordCh
 		cursor: "grab",
 	};
 
+	// CLASSES DEPENDING ON PARENT
 	const baseClasses =
 		"uppercase manipulation flex justify-center items-center rounded-lg text-rain-100 capitalize select-none transition-all";
 	const generatorClasses =
@@ -68,12 +70,14 @@ export default function WordChip({ word, parentId, onRemove, isOverlay }: WordCh
 				${isOverlay ? overlayClasses : ""}
 				`}
 		>
+			{/* SCREEN READERS */}
 			<span id={`word-${word}-instructions`} className="sr-only">
 				{parentId === "generator"
 					? "Press Enter or Space to pick up the word and use arrow keys to move."
 					: "Press Enter or Space to pick up the word, use arrow keys to move, or press Delete to remove."}
 			</span>
 			{word}
+			{/* DELETE BUTTON */}
 			{parentId !== "generator" && !isDragging && (
 				<button
 					type="button"

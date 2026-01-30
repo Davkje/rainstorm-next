@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-// MADE WITH FIGMA MAKE
+// MADE AND CUSTOMIZED W. FIGMA MAKE
 
 interface Particle {
 	x: number;

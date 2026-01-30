@@ -6,6 +6,7 @@ import Tooltip from "./Tooltip";
 export function FullscreenButton() {
 	const { isFullscreen, enter, exit } = useFullscreen();
 
+	// REMOVED: INTEARS W. BROWESER SEARCH
 	// useGlobalKeys(
 	// 	"f",
 	// 	() => {

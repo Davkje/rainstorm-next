@@ -1,5 +1,7 @@
 import { WordBankName } from "@/models/wordBanks";
 
+// FULL WORD BANK - KEEP SERVER SIDE
+
 export const wordBanks: Record<WordBankName, string[]> = {
 	verb: [
 		"Be",

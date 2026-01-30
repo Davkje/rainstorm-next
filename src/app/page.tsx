@@ -13,6 +13,7 @@ export default function Home() {
 	const [templates, setTemplates] = useState<Template[]>([]);
 	const router = useRouter();
 
+	// LOAD TEMPLATES FOR CTA
 	useEffect(() => {
 		const loaded = loadTemplates();
 		// eslint-disable-next-line react-hooks/set-state-in-effect

@@ -12,6 +12,8 @@ interface EditableTextProps {
 	maxLength?: number;
 }
 
+// EDITABLE TEXT - CAN CHANGE FROM ONE TAG TO ANOTHER
+
 export default function EditableText({
 	text,
 	className = "",

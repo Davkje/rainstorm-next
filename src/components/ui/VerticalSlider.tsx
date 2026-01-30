@@ -5,6 +5,8 @@ type Props = {
 	onChange: (v: number) => void;
 };
 
+// RADIX SLIDERS
+
 export function VerticalSlider({ value, onChange }: Props) {
 	return (
 		<Slider.Root

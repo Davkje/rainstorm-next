@@ -18,6 +18,7 @@ export default function Tooltip({ text, children, position = "top" }: TooltipPro
 	const [visible, setVisible] = useState(false);
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+	// POSITION
 	const posClass = {
 		top: "bottom-full mb-2 left-1/2 -translate-x-1/2",
 		topright: "bottom-full mb-4 -right-2",
